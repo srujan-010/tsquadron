@@ -80,7 +80,8 @@ const Chatbot = () => {
       }));
 
       // Call our InsForge backend endpoint
-      const response = await fetch('/api/chat', {
+      const chatUrl = import.meta.env.VITE_INSFORGE_CHAT_URL || '';
+      const response = await fetch(chatUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
