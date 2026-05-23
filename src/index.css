@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #ffffff;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(22, 60, 140, 0.04) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(94, 156, 179, 0.04) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, rgba(40, 87, 164, 0.04) 0px, transparent 50%);
+    background-attachment: fixed;
+    color: #475569; /* Slate 600 (Paragraph Text) */
+    font-weight: 400;
+  }
+  h1 {
+    color: #0F172A; /* Slate 900 */
+  }
+  h2, h3, h4, h5, h6 {
+    color: #1E293B; /* Slate 800 */
+  }
+}
+
+/* Premium Light Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(22, 60, 140, 0.15);
+  border-radius: 9999px;
+  border: 2px solid #f8fafc;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(22, 60, 140, 0.3);
+}
+
+/* Light Glassmorphism helpers */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(15, 23, 42, 0.05);
+}
+
+.glass-panel-heavy {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(15, 23, 42, 0.04);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(22, 60, 140, 0.25);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 30px -10px rgba(22, 60, 140, 0.08);
+}
+
+/* Light glow accents */
+.glow-text-cyan {
+  text-shadow: 0 0 20px rgba(94, 156, 179, 0.2);
+}
+
+.glow-text-blue {
+  text-shadow: 0 0 20px rgba(40, 87, 164, 0.2);
+}
+
+/* Ambient glow orb decoration bases */
+.glow-orb {
+  filter: blur(100px);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Custom linear text gradients */
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-slate-800 to-slate-600;
+}
+
+.gradient-text-brand {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-indigo via-brand-violet to-brand-cyan;
+}
+
+.gradient-text-cyan-emerald {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-cyan to-brand-emerald;
+}
+
+.gradient-text-rose-violet {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-rose to-brand-violet;
+}
+
+.gradient-border-glow {
+  position: relative;
+}
+
+.gradient-border-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(to right, rgba(22, 60, 140, 0.05), rgba(94, 156, 179, 0.05));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  transition: all 0.4s ease;
+}
+
+.gradient-border-glow:hover::before {
+  background: linear-gradient(to right, #163C8C, #5E9CB3);
+}
+
+/* TipTap Editor Styles */
+.ProseMirror {
+  min-height: 280px;
+  outline: none;
+}
+
+/* Global Heading Contrast Fixes for Dark/Gradient Containers */
+.bg-slate-900 h1, .bg-slate-900 h2, .bg-slate-900 h3, .bg-slate-900 h4,
+.bg-slate-950 h1, .bg-slate-950 h2, .bg-slate-950 h3, .bg-slate-950 h4,
+.bg-slate-800 h1, .bg-slate-800 h2, .bg-slate-800 h3, .bg-slate-800 h4,
+.bg-black h1, .bg-black h2, .bg-black h3, .bg-black h4,
+.text-white h1, .text-white h2, .text-white h3, .text-white h4 {
+  color: #ffffff !important;
+}
+
+
