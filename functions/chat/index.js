@@ -60,7 +60,7 @@ export default async function handler(req) {
       headers: {
         'Authorization': `Bearer ${openRouterApiKey}`,
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://tsquadron.com', // Optional but recommended by OpenRouter
+        'HTTP-Referer': 'https://tsquadron.in', // Optional but recommended by OpenRouter
         'X-Title': 'TSquadron Assistant'
       },
       body: JSON.stringify({
