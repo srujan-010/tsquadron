@@ -571,6 +571,8 @@ export const db = {
   },
   saveSeoFile: (filePath, data) => {
     setStore(`tsquadron_seo_file_${filePath}`, data);
+    // Dispatch custom event to instantly trigger re-renders in SEOHelmet without refresh
+    window.dispatchEvent(new Event('seo-updated'));
     return data;
   }
 };

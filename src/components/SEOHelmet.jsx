@@ -113,6 +113,15 @@ const DEFAULT_PAGE_SEO = {
 }
 
 export default function SEOHelmet({ activePage }) {
+  // Add a dummy state to force re-render when SEO settings are saved
+  const [updateTick, setUpdateTick] = React.useState(0)
+
+  React.useEffect(() => {
+    const handleSeoUpdate = () => setUpdateTick(t => t + 1)
+    window.addEventListener('seo-updated', handleSeoUpdate)
+    return () => window.removeEventListener('seo-updated', handleSeoUpdate)
+  }, [])
+
   // 1. Fetch Global defaults
   const globalSeo = db.getSeoFile('global.json', {
     siteTitle: 'TSquadron | Performance Marketing & Digital Growth Agency',
