@@ -147,17 +147,7 @@ export default function AdminLogin({ setActivePage }) {
             </button>
           </form>
 
-          {/* Credential Helper Badge */}
-          <div className="p-4 rounded-2xl bg-brand-indigo/[0.03] border border-brand-indigo/10 text-slate-600 text-xs font-sans space-y-1">
-            <span className="font-semibold text-brand-indigo block">Authorized Demo Credentials</span>
-            <p className="text-slate-600 leading-normal">
-              Use standard administrative login for sandbox validation:
-            </p>
-            <div className="font-mono text-[11px] text-slate-700 bg-white/70 border border-slate-100 p-2 rounded-lg mt-1 select-all">
-              Email: admin@tsquadron.com<br />
-              Password: admin
-            </div>
-          </div>
+
         </div>
       </div>
     </div>

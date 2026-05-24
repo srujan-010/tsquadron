@@ -4,7 +4,7 @@ const pngToIco = require('png-to-ico');
 const https = require('https');
 const path = require('path');
 
-const imageUrl = 'https://i.ibb.co/sp8pfGNc/Chat-GPT-Image-May-21-2026-03-14-44-PM.png';
+const imageUrl = 'https://i.ibb.co/hR1p60jt/Chat-GPT-Image-May-21-2026-03-14-44-PM-removebg-preview.png';
 const publicDir = path.join(__dirname, 'public');
 
 https.get(imageUrl, (response) => {
