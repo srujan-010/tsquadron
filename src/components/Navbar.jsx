@@ -24,6 +24,17 @@ export default function Navbar({ activePage, setActivePage, setSelectedServiceId
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
+
   const services = [
     { name: "Digital Marketing", id: "digital-marketing", icon: <FiTrendingUp className="text-brand-cyan" size={16} />, desc: "Growth engines & funnels" },
     { name: "Search Engine Optimization", id: "seo", icon: <FiGlobe className="text-brand-indigo" size={16} />, desc: "Organic authority ranking" },
@@ -80,7 +91,7 @@ export default function Navbar({ activePage, setActivePage, setSelectedServiceId
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${ scrolled ? 'py-3 bg-white/70 backdrop-blur-lg border-b border-slate-100 shadow-[0_4px_30px_rgba(15,23,42,0.03)]' : 'py-5 bg-transparent' }`}
+        className={`fixed top-0 left-0 w-full z-40 transition-all duration-300 ${ scrolled ? 'py-3 bg-white/70 backdrop-blur-lg border-b border-slate-100 shadow-[0_4px_30px_rgba(15,23,42,0.03)]' : 'py-5 bg-transparent' }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="flex items-center justify-between h-12">
@@ -88,7 +99,7 @@ export default function Navbar({ activePage, setActivePage, setSelectedServiceId
             {/* Logo */}
             <div 
               onClick={() => handleLinkClick('home')}
-              className="flex items-center cursor-pointer group"
+              className={`items-center cursor-pointer group ${isOpen ? 'hidden md:flex' : 'flex'}`}
             >
               <img src="/logo.png" alt="TSquadron Logo" className="h-10 sm:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
             </div>
@@ -212,7 +223,7 @@ export default function Navbar({ activePage, setActivePage, setSelectedServiceId
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 z-40 md:hidden bg-slate-900/40 backdrop-blur-sm"
+              className="fixed inset-0 z-50 md:hidden bg-slate-900/40 backdrop-blur-sm"
             />
 
             {/* Slide-out Drawer Panel */}
@@ -221,7 +232,7 @@ export default function Navbar({ activePage, setActivePage, setSelectedServiceId
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", bounce: 0.05, duration: 0.4 }}
-              className="fixed top-0 right-0 bottom-0 w-[290px] sm:w-[360px] z-50 md:hidden bg-white shadow-2xl border-l border-slate-100 flex flex-col h-screen overflow-y-auto"
+              className="fixed top-0 right-0 bottom-0 w-[290px] sm:w-[360px] z-[60] md:hidden bg-white shadow-2xl border-l border-slate-100 flex flex-col h-screen overflow-y-auto"
             >
               {/* Drawer Header */}
               <div className="p-5 flex items-center justify-between border-b border-slate-100 bg-slate-50/50">
