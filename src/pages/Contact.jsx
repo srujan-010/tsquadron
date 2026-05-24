@@ -116,19 +116,19 @@ export default function Contact() {
             {/* Icon Info Badges */}
             <div className="space-y-4">
               {[
-                { label: "Direct Support & Audit queries", value: "info@tsquadron.com", icon: <FiMail /> },
-                { label: "Call Our Execution Team", value: "+91 9346989817", icon: <FiPhone /> },
-                { label: "Office Location (Warangal)", value: "1st Floor, Green Square Plaza, Kishanpura, Hanamkonda, Warangal", icon: <FiMapPin /> }
+                { label: "Direct Support & Audit queries", value: "info@tsquadron.com", icon: <FiMail />, link: "mailto:info@tsquadron.com" },
+                { label: "Call Our Execution Team", value: "+91 9346989817", icon: <FiPhone />, link: "tel:+919346989817" },
+                { label: "Office Location (Warangal)", value: "1st Floor, Green Square Plaza, Kishanpura, Hanamkonda, Warangal", icon: <FiMapPin />, link: "https://maps.app.goo.gl/ebSTinBiFWneemTSA" }
               ].map((item, idx) => (
-                <div key={idx} className="flex items-start sm:items-center gap-4 p-4 sm:p-5 rounded-2xl bg-white border border-slate-100 shadow-premium">
-                  <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200/60 flex items-center justify-center text-slate-600 shrink-0">
+                <a key={idx} href={item.link} target={item.link.startsWith('http') ? "_blank" : undefined} rel={item.link.startsWith('http') ? "noopener noreferrer" : undefined} className="flex items-start sm:items-center gap-4 p-4 sm:p-5 rounded-2xl bg-white border border-slate-100 shadow-premium hover:border-brand-indigo/30 hover:bg-slate-50 transition-all group cursor-pointer block w-full text-left">
+                  <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200/60 flex items-center justify-center text-slate-600 shrink-0 group-hover:bg-brand-indigo group-hover:text-white transition-colors">
                     {item.icon}
                   </div>
                   <div>
                     <span className="text-[10px] text-brand-label font-sans uppercase tracking-widest block">{item.label}</span>
-                    <span className="text-sm font-semibold text-slate-900 block mt-0.5 break-words">{item.value}</span>
+                    <span className="text-sm font-semibold text-slate-900 block mt-0.5 break-words group-hover:text-brand-indigo transition-colors">{item.value}</span>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
 
@@ -147,7 +147,7 @@ export default function Contact() {
               />
               <div className="absolute bottom-4 right-4 z-10">
                 <a
-                  href="https://maps.app.goo.gl/UpQux41aUVMsD8LZA"
+                  href="https://maps.app.goo.gl/ebSTinBiFWneemTSA"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 text-[10px] font-heading font-black text-brand-indigo shadow-md hover:bg-white hover:scale-105 active:scale-95 transition-all"

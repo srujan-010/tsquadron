@@ -502,18 +502,18 @@ export default function About({ setActivePage }) {
         <div className="max-w-2xl mx-auto text-left">
           
           {/* Hanamkonda Office Card */}
-          <div className="p-8 rounded-3xl bg-white border border-slate-100 shadow-premium flex flex-col justify-between space-y-6 hover:border-brand-violet/20 transition-all duration-300">
-            <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-brand-violet/5 border border-brand-violet/10 flex items-center justify-center text-brand-violet shadow-sm">
+          <div className="p-8 rounded-3xl bg-white border border-slate-100 shadow-premium flex flex-col justify-between space-y-6">
+            <a href="https://maps.app.goo.gl/ebSTinBiFWneemTSA" target="_blank" rel="noopener noreferrer" className="space-y-4 group cursor-pointer">
+              <div className="w-12 h-12 rounded-2xl bg-brand-violet/5 border border-brand-violet/10 flex items-center justify-center text-brand-violet shadow-sm group-hover:bg-brand-violet group-hover:text-white transition-colors">
                 <FiMapPin size={22} />
               </div>
-              <h3 className="text-lg font-heading font-bold text-slate-900">
+              <h3 className="text-lg font-heading font-bold text-slate-900 group-hover:text-brand-violet transition-colors">
                 Hanamkonda Operational Hub
               </h3>
-              <p className="text-slate-600 text-xs sm:text-sm font-sans leading-relaxed">
+              <p className="text-slate-600 text-xs sm:text-sm font-sans leading-relaxed group-hover:text-slate-900 transition-colors">
                 1st Floor, Green Square Plaza, opp public garden, Kishanpura, Hanamkonda, Warangal, Telangana 506001
               </p>
-            </div>
+            </a>
             <div className="relative aspect-[16/9] rounded-2xl overflow-hidden border border-slate-200/80 bg-white shadow-premium group">
               <iframe
                 title="TSquadron Hanamkonda Location Map"
@@ -528,7 +528,7 @@ export default function About({ setActivePage }) {
               />
               <div className="absolute bottom-3 right-3 z-10">
                 <a
-                  href="https://maps.app.goo.gl/UpQux41aUVMsD8LZA"
+                  href="https://maps.app.goo.gl/ebSTinBiFWneemTSA"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-slate-200 text-[10px] font-heading font-black text-brand-indigo shadow-md hover:bg-white hover:scale-105 active:scale-95 transition-all"

@@ -139,20 +139,19 @@ export default function Footer({ setActivePage }) {
         {/* Middle Offices Address / Contact Section */}
         <div className="border-t border-[#2857A4]/10 pt-12 pb-10 space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 text-sm text-slate-700">
-            {/* Card 1: Office Location */}
-            <div className="lg:col-span-7 bg-white/40 border border-white/60 rounded-2xl p-6 backdrop-blur-sm shadow-sm hover:shadow-md hover:bg-white/60 transition-all duration-300 flex flex-col sm:flex-row items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-white border border-brand-cyan/20 flex items-center justify-center text-brand-indigo shrink-0 shadow-sm">
-                <FiMapPin size={20} className="text-brand-indigo" />
+            <a href="https://maps.app.goo.gl/ebSTinBiFWneemTSA" target="_blank" rel="noopener noreferrer" className="lg:col-span-7 bg-white/40 border border-white/60 rounded-2xl p-6 backdrop-blur-sm shadow-sm hover:shadow-md hover:bg-white/60 transition-all duration-300 flex flex-col sm:flex-row items-start gap-4 group cursor-pointer">
+              <div className="w-10 h-10 rounded-xl bg-white border border-brand-cyan/20 flex items-center justify-center text-brand-indigo shrink-0 shadow-sm group-hover:bg-brand-indigo group-hover:text-white transition-colors">
+                <FiMapPin size={20} />
               </div>
               <div className="space-y-1.5">
-                <span className="font-heading font-bold text-[#163C8C] uppercase tracking-wider text-xs block">
+                <span className="font-heading font-bold text-[#163C8C] uppercase tracking-wider text-xs block group-hover:text-brand-indigo transition-colors">
                   Office Location (Warangal)
                 </span>
                 <p className="text-slate-700 font-medium leading-relaxed">
                   1st Floor, Green Square Plaza, opp public garden, Kishanpura, Hanamkonda, Warangal, Telangana 506001
                 </p>
               </div>
-            </div>
+            </a>
 
             {/* Card 2: Contact info */}
             <div className="lg:col-span-5 bg-white/40 border border-white/60 rounded-2xl p-6 backdrop-blur-sm shadow-sm hover:shadow-md hover:bg-white/60 transition-all duration-300 flex flex-col sm:flex-row items-start gap-4">
