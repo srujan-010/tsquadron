@@ -21,17 +21,6 @@ export default function BlogDetailsLink({ setActivePage }) {
   const [commentSubmitted, setCommentSubmitted] = useState(false)
 
   useEffect(() => {
-    // [SEO Manager Override] document.title = "Top 10 Link Building Strategies to Rank Higher | TSquadron"
-    const metaDesc = document.querySelector('meta[name="description"]')
-    const descText = "Discover the top link-building strategies to improve SEO rankings, increase domain authority, drive organic traffic, and strengthen online visibility."
-    if (metaDesc) {
-      metaDesc.setAttribute("content", descText)
-    } else {
-      const meta = document.createElement('meta')
-      meta.name = "description"
-      meta.content = descText
-      document.getElementsByTagName('head')[0].appendChild(meta)
-    }
   }, [])
 
   const handleCommentSubmit = (e) => {

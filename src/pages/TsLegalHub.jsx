@@ -3,8 +3,7 @@ import React, { useEffect } from 'react'
 export default function PrivacyPolicy({ setActivePage }) {
   // Document Title update and scroll to top on mount
   useEffect(() => {
-    document.title = 'Privacy Policy | TSquadron'
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    document.title = 'Privacy Policy |    window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
 
   return (

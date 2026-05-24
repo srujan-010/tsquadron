@@ -21,17 +21,6 @@ export default function BlogDetailsVisibility({ setActivePage }) {
   const [commentSubmitted, setCommentSubmitted] = useState(false)
 
   useEffect(() => {
-    // [SEO Manager Override] document.title = "Types of Visibility in Digital Marketing | TSquadron"
-    const metaDesc = document.querySelector('meta[name="description"]')
-    const descText = "Learn about the different types of digital marketing visibility including SEO, social media, content marketing, influencer visibility, local search, and video marketing strategies."
-    if (metaDesc) {
-      metaDesc.setAttribute("content", descText)
-    } else {
-      const meta = document.createElement('meta')
-      meta.name = "description"
-      meta.content = descText
-      document.getElementsByTagName('head')[0].appendChild(meta)
-    }
   }, [])
 
   const handleCommentSubmit = (e) => {

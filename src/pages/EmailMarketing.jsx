@@ -12,17 +12,6 @@ export default function EmailMarketing({ setActivePage }) {
   const [openFaq, setOpenFaq] = useState(null)
 
   React.useEffect(() => {
-    // [SEO Manager Override] document.title = "Email Marketing Services in Warangal | TSquadron"
-    const metaDesc = document.querySelector('meta[name="description"]')
-    const descText = "TSquadron provides professional email marketing services in Warangal including campaign strategy, automation, customer engagement, and conversion-focused email solutions."
-    if (metaDesc) {
-      metaDesc.setAttribute("content", descText)
-    } else {
-      const meta = document.createElement('meta')
-      meta.name = "description"
-      meta.content = descText
-      document.getElementsByTagName('head')[0].appendChild(meta)
-    }
   }, [])
 
   const breadcrumbs = [

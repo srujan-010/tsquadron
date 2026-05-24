@@ -13,17 +13,6 @@ export default function UiUxDesigning({ setActivePage }) {
   const [openFaq, setOpenFaq] = useState(null)
 
   React.useEffect(() => {
-    // [SEO Manager Override] document.title = "UI/UX Designing Company in Warangal | TSquadron"
-    const metaDesc = document.querySelector('meta[name="description"]')
-    const descText = "TSquadron provides professional UI/UX designing services in Warangal including responsive interfaces, user experience design, wireframing, prototyping, and modern digital experiences."
-    if (metaDesc) {
-      metaDesc.setAttribute("content", descText)
-    } else {
-      const meta = document.createElement('meta')
-      meta.name = "description"
-      meta.content = descText
-      document.getElementsByTagName('head')[0].appendChild(meta)
-    }
   }, [])
 
   const breadcrumbs = [

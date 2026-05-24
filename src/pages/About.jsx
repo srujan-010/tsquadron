@@ -10,16 +10,7 @@ export default function About({ setActivePage }) {
   const [activeStep, setActiveStep] = useState(0)
 
   useEffect(() => {
-    // 1. Dynamic SEO Metadata Update
-    // [SEO Manager Override] document.title = "About TSquadron | Premium Digital Marketing Company"
     
-    let metaDescription = document.querySelector('meta[name="description"]')
-    if (!metaDescription) {
-      metaDescription = document.createElement('meta')
-      metaDescription.name = "description"
-      document.head.appendChild(metaDescription)
-    }
-    metaDescription.content = "Learn about TSquadron — a Hyderabad & Warangal-based digital marketing and web solutions company helping brands grow through SEO, UI/UX, web development, and performance marketing."
 
     // Scroll to top
     window.scrollTo({ top: 0, behavior: 'instant' })

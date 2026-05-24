@@ -21,7 +21,6 @@ export default function Blog({ setActivePage }) {
   const [posts, setPosts] = useState([])
 
   useEffect(() => {
-    // [SEO Manager Override] document.title = "Digital Marketing Blog | TSquadron"
     setPosts(db.getBlogs())
   }, [])
 

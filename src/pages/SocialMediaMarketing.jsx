@@ -12,17 +12,6 @@ export default function SocialMediaMarketing({ setActivePage }) {
   const [openFaq, setOpenFaq] = useState(null)
 
   React.useEffect(() => {
-    // [SEO Manager Override] document.title = "Social Media Marketing Company in Warangal | TSquadron"
-    const metaDesc = document.querySelector('meta[name="description"]')
-    const descText = "TSquadron provides professional social media marketing services in Warangal including content strategy, campaign management, audience engagement, and paid social advertising."
-    if (metaDesc) {
-      metaDesc.setAttribute("content", descText)
-    } else {
-      const meta = document.createElement('meta')
-      meta.name = "description"
-      meta.content = descText
-      document.getElementsByTagName('head')[0].appendChild(meta)
-    }
   }, [])
 
   const breadcrumbs = [

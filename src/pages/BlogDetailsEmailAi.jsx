@@ -27,17 +27,6 @@ export default function BlogDetailsEmailAi({ setActivePage }) {
   const [predictedCtr, setPredictedCtr] = useState(24)
 
   useEffect(() => {
-    // [SEO Manager Override] document.title = "The Role of AI in Email Marketing | TSquadron"
-    const metaDesc = document.querySelector('meta[name="description"]')
-    const descText = "Learn how AI improves email marketing through automation, personalization, predictive analytics, customer segmentation, and real-time campaign optimization."
-    if (metaDesc) {
-      metaDesc.setAttribute("content", descText)
-    } else {
-      const meta = document.createElement('meta')
-      meta.name = "description"
-      meta.content = descText
-      document.getElementsByTagName('head')[0].appendChild(meta)
-    }
   }, [])
 
   const handlePersonaChange = (persona) => {

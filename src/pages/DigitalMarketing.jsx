@@ -12,17 +12,6 @@ export default function DigitalMarketing({ setActivePage }) {
   const [openFaq, setOpenFaq] = useState(null)
 
   React.useEffect(() => {
-    // [SEO Manager Override] document.title = "Digital Marketing Agency in Warangal | TSquadron"
-    const metaDesc = document.querySelector('meta[name="description"]')
-    const descText = "TSquadron is a leading digital marketing agency in Warangal offering SEO, social media marketing, PPC, email marketing, ORM, and growth-focused digital solutions."
-    if (metaDesc) {
-      metaDesc.setAttribute("content", descText)
-    } else {
-      const meta = document.createElement('meta')
-      meta.name = "description"
-      meta.content = descText
-      document.getElementsByTagName('head')[0].appendChild(meta)
-    }
   }, [])
 
   const breadcrumbs = [

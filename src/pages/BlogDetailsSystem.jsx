@@ -21,17 +21,6 @@ export default function BlogDetailsSystem({ setActivePage }) {
   const [commentSubmitted, setCommentSubmitted] = useState(false)
 
   useEffect(() => {
-    // [SEO Manager Override] document.title = "The Role of Design Systems in Web Development | TSquadron"
-    const metaDesc = document.querySelector('meta[name="description"]')
-    const descText = "Learn how design systems improve scalability, consistency, collaboration, accessibility, and user experience in modern web development."
-    if (metaDesc) {
-      metaDesc.setAttribute("content", descText)
-    } else {
-      const meta = document.createElement('meta')
-      meta.name = "description"
-      meta.content = descText
-      document.getElementsByTagName('head')[0].appendChild(meta)
-    }
   }, [])
 
   const handleCommentSubmit = (e) => {

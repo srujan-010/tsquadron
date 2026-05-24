@@ -26,17 +26,6 @@ export default function BlogDetailsReputationSocial({ setActivePage }) {
   const [selectedScenario, setSelectedScenario] = useState('positive')
 
   useEffect(() => {
-    // [SEO Manager Override] document.title = "The Role of Social Media in Online Reputation Management | TSquadron"
-    const metaDesc = document.querySelector('meta[name="description"]')
-    const descText = "Learn how social media impacts online reputation management, customer trust, brand transparency, crisis management, and digital credibility."
-    if (metaDesc) {
-      metaDesc.setAttribute("content", descText)
-    } else {
-      const meta = document.createElement('meta')
-      meta.name = "description"
-      meta.content = descText
-      document.getElementsByTagName('head')[0].appendChild(meta)
-    }
   }, [])
 
   const handleScenarioChange = (scenario) => {

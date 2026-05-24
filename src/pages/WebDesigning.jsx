@@ -13,17 +13,6 @@ export default function WebDesigning({ setActivePage }) {
   const [openFaq, setOpenFaq] = useState(null)
 
   React.useEffect(() => {
-    // [SEO Manager Override] document.title = "Best Web Designing Company in Warangal | TSquadron"
-    const metaDesc = document.querySelector('meta[name="description"]')
-    const descText = "TSquadron provides professional web designing services in Warangal including responsive websites, UI/UX design, ecommerce solutions, and business-focused web development."
-    if (metaDesc) {
-      metaDesc.setAttribute("content", descText)
-    } else {
-      const meta = document.createElement('meta')
-      meta.name = "description"
-      meta.content = descText
-      document.getElementsByTagName('head')[0].appendChild(meta)
-    }
   }, [])
 
   const breadcrumbs = [

@@ -27,17 +27,6 @@ export default function BlogDetailsFundamentals({ setActivePage }) {
   const [activeStep, setActiveStep] = useState(0)
 
   useEffect(() => {
-    // [SEO Manager Override] document.title = "The Fundamentals of UI/UX Design | TSquadron"
-    const metaDesc = document.querySelector('meta[name="description"]')
-    const descText = "Learn the fundamentals of UI/UX design including user-centered design, responsive design, usability, accessibility, prototyping, and visual hierarchy."
-    if (metaDesc) {
-      metaDesc.setAttribute("content", descText)
-    } else {
-      const meta = document.createElement('meta')
-      meta.name = "description"
-      meta.content = descText
-      document.getElementsByTagName('head')[0].appendChild(meta)
-    }
   }, [])
 
   const handleCommentSubmit = (e) => {

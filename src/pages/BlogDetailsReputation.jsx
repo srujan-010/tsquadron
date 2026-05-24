@@ -21,17 +21,6 @@ export default function BlogDetailsReputation({ setActivePage }) {
   const [commentSubmitted, setCommentSubmitted] = useState(false)
 
   useEffect(() => {
-    // [SEO Manager Override] document.title = "The Impact of Online Reputation Management on SEO | TSquadron"
-    const metaDesc = document.querySelector('meta[name="description"]')
-    const descText = "Learn how online reputation management impacts SEO performance, customer trust, search rankings, local SEO visibility, and long-term brand authority."
-    if (metaDesc) {
-      metaDesc.setAttribute("content", descText)
-    } else {
-      const meta = document.createElement('meta')
-      meta.name = "description"
-      meta.content = descText
-      document.getElementsByTagName('head')[0].appendChild(meta)
-    }
   }, [])
 
   const handleCommentSubmit = (e) => {

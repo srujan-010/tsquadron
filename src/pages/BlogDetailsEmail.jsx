@@ -21,17 +21,6 @@ export default function BlogDetailsEmail({ setActivePage }) {
   const [commentSubmitted, setCommentSubmitted] = useState(false)
 
   useEffect(() => {
-    // [SEO Manager Override] document.title = "The Future of Email Marketing | TSquadron"
-    const metaDesc = document.querySelector('meta[name="description"]')
-    const descText = "Explore the future of email marketing including AI, automation, predictive analytics, personalization, interactive emails, and ecommerce integrations."
-    if (metaDesc) {
-      metaDesc.setAttribute("content", descText)
-    } else {
-      const meta = document.createElement('meta')
-      meta.name = "description"
-      meta.content = descText
-      document.getElementsByTagName('head')[0].appendChild(meta)
-    }
   }, [])
 
   const handleCommentSubmit = (e) => {

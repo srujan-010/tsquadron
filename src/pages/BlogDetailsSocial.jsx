@@ -48,17 +48,6 @@ export default function BlogDetailsSocial({ setActivePage }) {
   }
 
   useEffect(() => {
-    // [SEO Manager Override] document.title = "The Future of Social Media Marketing | TSquadron"
-    const metaDesc = document.querySelector('meta[name="description"]')
-    const descText = "Explore the future of social media marketing including AI personalization, video content, AR experiences, influencer marketing, and social commerce strategies."
-    if (metaDesc) {
-      metaDesc.setAttribute("content", descText)
-    } else {
-      const meta = document.createElement('meta')
-      meta.name = "description"
-      meta.content = descText
-      document.getElementsByTagName('head')[0].appendChild(meta)
-    }
 
     // Scroll Spy Setup
     const handleScroll = () => {
