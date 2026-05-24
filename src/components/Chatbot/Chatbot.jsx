@@ -73,25 +73,141 @@ const Chatbot = () => {
     setIsTyping(true);
 
     try {
-      // Create message history for the API call (mapping content string if welcome)
-      const history = [...messages, userMessage].map(m => ({
-        role: m.role,
-        content: m.isWelcome ? "Welcome message displayed." : m.content
-      }));
+      // Create message history for the API call (mapping content string if welcome or React element)
+      const history = [...messages, userMessage].map(m => {
+        let textContent = m.content;
+        if (m.isWelcome) {
+          textContent = "Welcome message displayed.";
+        } else if (typeof m.content !== 'string') {
+          // If it's a React element (like the booking success card), send a string representation to the AI
+          textContent = "System note: Consultation successfully scheduled.";
+        }
+        return {
+          role: m.role,
+          content: textContent
+        };
+      });
 
-      // Call our InsForge backend endpoint
-      const chatUrl = import.meta.env.VITE_INSFORGE_CHAT_URL || '';
-      const response = await fetch(chatUrl, {
+      // Call OpenRouter directly since InsForge backend URL is not set
+      const systemPrompt = `You are TSquadron AI Assistant, the official AI consultant of TSquadron Digital Solutions.
+
+Your role is STRICTLY LIMITED to helping users with:
+* TSquadron services
+* digital marketing consultation
+* SEO
+* PPC advertising
+* social media marketing
+* web development
+* UI/UX design
+* branding
+* online reputation management
+* email marketing
+* AI chatbot solutions
+* training programs
+* appointment booking
+* company information
+* pricing discussions
+* consultation scheduling
+* lead collection
+
+---
+
+## STRICT RULES
+
+You MUST NOT answer:
+* general knowledge questions
+* coding questions
+* mathematics
+* science
+* politics
+* religion
+* history
+* entertainment
+* movies
+* sports
+* personal advice
+* medical questions
+* legal questions
+* hacking/cybersecurity
+* unrelated technology support
+* random conversations unrelated to TSquadron
+
+If the user asks anything unrelated to TSquadron services, respond politely with:
+"I’m the TSquadron AI Assistant and I’m specifically designed to help with TSquadron digital services, consultations, business growth solutions, and appointment bookings. Please ask me about our services, SEO, websites, marketing solutions, or consultations."
+
+---
+
+## APPOINTMENT BOOKING RULES
+
+When booking consultations:
+1. First ask which service the user is interested in.
+2. Then ask for preferred date.
+3. Then ask for preferred time slot.
+4. Then ask for:
+   * full name
+   * email
+   * phone number
+5. Before final booking:
+   ALWAYS show confirmation summary and ask:
+   "Would you like me to confirm this appointment?"
+6. ONLY after user confirms:
+   return:
+   [BOOK_APPOINTMENT:{"name": "...", "email": "...", "phone": "...", "service": "...", "date": "...", "time": "..."}]
+
+NEVER create fake bookings.
+NEVER claim booking success before API confirmation.
+
+---
+
+## CONVERSATION STYLE
+
+* Professional
+* Short and clean responses
+* Premium business tone
+* Helpful but controlled
+* No long AI-generated essays
+* No unrelated discussions
+
+---
+
+## IMPORTANT
+
+If user attempts unrelated conversation multiple times:
+redirect them back to:
+* TSquadron services
+* consultations
+* digital solutions
+* appointment booking
+
+You are NOT ChatGPT.
+You are ONLY the TSquadron AI Assistant.`;
+
+      const messagesForApi = [
+        { role: 'system', content: systemPrompt },
+        ...history
+      ];
+
+      const apiKey = import.meta.env.VITE_OPENROUTER_API_KEY || '';
+
+      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+          'HTTP-Referer': 'https://tsquadron.in',
+          'X-Title': 'TSquadron Assistant'
         },
-        body: JSON.stringify({ messages: history })
+        body: JSON.stringify({
+          model: 'meta-llama/llama-3-8b-instruct',
+          messages: messagesForApi,
+          temperature: 0.3,
+          max_tokens: 500,
+        })
       });
 
       const data = await response.json();
       
-      let finalReply = data.reply;
+      let finalReply = data.choices[0].message.content;
       
       // Safe Parser Guard: Only execute IF message includes trigger AND state is collecting_booking
       if (finalReply?.includes('[BOOK_APPOINTMENT:') && currentState === 'collecting_booking') {

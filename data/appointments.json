@@ -20,5 +20,27 @@
     "time": "11:00 AM",
     "status": "Pending",
     "createdAt": "2026-05-21T09:39:49.312Z"
+  },
+  {
+    "id": "1779600833049",
+    "name": "Srujan",
+    "email": "srujanakulawar@gmail.com",
+    "phone": "9100329521",
+    "service": "UI/UX design",
+    "date": "2026-05-25",
+    "time": "11:00 AM",
+    "status": "Pending",
+    "createdAt": "2026-05-24T05:33:53.049Z"
+  },
+  {
+    "id": "1779601129462",
+    "name": "Srujan",
+    "email": "srujanakulawar@gmail.com",
+    "phone": "9100329521",
+    "service": "SEO Consultation",
+    "date": "26/05/2026",
+    "time": "Evening (5:00 PM - 8:00 PM)",
+    "status": "Pending",
+    "createdAt": "2026-05-24T05:38:49.462Z"
   }
 ]
