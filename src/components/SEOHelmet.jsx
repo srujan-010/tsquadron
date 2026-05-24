@@ -178,12 +178,13 @@ export default function SEOHelmet({ activePage }) {
   const pagePath = getSeoPath(activePage)
   
   // Get fallback standard default for this specific page if nothing custom is stored
-  const pageFallback = DEFAULT_PAGE_SEO[activePage] || {
-    title: globalSeo.siteTitle,
-    description: globalSeo.defaultMetaDescription,
-    keywords: globalSeo.defaultKeywords,
-    robotsIndex: 'index',
-    robotsFollow: 'follow'
+  const rawFallback = DEFAULT_PAGE_SEO[activePage]
+  const pageFallback = {
+    title: (activePage === 'home' || !rawFallback?.title) ? globalSeo.siteTitle : rawFallback.title,
+    description: (activePage === 'home' || !rawFallback?.description) ? globalSeo.defaultMetaDescription : rawFallback.description,
+    keywords: (activePage === 'home' || !rawFallback?.keywords) ? globalSeo.defaultKeywords : rawFallback.keywords,
+    robotsIndex: rawFallback?.robotsIndex || 'index',
+    robotsFollow: rawFallback?.robotsFollow || 'follow'
   }
 
   // If this is a blog details path, fetch the actual blog post title for the fallback out-of-the-box feel!

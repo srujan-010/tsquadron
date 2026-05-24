@@ -92,12 +92,21 @@ export default function AdminSeoPages() {
   // Fetch / Sync settings when page changes
   useEffect(() => {
     const pageItem = PAGE_LIST.find(p => p.id === selectedPage)
-    const fallback = DEFAULT_PAGE_FALLBACKS[selectedPage] || {
-      title: 'TSquadron Digital Solutions',
-      description: 'TSquadron is a premium performance digital agency in Warangal.',
-      keywords: 'digital marketing, seo, ppc',
-      robotsIndex: 'index',
-      robotsFollow: 'follow'
+    
+    // Fetch global defaults for empty fallbacks
+    const globalSeo = db.getSeoFile('global.json', {
+      siteTitle: 'TSquadron | Performance Marketing & Digital Growth Agency',
+      defaultMetaDescription: 'TSquadron is a premium performance digital agency in Warangal. We engineer aggressive, analytics-guided SEO, SMM, PPC, and UI/UX campaigns.',
+      defaultKeywords: 'digital marketing, seo, ppc, social media marketing, reputation management, web design, ui ux design',
+    })
+
+    const rawFallback = DEFAULT_PAGE_FALLBACKS[selectedPage]
+    const fallback = {
+      title: (selectedPage === 'home' || !rawFallback?.title) ? globalSeo.siteTitle : rawFallback.title,
+      description: (selectedPage === 'home' || !rawFallback?.description) ? globalSeo.defaultMetaDescription : rawFallback.description,
+      keywords: (selectedPage === 'home' || !rawFallback?.keywords) ? globalSeo.defaultKeywords : rawFallback.keywords,
+      robotsIndex: rawFallback?.robotsIndex || 'index',
+      robotsFollow: rawFallback?.robotsFollow || 'follow'
     }
 
     const data = db.getSeoFile(pageItem.path, {
