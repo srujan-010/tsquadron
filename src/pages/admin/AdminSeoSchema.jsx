@@ -35,7 +35,7 @@ export default function AdminSeoSchema() {
   const [orgData, setOrgData] = useState({
     name: 'TSquadron Digital Solutions',
     url: 'https://www.tsquadron.com',
-    logo: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=80',
+    logo: 'https://res.cloudinary.com/dixbhnqnf/image/upload/v1782553914/Chat-GPT-Image-May-21-2026-03-14-44-PM-removebg-preview_b7cqku.png',
     phone: '+91 98765 43210'
   })
 
@@ -146,7 +146,7 @@ export default function AdminSeoSchema() {
         '@context': 'https://schema.org',
         '@type': 'LocalBusiness',
         'name': localData.name,
-        'image': 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800',
+        'image': 'https://res.cloudinary.com/dixbhnqnf/image/upload/v1782553914/Chat-GPT-Image-May-21-2026-03-14-44-PM-removebg-preview_b7cqku.png',
         'address': {
           '@type': 'PostalAddress',
           'streetAddress': localData.street,

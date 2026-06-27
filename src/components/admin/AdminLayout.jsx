@@ -314,7 +314,7 @@ export default function AdminLayout({ children, activeTab, setActivePage }) {
                 <span className="text-[10px] text-brand-label font-sans block">TSquadron Digital</span>
               </div>
               <img
-                src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=80"
+                src="https://res.cloudinary.com/dixbhnqnf/image/upload/v1782553914/Chat-GPT-Image-May-21-2026-03-14-44-PM-removebg-preview_b7cqku.png"
                 alt="Admin Profile"
                 className="w-9 h-9 rounded-xl border border-slate-200 object-cover"
               />

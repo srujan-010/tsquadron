@@ -114,7 +114,7 @@ export default function AdminSeoPages() {
       canonicalUrl: `https://www.tsquadron.com/${selectedPage === 'home' ? '' : selectedPage + '/'}`,
       ogTitle: '',
       ogDescription: '',
-      ogImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800',
+      ogImage: 'https://res.cloudinary.com/dixbhnqnf/image/upload/v1782553914/Chat-GPT-Image-May-21-2026-03-14-44-PM-removebg-preview_b7cqku.png',
       twitterTitle: '',
       twitterDescription: '',
       twitterImage: ''
@@ -476,7 +476,7 @@ export default function AdminSeoPages() {
               {activePreviewTab === 'social' && (
                 <div className="w-full border border-slate-200 bg-white rounded-2xl overflow-hidden shadow-xs text-left">
                   <img
-                    src={formData.ogImage || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800'}
+                    src={formData.ogImage || 'https://res.cloudinary.com/dixbhnqnf/image/upload/v1782553914/Chat-GPT-Image-May-21-2026-03-14-44-PM-removebg-preview_b7cqku.png'}
                     alt="Social Share Asset"
                     className="w-full h-36 object-cover border-b"
                   />
