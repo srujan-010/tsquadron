@@ -1,9 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FiMail, FiPhone, FiMapPin, FiLinkedin, FiFacebook, FiInstagram } from 'react-icons/fi'
+import { db } from '../lib/db'
 
 export default function Footer({ setActivePage }) {
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
+  const [logoUrl, setLogoUrl] = useState('https://res.cloudinary.com/dixbhnqnf/image/upload/v1782826521/og-image-Photoroom_oawp5v.png')
+
+  const updateLogo = () => {
+    const globalSeo = db.getSeoFile('global.json', {
+      companyLogo: 'https://res.cloudinary.com/dixbhnqnf/image/upload/v1782826521/og-image-Photoroom_oawp5v.png'
+    })
+    setLogoUrl(globalSeo.companyLogo || 'https://res.cloudinary.com/dixbhnqnf/image/upload/v1782826521/og-image-Photoroom_oawp5v.png')
+  }
+
+  useEffect(() => {
+    updateLogo()
+    window.addEventListener('seo-updated', updateLogo)
+    return () => window.removeEventListener('seo-updated', updateLogo)
+  }, [])
 
   const handleSubscribe = (e) => {
     e.preventDefault()
@@ -37,7 +52,7 @@ export default function Footer({ setActivePage }) {
               onClick={() => navigateTo('home')}
               className="flex items-center cursor-pointer group"
             >
-              <img src="/logo.png" alt="TSquadron Logo" className="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
+              <img src={logoUrl} alt="TSquadron Logo" className="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
             </div>
             <p className="text-slate-700 text-sm/relaxed max-w-md font-medium">
               Tsquadron creates and defines brand identities, strategically expands businesses in digital markets, and ignites brand awareness, sales, and desire. With a strong global presence in Warangal, Tsquadron’s expertise and passion fuel your brand’s remarkable digital journey.

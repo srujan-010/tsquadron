@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { 
   FiSave, FiFileText, FiLayers, FiImage, FiSearch, 
-  FiFacebook, FiCheck, FiX, FiRefreshCw, FiBookOpen 
+  FiFacebook, FiCheck, FiX, FiRefreshCw, FiBookOpen,
+  FiTwitter, FiActivity, FiTag, FiClock, FiCalendar, FiUser
 } from 'react-icons/fi'
 import { db } from '../../lib/db'
 
@@ -20,10 +21,17 @@ export default function AdminSeoBlogs() {
     ogImage: '',
     slug: '',
     robotsIndex: 'index',
-    robotsFollow: 'follow'
+    robotsFollow: 'follow',
+    focusKeyword: '',
+    author: 'TSquadron Expert',
+    tags: 'marketing, digital-agency, business',
+    readingTime: '5 min read',
+    publishDate: '',
+    updatedDate: ''
   })
 
   const [activePreviewTab, setActivePreviewTab] = useState('google')
+  const [previewDevice, setPreviewDevice] = useState('desktop') // 'desktop' | 'mobile'
   const [showSavedToast, setShowSavedToast] = useState(false)
   const [isMediaPickerOpen, setIsMediaPickerOpen] = useState(false)
   const [mediaLibrary, setMediaLibrary] = useState([])
@@ -86,7 +94,13 @@ export default function AdminSeoBlogs() {
       ogImage: 'https://res.cloudinary.com/dixbhnqnf/image/upload/v1782553914/Chat-GPT-Image-May-21-2026-03-14-44-PM-removebg-preview_b7cqku.png',
       slug: activeSlug,
       robotsIndex: 'index',
-      robotsFollow: 'follow'
+      robotsFollow: 'follow',
+      focusKeyword: '',
+      author: 'TSquadron Expert',
+      tags: `marketing, ${matchBlog.category.toLowerCase()}, warangal`,
+      readingTime: matchBlog.readTime || '5 min read',
+      publishDate: matchBlog.date || new Date().toLocaleDateString('en-US'),
+      updatedDate: new Date().toLocaleDateString('en-US')
     })
 
     setFormData(data)
@@ -114,7 +128,7 @@ export default function AdminSeoBlogs() {
   }
 
   const handleSave = (e) => {
-    e.preventDefault()
+    if (e) e.preventDefault()
     if (!selectedBlog) return
 
     const filePath = getBlogPath(selectedBlog)
@@ -127,8 +141,98 @@ export default function AdminSeoBlogs() {
     }, 3000)
   }
 
+  // Suggest focus keywords by blog categories
+  const getIntentKeywords = () => {
+    if (!selectedBlog) return ['SEO Training Warangal']
+    const cat = selectedBlog.category.toLowerCase()
+    if (cat.includes('seo')) {
+      return ['SEO Services Warangal', 'Best SEO Company in Warangal', 'Learn SEO']
+    }
+    if (cat.includes('marketing') || cat.includes('smm')) {
+      return ['Digital Marketing Course Warangal', 'Social Media Marketing Warangal', 'Learn Digital Marketing']
+    }
+    if (cat.includes('ui') || cat.includes('design') || cat.includes('web')) {
+      return ['Web Design Company Warangal', 'Website Designers Warangal', 'React Website Development']
+    }
+    return ['Digital Marketing Agency Warangal', 'SEO Company Warangal']
+  }
+
+  const selectIntentKeyword = (kw) => {
+    setFormData(prev => ({
+      ...prev,
+      focusKeyword: kw,
+      title: `${selectedBlog.title} | ${kw}`,
+      description: `${selectedBlog.excerpt} Learn more about ${kw} with TSquadron experts.`
+    }))
+  }
+
+  // Related suggestions compiler (category checks)
+  const getRelatedBlogs = () => {
+    if (!selectedBlog) return []
+    return blogsList
+      .filter(b => b.id !== selectedBlog.id && b.category === selectedBlog.category)
+      .slice(0, 3)
+  }
+
+  const getSeoMetrics = () => {
+    let score = 30
+    const checks = []
+
+    if (formData.title) {
+      const len = formData.title.length
+      if (len >= 50 && len <= 65) {
+        score += 20
+        checks.push({ status: 'good', text: 'Article Title length is perfect.' })
+      } else {
+        checks.push({ status: 'warning', text: `Title should be 50-65 chars (currently ${len}).` })
+      }
+    } else {
+      checks.push({ status: 'error', text: 'Title is empty.' })
+    }
+
+    if (formData.description) {
+      const len = formData.description.length
+      if (len >= 110 && len <= 160) {
+        score += 20
+        checks.push({ status: 'good', text: 'Meta Description length is optimal.' })
+      } else {
+        checks.push({ status: 'warning', text: `Meta Description should be 110-160 chars (currently ${len}).` })
+      }
+    } else {
+      checks.push({ status: 'error', text: 'Meta Description is missing.' })
+    }
+
+    if (formData.focusKeyword) {
+      const kw = formData.focusKeyword.toLowerCase()
+      const titleLower = (formData.title || '').toLowerCase()
+      const descLower = (formData.description || '').toLowerCase()
+
+      if (titleLower.includes(kw)) {
+        score += 15
+        checks.push({ status: 'good', text: 'Focus Keyword matches in Title tag.' })
+      } else {
+        checks.push({ status: 'warning', text: 'Focus Keyword is missing from SEO Title.' })
+      }
+
+      if (descLower.includes(kw)) {
+        score += 15
+        checks.push({ status: 'good', text: 'Focus Keyword matches in Meta Description.' })
+      } else {
+        checks.push({ status: 'warning', text: 'Focus Keyword is missing from Meta Description.' })
+      }
+      
+      checks.push({ status: 'good', text: 'Article Schema LD-JSON compiler status: Active.' })
+    } else {
+      checks.push({ status: 'info', text: 'Add a Focus Keyword to trigger content analysis.' })
+    }
+
+    return { score, checks }
+  }
+
+  const { score, checks } = getSeoMetrics()
+
   return (
-    <div className="space-y-8 text-left max-w-6xl">
+    <div className="space-y-8 text-left max-w-6xl font-sans">
       {/* Title Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200 pb-5">
         <div>
@@ -148,7 +252,7 @@ export default function AdminSeoBlogs() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         {/* Left Side: Article Selector list - 4 cols */}
-        <div className="lg:col-span-4 bg-white border border-slate-200/80 rounded-3xl p-5 shadow-premium max-h-[70vh] flex flex-col overflow-hidden">
+        <div className="lg:col-span-4 bg-white border border-slate-200/80 rounded-3xl p-5 shadow-premium max-h-[85vh] flex flex-col overflow-hidden">
           <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest pb-3 block border-b border-slate-100 mb-3">TSquadron Publications ({blogsList.length})</span>
           <div className="space-y-2 overflow-y-auto flex-grow pr-1">
             {blogsList.map((blog) => {
@@ -187,6 +291,37 @@ export default function AdminSeoBlogs() {
                 <FiFileText className="text-brand-indigo" size={16} /> Meta Configuration
               </h3>
 
+              {/* Focus Keyword & suggestions */}
+              <div className="space-y-3">
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-bold text-slate-700 uppercase tracking-wider block">Focus Keyword (Target Intent Query)</label>
+                  <input
+                    type="text"
+                    name="focusKeyword"
+                    value={formData.focusKeyword || ''}
+                    onChange={handleChange}
+                    placeholder="e.g. Best SEO Company in Warangal"
+                    className="w-full px-4 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-brand-indigo focus:border-brand-indigo font-semibold text-slate-800"
+                  />
+                </div>
+
+                <div className="space-y-1.5 p-3 bg-slate-50 border border-slate-100 rounded-2xl">
+                  <span className="text-[9px] font-bold text-slate-400 tracking-wider uppercase block">Keyword Recommendations (Click to Apply)</span>
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {getIntentKeywords().map((kw, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => selectIntentKeyword(kw)}
+                        className="px-2 py-0.5 bg-white border border-slate-200 text-[9px] font-semibold text-slate-600 hover:text-brand-indigo hover:border-brand-indigo rounded transition-all"
+                      >
+                        + {kw}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
               {/* URL Slug & Generator */}
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold text-slate-700 uppercase tracking-wider block">Blog URL Slug</label>
@@ -206,7 +341,7 @@ export default function AdminSeoBlogs() {
                     type="button"
                     onClick={handleRegenerateSlug}
                     title="Auto-Generate Slug from Blog Title"
-                    className="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-250 border border-slate-200 text-slate-700 rounded-xl transition-all flex items-center justify-center shrink-0"
+                    className="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 rounded-xl transition-all flex items-center justify-center shrink-0"
                   >
                     <FiRefreshCw size={14} />
                   </button>
@@ -218,8 +353,8 @@ export default function AdminSeoBlogs() {
               <div className="space-y-1.5">
                 <div className="flex justify-between items-center">
                   <label className="text-[10px] font-bold text-slate-700 uppercase tracking-wider">SEO Title Tag</label>
-                  <span className={`text-[10px] font-bold ${formData.title.length > 60 ? 'text-amber-500' : 'text-slate-400'}`}>
-                    {formData.title.length} / 60 chars
+                  <span className={`text-[10px] font-bold ${formData.title.length > 65 || formData.title.length < 50 ? 'text-amber-500' : 'text-slate-400'}`}>
+                    {formData.title.length} / 65 chars
                   </span>
                 </div>
                 <input
@@ -236,7 +371,7 @@ export default function AdminSeoBlogs() {
               <div className="space-y-1.5">
                 <div className="flex justify-between items-center">
                   <label className="text-[10px] font-bold text-slate-700 uppercase tracking-wider">Meta Description Tag</label>
-                  <span className={`text-[10px] font-bold ${formData.description.length > 160 ? 'text-amber-500' : 'text-slate-400'}`}>
+                  <span className={`text-[10px] font-bold ${formData.description.length > 160 || formData.description.length < 110 ? 'text-amber-500' : 'text-slate-400'}`}>
                     {formData.description.length} / 160 chars
                   </span>
                 </div>
@@ -248,6 +383,54 @@ export default function AdminSeoBlogs() {
                   placeholder="Write description excerpt..."
                   className="w-full px-4 py-3 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-brand-indigo focus:border-brand-indigo font-semibold text-slate-800 leading-relaxed"
                 />
+              </div>
+
+              {/* Metadata attributes: Author, dates, tags */}
+              <div className="grid grid-cols-2 gap-4 border-t border-slate-100 pt-4">
+                <div className="space-y-1.5">
+                  <label className="text-[9px] font-bold text-slate-500 uppercase flex items-center gap-1"><FiUser size={10} /> Author</label>
+                  <input
+                    type="text"
+                    name="author"
+                    value={formData.author}
+                    onChange={handleChange}
+                    className="w-full px-3 py-1.5 text-xs border border-slate-200 rounded-lg"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-[9px] font-bold text-slate-500 uppercase flex items-center gap-1"><FiClock size={10} /> Read Time</label>
+                  <input
+                    type="text"
+                    name="readingTime"
+                    value={formData.readingTime}
+                    onChange={handleChange}
+                    className="w-full px-3 py-1.5 text-xs border border-slate-200 rounded-lg"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-[9px] font-bold text-slate-500 uppercase flex items-center gap-1"><FiCalendar size={10} /> Publish Date</label>
+                  <input
+                    type="text"
+                    name="publishDate"
+                    value={formData.publishDate}
+                    onChange={handleChange}
+                    className="w-full px-3 py-1.5 text-xs border border-slate-200 rounded-lg"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-[9px] font-bold text-slate-500 uppercase flex items-center gap-1"><FiTag size={10} /> Tags</label>
+                  <input
+                    type="text"
+                    name="tags"
+                    value={formData.tags}
+                    onChange={handleChange}
+                    placeholder="tag1, tag2..."
+                    className="w-full px-3 py-1.5 text-xs border border-slate-200 rounded-lg"
+                  />
+                </div>
               </div>
 
               {/* Social Featured Image */}
@@ -265,7 +448,6 @@ export default function AdminSeoBlogs() {
                   <button
                     type="button"
                     onClick={() => {
-                      setMediaLibrary(db.getMedia())
                       setIsMediaPickerOpen(true)
                     }}
                     className="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl transition-all"
@@ -285,85 +467,143 @@ export default function AdminSeoBlogs() {
           )}
         </form>
 
-        {/* Right: Live Previews - 3 cols */}
+        {/* Right: Previews & Scorecard - 3 cols */}
         <div className="lg:col-span-3 space-y-6">
           {selectedBlog && (
-            <div className="bg-white border border-slate-200/80 rounded-3xl shadow-premium p-6 sm:p-8 space-y-6 sticky top-6">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 className="text-slate-900 font-heading font-black text-xs uppercase tracking-wider flex items-center gap-2">
-                  <FiSearch className="text-brand-indigo" size={16} /> Live Previews
+            <>
+              {/* Scorecard panel */}
+              <div className="bg-white border border-slate-200/80 rounded-3xl shadow-premium p-6 sm:p-8 space-y-4 text-left">
+                <h3 className="text-slate-900 font-heading font-black text-xs uppercase tracking-wider flex items-center justify-between pb-3 border-b border-slate-100">
+                  <span>Scorecard Check</span>
+                  <span className={`px-2.5 py-0.5 rounded-lg text-xs font-mono font-bold ${
+                    score >= 80 ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'
+                  }`}>
+                    {score} / 100
+                  </span>
                 </h3>
 
-                <div className="flex bg-slate-100 p-0.5 rounded-lg border">
-                  <button
-                    onClick={() => setActivePreviewTab('google')}
-                    className={`px-2.5 py-1 text-[10px] font-bold rounded-md transition-all ${
-                      activePreviewTab === 'google' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-800'
-                    }`}
-                  >
-                    Google
-                  </button>
-                  <button
-                    onClick={() => setActivePreviewTab('social')}
-                    className={`px-2.5 py-1 text-[10px] font-bold rounded-md transition-all ${
-                      activePreviewTab === 'social' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-800'
-                    }`}
-                  >
-                    Social Card
-                  </button>
+                <div className="space-y-2 text-xs font-semibold max-h-[140px] overflow-y-auto">
+                  {checks.map((chk, i) => (
+                    <div key={i} className="flex gap-2 items-start text-slate-600">
+                      <div className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${
+                        chk.status === 'good' ? 'bg-emerald-500' :
+                        chk.status === 'warning' ? 'bg-amber-500' : 'bg-red-500'
+                      }`} />
+                      <span>{chk.text}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              {/* Preview Window */}
-              <div className="min-h-[220px] flex items-center justify-center bg-slate-50 rounded-2xl p-4 border border-slate-100">
-                {activePreviewTab === 'google' ? (
-                  <div className="w-full space-y-1.5 font-sans text-left">
-                    <div className="flex items-center gap-1.5">
-                      <div className="w-6 h-6 rounded-full bg-white shadow-xs border flex items-center justify-center shrink-0">
-                        <span className="text-[10px] font-black text-slate-800">T</span>
+              {/* Google device and social previews */}
+              <div className="bg-white border border-slate-200/80 rounded-3xl shadow-premium p-6 sm:p-8 space-y-6">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                  <h3 className="text-slate-900 font-heading font-black text-xs uppercase tracking-wider flex items-center gap-2">
+                    <FiSearch className="text-brand-indigo" size={16} /> Previews
+                  </h3>
+
+                  <div className="flex gap-1 items-center">
+                    <div className="flex bg-slate-100 p-0.5 rounded-lg border">
+                      <button
+                        onClick={() => setActivePreviewTab('google')}
+                        className={`px-2.5 py-1 text-[9px] font-bold rounded-md transition-all ${
+                          activePreviewTab === 'google' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-850'
+                        }`}
+                      >
+                        Google
+                      </button>
+                      <button
+                        onClick={() => setActivePreviewTab('social')}
+                        className={`px-2.5 py-1 text-[9px] font-bold rounded-md transition-all ${
+                          activePreviewTab === 'social' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-850'
+                        }`}
+                      >
+                        Social
+                      </button>
+                    </div>
+
+                    {activePreviewTab === 'google' && (
+                      <div className="flex bg-slate-100 p-0.5 rounded-lg border">
+                        <button
+                          type="button"
+                          onClick={() => setPreviewDevice('desktop')}
+                          className={`px-2 py-0.5 text-[9px] font-bold rounded ${
+                            previewDevice === 'desktop' ? 'bg-white text-slate-900' : 'text-slate-500'
+                          }`}
+                        >
+                          D
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setPreviewDevice('mobile')}
+                          className={`px-2 py-0.5 text-[9px] font-bold rounded ${
+                            previewDevice === 'mobile' ? 'bg-white text-slate-900' : 'text-slate-500'
+                          }`}
+                        >
+                          M
+                        </button>
                       </div>
-                      <div className="leading-none">
-                        <span className="text-[11px] font-medium text-slate-800 block">TSquadron Insights</span>
-                        <span className="text-[9px] text-slate-500 font-medium truncate max-w-[190px] block">
-                          https://www.tsquadron.com/blog/{formData.slug}/
-                        </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Preview Window */}
+                <div className="min-h-[220px] flex items-center justify-center bg-slate-50 rounded-2xl p-4 border border-slate-100">
+                  {activePreviewTab === 'google' ? (
+                    <div className={`w-full font-sans transition-all text-left ${previewDevice === 'mobile' ? 'max-w-[320px] bg-white border border-slate-200 rounded-xl p-3 shadow-xs' : ''}`}>
+                      <div className="flex items-center gap-1.5">
+                        <div className="w-6 h-6 rounded-full bg-white shadow-xs border flex items-center justify-center shrink-0">
+                          <span className="text-[10px] font-black text-slate-800">T</span>
+                        </div>
+                        <div className="leading-none text-left">
+                          <span className="text-[11px] font-medium text-slate-800 block">TSquadron Insights</span>
+                          <span className="text-[9px] text-slate-500 font-medium truncate max-w-[190px] block">
+                            https://www.tsquadron.com/blog/{formData.slug || 'url'}/
+                          </span>
+                        </div>
+                      </div>
+                      <h4 className={`font-semibold text-[#1a0dab] hover:underline cursor-pointer leading-snug mt-1 truncate max-w-full ${previewDevice === 'mobile' ? 'text-xs' : 'text-[15px]'}`}>
+                        {formData.title || 'Blog Article Title'}
+                      </h4>
+                      <p className="text-xs text-[#4d5156] font-normal leading-relaxed line-clamp-2 mt-0.5">
+                        {formData.description || 'Article meta description snippet...'}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="w-full border border-slate-200 bg-white rounded-2xl overflow-hidden shadow-xs text-left">
+                      <img
+                        src={formData.ogImage || 'https://res.cloudinary.com/dixbhnqnf/image/upload/v1782553914/Chat-GPT-Image-May-21-2026-03-14-44-PM-removebg-preview_b7cqku.png'}
+                        alt="Featured share card Preview"
+                        className="w-full h-36 object-cover border-b"
+                      />
+                      <div className="p-3 space-y-1">
+                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block font-sans">www.tsquadron.com</span>
+                        <h5 className="text-[11px] font-bold text-slate-800 leading-snug truncate font-sans">
+                          {formData.ogTitle || formData.title || 'Blog Share Title'}
+                        </h5>
+                        <p className="text-[10px] text-slate-500 leading-normal line-clamp-2 font-medium font-sans">
+                          {formData.ogDescription || formData.description || 'Snippet excerpt'}
+                        </p>
                       </div>
                     </div>
-                    <h4 className="font-semibold text-[#1a0dab] hover:underline cursor-pointer text-[15px] leading-snug truncate max-w-full">
-                      {formData.title || 'Blog Article Title'}
-                    </h4>
-                    <p className="text-xs text-[#4d5156] font-normal leading-relaxed line-clamp-2">
-                      {formData.description || 'Article meta description snippet...'}
-                    </p>
-                  </div>
-                ) : (
-                  <div className="w-full border border-slate-200 bg-white rounded-2xl overflow-hidden shadow-xs text-left">
-                    <img
-                      src={formData.ogImage || 'https://res.cloudinary.com/dixbhnqnf/image/upload/v1782553914/Chat-GPT-Image-May-21-2026-03-14-44-PM-removebg-preview_b7cqku.png'}
-                      alt="Featured share card Preview"
-                      className="w-full h-36 object-cover border-b"
-                    />
-                    <div className="p-3 space-y-1">
-                      <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block font-sans">www.tsquadron.com</span>
-                      <h5 className="text-[11px] font-bold text-slate-800 leading-snug truncate font-sans">
-                        {formData.ogTitle || formData.title || 'Blog Share Title'}
-                      </h5>
-                      <p className="text-[10px] text-slate-500 leading-normal line-clamp-2 font-medium font-sans">
-                        {formData.ogDescription || formData.description || 'Snippet excerpt'}
-                      </p>
+                  )}
+                </div>
+
+                {/* Suggestions / Category matches */}
+                {getRelatedBlogs().length > 0 && (
+                  <div className="border-t border-slate-100 pt-4 text-left">
+                    <span className="text-[9px] font-bold text-slate-400 tracking-wider uppercase block pb-2">Auto-suggested Related Articles</span>
+                    <div className="space-y-1.5">
+                      {getRelatedBlogs().map(b => (
+                        <div key={b.id} className="p-2 bg-slate-50 border border-slate-100 rounded-xl text-[10px] font-bold text-slate-700">
+                          {b.title}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )}
               </div>
-
-              <div className="p-4 bg-slate-50 border border-slate-100 rounded-2xl text-slate-500 text-[10px] leading-relaxed flex gap-3 text-left">
-                <FiCheck className="text-emerald-500 shrink-0 mt-0.5" size={16} />
-                <div>
-                  <span className="font-bold text-slate-800 block mb-0.5">Auto Slug Hook</span>
-                  Custom slugs automatically bind onto router links, immediately aligning with search crawlers dynamically.
-                </div>
-              </div>
-            </div>
+            </>
           )}
         </div>
       </div>
@@ -388,14 +628,14 @@ export default function AdminSeoBlogs() {
             </div>
 
             <div className="p-6 overflow-y-auto flex-grow bg-slate-50">
-              {mediaLibrary.length === 0 ? (
+              {db.getMedia().length === 0 ? (
                 <div className="text-center py-12 space-y-3">
                   <FiImage className="mx-auto text-slate-300" size={48} />
                   <p className="text-xs text-slate-500 font-semibold">Your TSquadron media vault is empty.</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-left">
-                  {mediaLibrary.map((item) => (
+                  {db.getMedia().map((item) => (
                     <div
                       key={item.id}
                       onClick={() => handleSelectMedia(item.url)}

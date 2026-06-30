@@ -1,60 +1,64 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+// Structural Components
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import BackToTop from './components/BackToTop'
-import Home from './pages/Home'
-import Services from './pages/Services'
-import Blog from './pages/Blog'
-import About from './pages/About'
-import Contact from './pages/Contact'
-import DigitalMarketing from './pages/DigitalMarketing'
-import SearchEngineOptimization from './pages/SearchEngineOptimization'
-import SocialMediaMarketing from './pages/SocialMediaMarketing'
-import PpcServices from './pages/PpcServices'
-import EmailMarketing from './pages/EmailMarketing'
-import OnlineReputationManagement from './pages/OnlineReputationManagement'
-import WebDesigning from './pages/WebDesigning'
-import UiUxDesigning from './pages/UiUxDesigning'
-import BlogDetailsVisibility from './pages/BlogDetailsVisibility'
-import BlogDetailsReputation from './pages/BlogDetailsReputation'
-import BlogDetailsUiUx from './pages/BlogDetailsUiUx'
-import BlogDetailsEmail from './pages/BlogDetailsEmail'
-import BlogDetailsLink from './pages/BlogDetailsLink'
-import BlogDetailsSocial from './pages/BlogDetailsSocial'
-import BlogDetailsSystem from './pages/BlogDetailsSystem'
-import BlogDetailsFundamentals from './pages/BlogDetailsFundamentals'
-import BlogDetailsReputationSocial from './pages/BlogDetailsReputationSocial'
-import BlogDetailsEmailAi from './pages/BlogDetailsEmailAi'
-import DigitalMarketingTraining from './pages/DigitalMarketingTraining'
-import PrivacyPolicy from './pages/TsLegalHub.jsx'
-
-// Admin Views
-import AdminLogin from './pages/admin/AdminLogin'
 import AdminLayout from './components/admin/AdminLayout'
-import AdminDashboard from './pages/admin/AdminDashboard'
-import AdminLeads from './pages/admin/AdminLeads'
-import AdminBlogs from './pages/admin/AdminBlogs'
-import AdminServices from './pages/admin/AdminServices'
-import AdminTestimonials from './pages/admin/AdminTestimonials'
-import AdminMedia from './pages/admin/AdminMedia'
-import AdminSettings from './pages/admin/AdminSettings'
-import AdminAppointments from './pages/admin/AdminAppointments'
 import Chatbot from './components/Chatbot/Chatbot'
-
-// SEO Components and Virtual Crawlers Interceptors
-import { HelmetProvider } from 'react-helmet-async'
 import SEOHelmet from './components/SEOHelmet'
 import VirtualSitemap from './components/VirtualSitemap'
 import VirtualRobots from './components/VirtualRobots'
+import { HelmetProvider } from 'react-helmet-async'
 
-// SEO Suite Admin Pages
-import AdminSeoGlobal from './pages/admin/AdminSeoGlobal.jsx'
-import AdminSeoPages from './pages/admin/AdminSeoPages.jsx'
-import AdminSeoBlogs from './pages/admin/AdminSeoBlogs.jsx'
-import AdminSeoTechnical from './pages/admin/AdminSeoTechnical.jsx'
-import AdminSeoSitemap from './pages/admin/AdminSeoSitemap.jsx'
-import AdminSeoSchema from './pages/admin/AdminSeoSchema.jsx'
+// Public Pages Dynamic Lazy Load
+const Home = React.lazy(() => import('./pages/Home'))
+const Services = React.lazy(() => import('./pages/Services'))
+const Blog = React.lazy(() => import('./pages/Blog'))
+const About = React.lazy(() => import('./pages/About'))
+const Contact = React.lazy(() => import('./pages/Contact'))
+const DigitalMarketing = React.lazy(() => import('./pages/DigitalMarketing'))
+const SearchEngineOptimization = React.lazy(() => import('./pages/SearchEngineOptimization'))
+const SocialMediaMarketing = React.lazy(() => import('./pages/SocialMediaMarketing'))
+const PpcServices = React.lazy(() => import('./pages/PpcServices'))
+const EmailMarketing = React.lazy(() => import('./pages/EmailMarketing'))
+const OnlineReputationManagement = React.lazy(() => import('./pages/OnlineReputationManagement'))
+const WebDesigning = React.lazy(() => import('./pages/WebDesigning'))
+const UiUxDesigning = React.lazy(() => import('./pages/UiUxDesigning'))
+const BlogDetailsVisibility = React.lazy(() => import('./pages/BlogDetailsVisibility'))
+const BlogDetailsReputation = React.lazy(() => import('./pages/BlogDetailsReputation'))
+const BlogDetailsUiUx = React.lazy(() => import('./pages/BlogDetailsUiUx'))
+const BlogDetailsEmail = React.lazy(() => import('./pages/BlogDetailsEmail'))
+const BlogDetailsLink = React.lazy(() => import('./pages/BlogDetailsLink'))
+const BlogDetailsSocial = React.lazy(() => import('./pages/BlogDetailsSocial'))
+const BlogDetailsSystem = React.lazy(() => import('./pages/BlogDetailsSystem'))
+const BlogDetailsFundamentals = React.lazy(() => import('./pages/BlogDetailsFundamentals'))
+const BlogDetailsReputationSocial = React.lazy(() => import('./pages/BlogDetailsReputationSocial'))
+const BlogDetailsEmailAi = React.lazy(() => import('./pages/BlogDetailsEmailAi'))
+const DigitalMarketingTraining = React.lazy(() => import('./pages/DigitalMarketingTraining'))
+const PrivacyPolicy = React.lazy(() => import('./pages/TsLegalHub.jsx'))
+
+// Admin Views Dynamic Lazy Load
+const AdminLogin = React.lazy(() => import('./pages/admin/AdminLogin'))
+const AdminDashboard = React.lazy(() => import('./pages/admin/AdminDashboard'))
+const AdminLeads = React.lazy(() => import('./pages/admin/AdminLeads'))
+const AdminBlogs = React.lazy(() => import('./pages/admin/AdminBlogs'))
+const AdminServices = React.lazy(() => import('./pages/admin/AdminServices'))
+const AdminTestimonials = React.lazy(() => import('./pages/admin/AdminTestimonials'))
+const AdminMedia = React.lazy(() => import('./pages/admin/AdminMedia'))
+const AdminSettings = React.lazy(() => import('./pages/admin/AdminSettings'))
+const AdminAppointments = React.lazy(() => import('./pages/admin/AdminAppointments'))
+
+// SEO Suite Admin Pages Dynamic Lazy Load
+const AdminSeoGlobal = React.lazy(() => import('./pages/admin/AdminSeoGlobal.jsx'))
+const AdminSeoPages = React.lazy(() => import('./pages/admin/AdminSeoPages.jsx'))
+const AdminSeoBlogs = React.lazy(() => import('./pages/admin/AdminSeoBlogs.jsx'))
+const AdminSeoTechnical = React.lazy(() => import('./pages/admin/AdminSeoTechnical.jsx'))
+const AdminSeoSitemap = React.lazy(() => import('./pages/admin/AdminSeoSitemap.jsx'))
+const AdminSeoSchema = React.lazy(() => import('./pages/admin/AdminSeoSchema.jsx'))
+const AdminSeoProducts = React.lazy(() => import('./pages/admin/AdminSeoProducts.jsx'))
+const AdminSeoCategories = React.lazy(() => import('./pages/admin/AdminSeoCategories.jsx'))
+const AdminSeoHealth = React.lazy(() => import('./pages/admin/AdminSeoHealth.jsx'))
 
 export default function App() {
   const getInitialPage = () => {
@@ -305,6 +309,12 @@ export default function App() {
           return <AdminLayout activeTab="seo-sitemap" setActivePage={setActivePage}><AdminSeoSitemap /></AdminLayout>
         case 'admin/seo-schema':
           return <AdminLayout activeTab="seo-schema" setActivePage={setActivePage}><AdminSeoSchema /></AdminLayout>
+        case 'admin/seo-products':
+          return <AdminLayout activeTab="seo-products" setActivePage={setActivePage}><AdminSeoProducts /></AdminLayout>
+        case 'admin/seo-categories':
+          return <AdminLayout activeTab="seo-categories" setActivePage={setActivePage}><AdminSeoCategories /></AdminLayout>
+        case 'admin/seo-health':
+          return <AdminLayout activeTab="seo-health" setActivePage={setActivePage}><AdminSeoHealth setActivePage={setActivePage} /></AdminLayout>
         default:
           return <AdminLayout activeTab="dashboard" setActivePage={setActivePage}><AdminDashboard /></AdminLayout>
       }
@@ -419,7 +429,13 @@ export default function App() {
               exit="exit"
               className="w-full"
             >
-              {renderPage()}
+              <React.Suspense fallback={
+                <div className="min-h-[50vh] flex items-center justify-center">
+                  <div className="w-8 h-8 border-4 border-brand-indigo/20 border-t-brand-indigo rounded-full animate-spin" />
+                </div>
+              }>
+                {renderPage()}
+              </React.Suspense>
             </motion.div>
           </AnimatePresence>
         </main>

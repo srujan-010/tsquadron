@@ -556,6 +556,69 @@ export default function EmailMarketing({ setActivePage }) {
         </div>
       </section>
 
+      {/* 9.5. LOCAL STRATEGIC INSIGHTS AND DEEP DIVE (Content expansion for Email Marketing: >800 words total) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 border-t border-slate-100 text-left">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          {/* Left detailed columns */}
+          <div className="lg:col-span-8 space-y-8 font-sans text-slate-600 text-sm sm:text-base leading-relaxed">
+            <h2 className="text-2xl sm:text-3xl font-heading font-bold text-slate-900 leading-tight">
+              Maximizing Customer Lifetime Value with Advanced Email Marketing in Warangal
+            </h2>
+            <p>
+              Acquiring a new visitor is expensive, but nurturing active subscribers is highly cost-effective. To grow subscriber retention and unlock recurring revenue, your campaigns must speak directly to customer behavior. As the premier <strong>best digital marketing company in Warangal</strong> and Telangana, TSquadron designs advanced email marketing flows that keep your prospects engaged.
+            </p>
+            <p>
+              Our specialists develop custom campaign structures for client partners across Hanamkonda, Kazipet, Hyderabad, and surrounding local areas. By choosing TSquadron for your local <strong>email marketing services Warangal</strong> campaigns, you gain access to performance analytics experts. We set up automated cart abandonment flows, configure targeted subscriber list segmentation, write high-converting subject lines, and audit delivery status.
+            </p>
+
+            <h3 className="text-xl font-heading font-semibold text-slate-900 pt-4">
+              Integrated Conversion Layouts & Custom Landing Page Design
+            </h3>
+            <p>
+              Email campaigns perform best when connected with high-speed, SEO-ready landing pages. Every sign-up page we design uses clean typography, single H1 headers, fast CSS templates, and schema markup. This optimization ensures that prospects arriving via search queries convert into subscribers instantly.
+            </p>
+
+            <h3 className="text-xl font-heading font-semibold text-slate-900 pt-4">
+              Multi-Channel Retention Bidding & Brand Trust Scaling
+            </h3>
+            <p>
+              We connect list building with paid advertising pipelines. TSquadron operates as an elite paid social and <strong>lead generation company</strong> in Telangana. We sync subscriber lists with custom audiences on Google Ads and Meta Ads, creating retargeting loops. Simultaneously, our brand sentiment systems audit customer reviews, building absolute authority.
+            </p>
+          </div>
+
+          {/* Right sidebar links and statistics */}
+          <div className="lg:col-span-4 space-y-6">
+            <div className="p-6 rounded-3xl bg-slate-50 border border-slate-100 space-y-4 shadow-sm">
+              <h4 className="font-heading font-bold text-sm text-slate-900 uppercase tracking-wide">
+                Email Campaign Deliverables
+              </h4>
+              <ul className="space-y-3 text-xs font-sans font-medium text-slate-700">
+                <li className="flex items-center gap-2">✓ Automated Customer Welcome Sequences</li>
+                <li className="flex items-center gap-2">✓ E-commerce Abandoned Cart Flows</li>
+                <li className="flex items-center gap-2">✓ Advanced Subscriber Segmentation</li>
+                <li className="flex items-center gap-2">✓ High-Converting Subject Line Tests</li>
+                <li className="flex items-center gap-2">✓ Campaign Delivery & Spam Audits</li>
+                <li className="flex items-center gap-2">✓ CRM & Lead Capture Integrations</li>
+              </ul>
+            </div>
+
+            <div className="p-6 rounded-3xl bg-brand-indigo/5 border border-brand-indigo/10 space-y-3">
+              <h4 className="font-heading font-bold text-sm text-brand-indigo uppercase tracking-wide">
+                Partner Services
+              </h4>
+              <p className="text-xs text-slate-600 font-sans leading-relaxed">
+                Drive more organic traffic to your opt-in pages with our search engine services:
+              </p>
+              <div className="flex flex-wrap gap-2 pt-2">
+                <button onClick={() => navigateTo('seo-company-in-hanamkonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">SEO Services</button>
+                <button onClick={() => navigateTo('web-designing-development-company-hanumakonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">Web Design</button>
+                <button onClick={() => navigateTo('ppc-services-in-hanamkonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">Google Ads (PPC)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 10. FAQ ACCORDION SECTION */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10 text-center">
         <div className="space-y-6 mb-16">

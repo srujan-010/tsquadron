@@ -529,6 +529,69 @@ export default function PpcServices({ setActivePage }) {
         </div>
       </section>
 
+      {/* 8.5. LOCAL STRATEGIC INSIGHTS AND DEEP DIVE (Content expansion for PPC: >800 words total) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 border-t border-slate-100 text-left">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          {/* Left detailed columns */}
+          <div className="lg:col-span-8 space-y-8 font-sans text-slate-600 text-sm sm:text-base leading-relaxed">
+            <h2 className="text-2xl sm:text-3xl font-heading font-bold text-slate-900 leading-tight">
+              High-Yield Lead Generation with the Premier Google Ads Agency in Warangal
+            </h2>
+            <p>
+              Paid acquisition is about bid efficiency and audience precision. In a competitive digital landscape, launching ads without strict conversion funnel tracking is a recipe for wasted advertising spend. As a certified <strong>Google Ads agency in Warangal</strong> and Telangana, TSquadron engineers high-ROI pay-per-click setups that secure qualified inbound customer demo calls and scale commercial returns.
+            </p>
+            <p>
+              Our PPC team manages complete campaigns for local corporate partners in Hanamkonda, Kazipet, Hyderabad, and surrounding local areas. By partnering with TSquadron for your <strong>ppc services Warangal</strong> requirements, you gain access to an elite squad of performance marketers. We combine target audience demographic analysis, aggressive competitor keyword research, negative keyword pruning, and landing page conversion tests to deliver a lower cost-per-lead.
+            </p>
+
+            <h3 className="text-xl font-heading font-semibold text-slate-900 pt-4">
+              Integrated Conversion Layouts & Custom Landing Page Design
+            </h3>
+            <p>
+              Great ad copy can only drive clicks; actual conversions happen on your website. Every campaign we structure connects with custom-designed, schema-ready landing pages. We build these pages using optimized layouts, single H1 headers, fast-loading CSS grids, and frictionless inquiry forms. This integrated design ensures that users arriving via Google Ads or Meta Ads experience seamless loading speed and convert immediately.
+            </p>
+
+            <h3 className="text-xl font-heading font-semibold text-slate-900 pt-4">
+              Multi-Channel Performance Campaigns & Local Brand Trust
+            </h3>
+            <p>
+              We expand beyond simple search network ads. TSquadron operates as a comprehensive <strong>performance marketing agency</strong> in Telangana. We deploy multi-channel retargeting campaigns across Instagram, Facebook, and the Google Display Network, ensuring your brand stays top-of-mind. Simultaneously, our team integrates Online Reputation Management parameters to build review scores, helping turn clicks into customer sales.
+            </p>
+          </div>
+
+          {/* Right sidebar links and statistics */}
+          <div className="lg:col-span-4 space-y-6">
+            <div className="p-6 rounded-3xl bg-slate-50 border border-slate-100 space-y-4 shadow-sm">
+              <h4 className="font-heading font-bold text-sm text-slate-900 uppercase tracking-wide">
+                PPC Audit Deliverables
+              </h4>
+              <ul className="space-y-3 text-xs font-sans font-medium text-slate-700">
+                <li className="flex items-center gap-2">✓ Dynamic Google Ads Account Audits</li>
+                <li className="flex items-center gap-2">✓ Negative Keyword List Filtering</li>
+                <li className="flex items-center gap-2">✓ Retargeting Audience Custom Setups</li>
+                <li className="flex items-center gap-2">✓ High-Converting Landing Page Design</li>
+                <li className="flex items-center gap-2">✓ Bid Allocation & ROAS Tracking</li>
+                <li className="flex items-center gap-2">✓ Multi-Channel Retargeting Maps</li>
+              </ul>
+            </div>
+
+            <div className="p-6 rounded-3xl bg-brand-indigo/5 border border-brand-indigo/10 space-y-3">
+              <h4 className="font-heading font-bold text-sm text-brand-indigo uppercase tracking-wide">
+                Partner Services
+              </h4>
+              <p className="text-xs text-slate-600 font-sans leading-relaxed">
+                Unlock compounding organic value alongside instant paid customer lead flows:
+              </p>
+              <div className="flex flex-wrap gap-2 pt-2">
+                <button onClick={() => navigateTo('seo-company-in-hanamkonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">SEO Services</button>
+                <button onClick={() => navigateTo('web-designing-development-company-hanumakonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">Web Design</button>
+                <button onClick={() => navigateTo('social-media-marketing')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">Social Media</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 9. FAQ ACCORDION SECTION */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10 text-center">
         <div className="space-y-6 mb-16">

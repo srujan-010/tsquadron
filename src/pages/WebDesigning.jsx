@@ -559,6 +559,69 @@ export default function WebDesigning({ setActivePage }) {
         </div>
       </section>
 
+      {/* 10.5. LOCAL STRATEGIC INSIGHTS AND DEEP DIVE (Content expansion for Web Design: >800 words total) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 border-t border-slate-100 text-left">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          {/* Left detailed columns */}
+          <div className="lg:col-span-8 space-y-8 font-sans text-slate-600 text-sm sm:text-base leading-relaxed">
+            <h2 className="text-2xl sm:text-3xl font-heading font-bold text-slate-900 leading-tight">
+              State-of-the-Art Website Designing & Development in Warangal and Hanamkonda
+            </h2>
+            <p>
+              Your website is the virtual front door of your business. It is the primary platform where brand impressions are formed, search index positions are consolidated, and conversions are triggered. As the leading <strong>website development company in Warangal</strong> and Telangana, TSquadron designs, codes, and deploys high-speed headless interfaces and visual design systems that turn casual traffic into loyal customer streams.
+            </p>
+            <p>
+              Our developers build customized digital platforms tailored exactly to local business requirements. Whether you require a sleek service showcase for an institute in Hanamkonda, a robust booking system for a clinic in Kazipet, or complex <strong>ecommerce website development</strong> built on React for a business in Hyderabad, we deliver optimal code quality. By prioritizing responsive styling frameworks and mobile-first grids, we guarantee your site looks stunning and loads instantly on every browser.
+            </p>
+
+            <h3 className="text-xl font-heading font-semibold text-slate-900 pt-4">
+              Integrated SEO Readiness & Dynamic Breadcrumb Architectures
+            </h3>
+            <p>
+              A beautiful website is useless if nobody can discover it. Every asset built by our <strong>website design company in Warangal</strong> is engineered with SEO in mind. We structure clean semantic HTML hierarchies (with proper single-H1 structures, nesting H2 and H3 layers), configure optimal canonical link metadata, design responsive CSS layouts to eliminate CLS layout shifts, and inject structured organization schema markup. This optimization ensures search crawlers index your page structure easily, driving organic search visibility and search ranking success.
+            </p>
+
+            <h3 className="text-xl font-heading font-semibold text-slate-900 pt-4">
+              Logo Design & Complete Corporate Identity Solutions
+            </h3>
+            <p>
+              Corporate expansion starts with strong, memorable branding. Beyond coding, TSquadron functions as an elite <strong>logo design company in Warangal</strong>. We define and compile brand identities, design professional color palettes, and create high-resolution vector assets that establish your local authority. These visual brand assets are integrated throughout your online presence, ensuring absolute consistency from social media banners to checkout headers.
+            </p>
+          </div>
+
+          {/* Right sidebar links and statistics */}
+          <div className="lg:col-span-4 space-y-6">
+            <div className="p-6 rounded-3xl bg-slate-50 border border-slate-100 space-y-4 shadow-sm">
+              <h4 className="font-heading font-bold text-sm text-slate-900 uppercase tracking-wide">
+                Web Development Core Tech
+              </h4>
+              <ul className="space-y-3 text-xs font-sans font-medium text-slate-700">
+                <li className="flex items-center gap-2">✓ React / Vite / Next.js Frameworks</li>
+                <li className="flex items-center gap-2">✓ Headless CMS & Static Site Generators</li>
+                <li className="flex items-center gap-2">✓ Responsive Mobile-First Grids</li>
+                <li className="flex items-center gap-2">✓ Integrated SEO Schema Markup</li>
+                <li className="flex items-center gap-2">✓ Custom UI/UX Kits & Figma Blueprints</li>
+                <li className="flex items-center gap-2">✓ E-commerce Shopping Cart Security</li>
+              </ul>
+            </div>
+
+            <div className="p-6 rounded-3xl bg-brand-indigo/5 border border-brand-indigo/10 space-y-3">
+              <h4 className="font-heading font-bold text-sm text-brand-indigo uppercase tracking-wide">
+                Grow Your Brand Presence
+              </h4>
+              <p className="text-xs text-slate-600 font-sans leading-relaxed">
+                Connect your high-speed website to target search audiences and customer leads:
+              </p>
+              <div className="flex flex-wrap gap-2 pt-2">
+                <button onClick={() => navigateTo('seo-company-in-hanamkonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">SEO Services</button>
+                <button onClick={() => navigateTo('ppc-services-in-hanamkonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">Google Ads (PPC)</button>
+                <button onClick={() => navigateTo('social-media-marketing')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">Social Media</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 11. FAQ ACCORDION SECTION */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10 text-center">
         <div className="space-y-6 mb-16">

@@ -5,9 +5,24 @@ import {
   FiMail, FiShield, FiCpu, FiZap 
 } from 'react-icons/fi'
 import { motion, AnimatePresence } from 'framer-motion'
+import { db } from '../lib/db'
 
 export default function Navbar({ activePage, setActivePage, setSelectedServiceId }) {
   const [isOpen, setIsOpen] = useState(false)
+  const [logoUrl, setLogoUrl] = useState('https://res.cloudinary.com/dixbhnqnf/image/upload/v1782826521/og-image-Photoroom_oawp5v.png')
+
+  const updateLogo = () => {
+    const globalSeo = db.getSeoFile('global.json', {
+      companyLogo: 'https://res.cloudinary.com/dixbhnqnf/image/upload/v1782826521/og-image-Photoroom_oawp5v.png'
+    })
+    setLogoUrl(globalSeo.companyLogo || 'https://res.cloudinary.com/dixbhnqnf/image/upload/v1782826521/og-image-Photoroom_oawp5v.png')
+  }
+
+  useEffect(() => {
+    updateLogo()
+    window.addEventListener('seo-updated', updateLogo)
+    return () => window.removeEventListener('seo-updated', updateLogo)
+  }, [])
   const [scrolled, setScrolled] = useState(false)
   const [isServicesHovered, setIsServicesHovered] = useState(false)
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false)
@@ -101,7 +116,7 @@ export default function Navbar({ activePage, setActivePage, setSelectedServiceId
               onClick={() => handleLinkClick('home')}
               className={`items-center cursor-pointer group ${isOpen ? 'hidden md:flex' : 'flex'}`}
             >
-              <img src="/logo.png" alt="TSquadron Logo" className="h-10 sm:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
+              <img src={logoUrl} alt="TSquadron Logo" className="h-10 sm:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
             </div>
 
             {/* Desktop Navigation */}
@@ -236,7 +251,7 @@ export default function Navbar({ activePage, setActivePage, setSelectedServiceId
             >
               {/* Drawer Header */}
               <div className="p-5 flex items-center justify-between border-b border-slate-100 bg-slate-50/50">
-                <img src="/logo.png" alt="TSquadron Logo" className="h-8 w-auto object-contain" />
+                <img src={logoUrl} alt="TSquadron Logo" className="h-8 w-auto object-contain" />
                 <button
                   onClick={() => setIsOpen(false)}
                   className="p-2.5 rounded-xl text-slate-600 hover:text-slate-800 hover:bg-slate-100/80 transition-all flex items-center justify-center shrink-0 w-10 h-10"

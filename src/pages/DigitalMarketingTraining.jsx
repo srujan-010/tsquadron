@@ -978,6 +978,10 @@ export default function DigitalMarketingTraining({ setActivePage }) {
                 <img 
                   src={story.pic} 
                   alt={story.name} 
+                  title={story.name}
+                  loading="lazy"
+                  width="48"
+                  height="48"
                   className="w-12 h-12 rounded-full object-cover border border-slate-200" 
                 />
                 <div>

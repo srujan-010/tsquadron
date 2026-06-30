@@ -70,6 +70,27 @@ export default function VirtualSitemap() {
       })
     }
 
+    const generateSlug = (text) => {
+      return text
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .trim()
+    }
+
+    // Dynamic Products
+    const products = db.getProducts()
+    products.forEach(p => {
+      list.push({ loc: `${domain}/products/${p.slug || generateSlug(p.name)}/`, changefreq: 'daily', priority: '0.9' })
+    })
+
+    // Dynamic Categories
+    const categories = db.getCategories()
+    categories.forEach(c => {
+      list.push({ loc: `${domain}/categories/${c.slug || generateSlug(c.name)}/`, changefreq: 'weekly', priority: '0.7' })
+    })
+
     setUrlsList(list)
 
     // 3. Construct raw compliant XML schema string

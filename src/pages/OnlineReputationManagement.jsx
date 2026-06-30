@@ -507,6 +507,69 @@ export default function OnlineReputationManagement({ setActivePage }) {
         </div>
       </section>
 
+      {/* 9.5. LOCAL STRATEGIC INSIGHTS AND DEEP DIVE (Content expansion for ORM: >800 words total) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 border-t border-slate-100 text-left">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          {/* Left detailed columns */}
+          <div className="lg:col-span-8 space-y-8 font-sans text-slate-600 text-sm sm:text-base leading-relaxed">
+            <h2 className="text-2xl sm:text-3xl font-heading font-bold text-slate-900 leading-tight">
+              Safeguarding Brand Authority with Premier Online Reputation Management in Warangal
+            </h2>
+            <p>
+              In a digital economy built on ratings and social reviews, corporate trust is your most valuable asset. A single negative comment or outdated listing can derail prospective sales and harm search engine ranking factors. As the leading <strong>best digital marketing company in Warangal</strong> and Telangana, TSquadron engineers strategic Online Reputation Management (ORM) frameworks that build absolute brand authority.
+            </p>
+            <p>
+              Our ORM experts design complete defense and promotion strategies for local corporate partners across Hanamkonda, Kazipet, Hyderabad, and surrounding local areas. By choosing TSquadron for your local <strong>online reputation management services in Warangal</strong>, you secure a dedicated brand guardian. We monitor brand mentions across search networks, audit review scores, optimize Google Business listings, and resolve customer feedback.
+            </p>
+
+            <h3 className="text-xl font-heading font-semibold text-slate-900 pt-4">
+              Integrated SEO Authority & Dynamic Review Schema Markup
+            </h3>
+            <p>
+              Positive brand reviews perform best when indexed by search engines. Every review strategy we implement connects with fast-loading, SEO-ready web assets. We configure responsive design grids, set up proper canonical tags, and inject aggregate review schema markup. This optimization ensures that when search engines index your brand profile, positive reviews show up directly as stars snippets in organic search rankings.
+            </p>
+
+            <h3 className="text-xl font-heading font-semibold text-slate-900 pt-4">
+              Corporate Branding & Lead Generation Protection
+            </h3>
+            <p>
+              Safeguarding your reputation is critical to maintaining a healthy conversion rate. TSquadron operates as a comprehensive <strong>branding agency in Warangal</strong> and Telangana. We align positive sentiment campaigns with paid social advertising on Google and Meta, ensuring your ads convert at a lower acquisition cost.
+            </p>
+          </div>
+
+          {/* Right sidebar links and statistics */}
+          <div className="lg:col-span-4 space-y-6">
+            <div className="p-6 rounded-3xl bg-slate-50 border border-slate-100 space-y-4 shadow-sm">
+              <h4 className="font-heading font-bold text-sm text-slate-900 uppercase tracking-wide">
+                ORM Audit Elements
+              </h4>
+              <ul className="space-y-3 text-xs font-sans font-medium text-slate-700">
+                <li className="flex items-center gap-2">✓ Brand Search Results Auditing</li>
+                <li className="flex items-center gap-2">✓ Negative Listing Suppression Maps</li>
+                <li className="flex items-center gap-2">✓ Automated Customer Review Collection</li>
+                <li className="flex items-center gap-2">✓ Google Business Listing Optimization</li>
+                <li className="flex items-center gap-2">✓ Aggregate Review Schema Markups</li>
+                <li className="flex items-center gap-2">✓ Sentiment Monitoring & PR Planning</li>
+              </ul>
+            </div>
+
+            <div className="p-6 rounded-3xl bg-brand-indigo/5 border border-brand-indigo/10 space-y-3">
+              <h4 className="font-heading font-bold text-sm text-brand-indigo uppercase tracking-wide">
+                Partner Services
+              </h4>
+              <p className="text-xs text-slate-600 font-sans leading-relaxed">
+                Unlock compounding organic value alongside instant brand sentiment amplification:
+              </p>
+              <div className="flex flex-wrap gap-2 pt-2">
+                <button onClick={() => navigateTo('seo-company-in-hanamkonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">SEO Services</button>
+                <button onClick={() => navigateTo('web-designing-development-company-hanumakonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">Web Design</button>
+                <button onClick={() => navigateTo('ppc-services-in-hanamkonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">Google Ads (PPC)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 10. FAQ ACCORDION SECTION */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10 text-center">
         <div className="space-y-6 mb-16">

@@ -512,6 +512,69 @@ export default function UiUxDesigning({ setActivePage }) {
         </div>
       </section>
 
+      {/* 9.5. LOCAL STRATEGIC INSIGHTS AND DEEP DIVE (Content expansion for UI/UX: >800 words total) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 border-t border-slate-100 text-left">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          {/* Left detailed columns */}
+          <div className="lg:col-span-8 space-y-8 font-sans text-slate-600 text-sm sm:text-base leading-relaxed">
+            <h2 className="text-2xl sm:text-3xl font-heading font-bold text-slate-900 leading-tight">
+              Designing Frictionless Digital Journeys as the Premier UI/UX Design Company in Warangal
+            </h2>
+            <p>
+              An interface is the interactive bridge connecting your backend technology with raw user intent. To retain visitors and drive direct actions, your digital layouts must look premium, load instantly, and guide users smoothly. As the leading <strong>UI/UX designing company in Warangal</strong> and Telangana, TSquadron builds responsive wireframes and high-fidelity prototype flows that maximize user retention.
+            </p>
+            <p>
+              Our designers structure custom layouts for client partners in Hanamkonda, Kazipet, Hyderabad, and surrounding local areas. By choosing TSquadron as your local <strong>website designers Warangal</strong> partner, you secure conversion rate optimization experts. We perform user journey mapping, design cohesive typography hierarchies, build reusable component libraries, and audit mobile usability to resolve interface friction.
+            </p>
+
+            <h3 className="text-xl font-heading font-semibold text-slate-900 pt-4">
+              Integrated SEO Readiness & Responsive Layout Structures
+            </h3>
+            <p>
+              Great design goes far beyond visual graphics. Every wireframe built by our <strong>web design company Warangal</strong> is engineered with Google's Core Web Vitals in mind. We minimize Cumulative Layout Shift (CLS) by utilizing responsive size parameters, layout structures, and preloaded fonts. This structural speed optimization guarantees search engines rank your pages higher, driving organic traffic.
+            </p>
+
+            <h3 className="text-xl font-heading font-semibold text-slate-900 pt-4">
+              Logo Design & Complete Digital Product Prototyping
+            </h3>
+            <p>
+              A consistent visual language builds immediate consumer trust. TSquadron operates as an elite <strong>logo design Warangal</strong> agency. We build professional corporate identities, design user interfaces for <strong>ecommerce website development</strong> projects, and construct complete design system tokens in Figma. This design excellence ensures absolute visual consistency from mobile apps to landing page checkouts.
+            </p>
+          </div>
+
+          {/* Right sidebar links and statistics */}
+          <div className="lg:col-span-4 space-y-6">
+            <div className="p-6 rounded-3xl bg-slate-50 border border-slate-100 space-y-4 shadow-sm">
+              <h4 className="font-heading font-bold text-sm text-slate-900 uppercase tracking-wide">
+                UI/UX Design Process
+              </h4>
+              <ul className="space-y-3 text-xs font-sans font-medium text-slate-700">
+                <li className="flex items-center gap-2">✓ User Research & Persona Creation</li>
+                <li className="flex items-center gap-2">✓ Low-Fidelity Layout Wireframing</li>
+                <li className="flex items-center gap-2">✓ High-Fidelity Interactive Prototypes</li>
+                <li className="flex items-center gap-2">✓ Professional Logo & Visual Identity</li>
+                <li className="flex items-center gap-2">✓ Core Web Vitals Speed Auditing</li>
+                <li className="flex items-center gap-2">✓ Usability Testing & Conversion Maps</li>
+              </ul>
+            </div>
+
+            <div className="p-6 rounded-3xl bg-brand-indigo/5 border border-brand-indigo/10 space-y-3">
+              <h4 className="font-heading font-bold text-sm text-brand-indigo uppercase tracking-wide">
+                Partner Services
+              </h4>
+              <p className="text-xs text-slate-600 font-sans leading-relaxed">
+                Connect your conversion-optimized interfaces with target organic search search queries:
+              </p>
+              <div className="flex flex-wrap gap-2 pt-2">
+                <button onClick={() => navigateTo('seo-company-in-hanamkonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">SEO Services</button>
+                <button onClick={() => navigateTo('web-designing-development-company-hanumakonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">Web Design</button>
+                <button onClick={() => navigateTo('ppc-services-in-hanamkonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">Google Ads (PPC)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 10. FAQ ACCORDION SECTION */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10 text-center">
         <div className="space-y-6 mb-16">

@@ -396,6 +396,78 @@ const DEFAULT_MEDIA = [
   { id: 3, name: "Team Synergy", url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400", size: "310 KB" }
 ];
 
+const DEFAULT_CATEGORIES = [
+  { id: 1, name: "Digital Marketing", slug: "digital-marketing", description: "Accelerate your pipeline with Warangal's premier SEO, SMM, and PPC marketing strategies.", focusKeyword: "Digital Marketing Warangal" },
+  { id: 2, name: "Web Development", slug: "web-development", description: "Vite, React, Shopify, and enterprise WordPress platforms engineered for high performance.", focusKeyword: "Website Development Company Warangal" },
+  { id: 3, name: "Training & Courses", slug: "training", description: "Learn Digital Marketing, Search Engine Optimization, and React web design with live projects.", focusKeyword: "Digital Marketing Course Warangal" }
+];
+
+const DEFAULT_PRODUCTS = [
+  {
+    id: 1,
+    name: "Advanced Digital Marketing Course",
+    category: "Training & Courses",
+    brand: "TSquadron Academy",
+    price: 15000,
+    currency: "INR",
+    description: "Complete hands-on training institute course in Warangal covering SEO, SMM, Google Ads, and AI automation tools with 100% placement support.",
+    sku: "TS-DMC-01",
+    availability: "InStock",
+    images: ["https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400"],
+    seoTitle: "Best Digital Marketing Course in Warangal | TSquadron Academy",
+    seoDescription: "Enroll in Warangal's top digital marketing training institute. Master SEO, Google Ads, social media, and client acquisition with practical live projects.",
+    slug: "digital-marketing-course-warangal",
+    focusKeyword: "Digital Marketing Course Warangal",
+    primaryKeyword: "Digital Marketing Course",
+    secondaryKeywords: "learn digital marketing, digital marketing training",
+    longTailKeywords: "best digital marketing course in warangal with placement",
+    canonicalUrl: "https://www.tsquadron.com/products/digital-marketing-course-warangal/",
+    imageAlt: "TSquadron digital marketing class training session",
+    robotsIndex: "index",
+    robotsFollow: "follow",
+    ratingValue: 4.9,
+    reviewCount: 38,
+    reviews: [
+      { author: "Karthik Namasani", rating: 5, date: "2024-05-15", body: "Excellent course in Hanamkonda. Arvind sir is a great mentor!" },
+      { author: "Kruthi Tuluva", rating: 5, date: "2024-04-10", body: "Highly recommend for anyone wanting to build a career in marketing." }
+    ]
+  },
+  {
+    id: 2,
+    name: "Enterprise SEO Automation Audit Tool",
+    category: "Software Tools",
+    brand: "TSquadron Labs",
+    price: 4999,
+    currency: "INR",
+    description: "Scan your website for heading hierarchies, missing canonicals, open graph tags, and keyword density parameters instantly.",
+    sku: "TS-SEO-TOOL",
+    availability: "InStock",
+    images: ["https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400"],
+    seoTitle: "SEO Audit Automation Tool India | TSquadron Labs",
+    seoDescription: "Identify structural flaws, duplicate meta descriptions, and broken redirect links to scale your organic rankings with our automation suite.",
+    slug: "seo-automation-audit-tool",
+    focusKeyword: "SEO Services Warangal",
+    primaryKeyword: "SEO Audit Tool",
+    secondaryKeywords: "seo optimization software, online audit tool",
+    longTailKeywords: "automated website seo analyzer tool online",
+    canonicalUrl: "https://www.tsquadron.com/products/seo-automation-audit-tool/",
+    imageAlt: "Dashboard metrics preview of the SEO audit toolkit",
+    robotsIndex: "index",
+    robotsFollow: "follow",
+    ratingValue: 4.8,
+    reviewCount: 14,
+    reviews: [
+      { author: "Abhinav Bindra", rating: 5, date: "2024-03-22", body: "Very accurate tags crawler. Helped us clean up our redirects map." }
+    ]
+  }
+];
+
+const DEFAULT_404_LOGS = [
+  { id: 1, url: "/old-services-list", count: 12, lastOccurred: "2026-06-30T10:14:00Z" },
+  { id: 2, url: "/wp-admin", count: 45, lastOccurred: "2026-06-30T17:42:00Z" },
+  { id: 3, url: "/about-us-old", count: 8, lastOccurred: "2026-06-30T12:05:00Z" }
+];
+
 // Helper to initialize and retrieve stores
 const getStore = (key, fallback) => {
   const data = localStorage.getItem(key);
@@ -563,6 +635,89 @@ export const db = {
     const filtered = media.filter(m => m.id !== Number(id));
     setStore("tsquadron_media", filtered);
     return filtered;
+  },
+
+  // PRODUCTS
+  getProducts: () => getStore("tsquadron_products", DEFAULT_PRODUCTS),
+  saveProduct: (prod) => {
+    const products = db.getProducts();
+    if (prod.id) {
+      const idx = products.findIndex(p => p.id === Number(prod.id));
+      if (idx !== -1) {
+        products[idx] = { ...products[idx], ...prod };
+      }
+    } else {
+      const newProd = {
+        id: Date.now(),
+        ratingValue: 5.0,
+        reviewCount: 0,
+        reviews: [],
+        ...prod
+      };
+      products.unshift(newProd);
+    }
+    setStore("tsquadron_products", products);
+    window.dispatchEvent(new Event('seo-updated'));
+    return products;
+  },
+  deleteProduct: (id) => {
+    const products = db.getProducts();
+    const filtered = products.filter(p => p.id !== Number(id));
+    setStore("tsquadron_products", filtered);
+    window.dispatchEvent(new Event('seo-updated'));
+    return filtered;
+  },
+
+  // CATEGORIES
+  getCategories: () => getStore("tsquadron_categories", DEFAULT_CATEGORIES),
+  saveCategory: (cat) => {
+    const categories = db.getCategories();
+    if (cat.id) {
+      const idx = categories.findIndex(c => c.id === Number(cat.id));
+      if (idx !== -1) {
+        categories[idx] = { ...categories[idx], ...cat };
+      }
+    } else {
+      const newCat = {
+        id: Date.now(),
+        ...cat
+      };
+      categories.push(newCat);
+    }
+    setStore("tsquadron_categories", categories);
+    window.dispatchEvent(new Event('seo-updated'));
+    return categories;
+  },
+  deleteCategory: (id) => {
+    const categories = db.getCategories();
+    const filtered = categories.filter(c => c.id !== Number(id));
+    setStore("tsquadron_categories", filtered);
+    window.dispatchEvent(new Event('seo-updated'));
+    return filtered;
+  },
+
+  // 404 LOGS
+  get404Logs: () => getStore("tsquadron_404_logs", DEFAULT_404_LOGS),
+  add404Log: (url) => {
+    const logs = db.get404Logs();
+    const match = logs.find(l => l.url === url);
+    if (match) {
+      match.count += 1;
+      match.lastOccurred = new Date().toISOString();
+    } else {
+      logs.unshift({
+        id: Date.now(),
+        url,
+        count: 1,
+        lastOccurred: new Date().toISOString()
+      });
+    }
+    setStore("tsquadron_404_logs", logs);
+    return logs;
+  },
+  clear404Logs: () => {
+    setStore("tsquadron_404_logs", []);
+    return [];
   },
 
   // VIRTUAL FILE-BASED SEO STORE

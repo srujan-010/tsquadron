@@ -490,6 +490,69 @@ export default function SearchEngineOptimization({ setActivePage }) {
         </div>
       </section>
 
+      {/* 7.5. LOCAL STRATEGIC INSIGHTS AND DEEP DIVE (Content expansion for SEO: >800 words total) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 border-t border-slate-100 text-left">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          {/* Left detailed columns */}
+          <div className="lg:col-span-8 space-y-8 font-sans text-slate-600 text-sm sm:text-base leading-relaxed">
+            <h2 className="text-2xl sm:text-3xl font-heading font-bold text-slate-900 leading-tight">
+              Dominating Organic Search as the Premier SEO Agency in Warangal & Hanamkonda
+            </h2>
+            <p>
+              In today's digital-first business landscape, standing out on Google search isn't just about search visibility—it is about capturing target customers at the exact moment they search for your services. As a premier <strong>SEO company in Warangal</strong> and Telangana, TSquadron engineers customized campaign architectures that deliver sustainable search positioning, increase direct inbound phone calls, and multiply sales pipeline yields.
+            </p>
+            <p>
+              Our search team goes far beyond standard on-page tweaking. We deploy comprehensive <strong>local SEO services</strong> specifically optimized for regional search hubs like Hanamkonda, Kazipet, Hyderabad, and surrounding local areas. By building high-authority local business citations, optimizing Google Business Profiles, structuring location-specific landing folders, and targeting geo-modified keywords (such as <i>"SEO services Warangal"</i> or <i>"Best digital marketing agency in Warangal"</i>), we ensure local buyers find your business first.
+            </p>
+
+            <h3 className="text-xl font-heading font-semibold text-slate-900 pt-4">
+              Advanced Schema Deployments & Core Technical SEO Audits
+            </h3>
+            <p>
+              Every search engine optimization campaign we manage undergoes a strict technical audit. We resolve rendering latency, structure semantic HTML hierarchies, configure correct canonical linkages to prevent duplicate path penalties, and manage crawl maps in robots.txt files. Furthermore, we compile rich schema markup—including LocalBusiness, FAQ page, Breadcrumbs, and Product review structured tags—which provides search bots with precise operational data. This technical excellence improves indexing success and secures highlighted Google rich result stars snippets.
+            </p>
+
+            <h3 className="text-xl font-heading font-semibold text-slate-900 pt-4">
+              Natural Content Optimization & Local Search Authority
+            </h3>
+            <p>
+              Content is the primary search engine rank driver. TSquadron's copywriters build helpful, high-value, comprehensive content hubs that naturally target primary keywords without keyword stuffing. By analyzing user intent patterns across Telangana and Hyderabad markets, we write articles that directly answer prospective client inquiries. These dense resource directories build organic backlinks and position your brand as a trusted industry authority.
+            </p>
+          </div>
+
+          {/* Right sidebar links and statistics */}
+          <div className="lg:col-span-4 space-y-6">
+            <div className="p-6 rounded-3xl bg-slate-50 border border-slate-100 space-y-4 shadow-sm">
+              <h4 className="font-heading font-bold text-sm text-slate-900 uppercase tracking-wide">
+                SEO Audit Deliverables
+              </h4>
+              <ul className="space-y-3 text-xs font-sans font-medium text-slate-700">
+                <li className="flex items-center gap-2">✓ Technical Indexing & Crawl Audits</li>
+                <li className="flex items-center gap-2">✓ Local Maps Citation Building</li>
+                <li className="flex items-center gap-2">✓ Commercial Intent Keyword Mapping</li>
+                <li className="flex items-center gap-2">✓ Competitor Gap & Backlink Analysis</li>
+                <li className="flex items-center gap-2">✓ Schema Markup JSON-LD Integration</li>
+                <li className="flex items-center gap-2">✓ Page Speed & Core Web Vitals Optimization</li>
+              </ul>
+            </div>
+
+            <div className="p-6 rounded-3xl bg-brand-indigo/5 border border-brand-indigo/10 space-y-3">
+              <h4 className="font-heading font-bold text-sm text-brand-indigo uppercase tracking-wide">
+                Recommended Services
+              </h4>
+              <p className="text-xs text-slate-600 font-sans leading-relaxed">
+                Maximize your search rankings with our high-speed website structures and PPC paid channels:
+              </p>
+              <div className="flex flex-wrap gap-2 pt-2">
+                <button onClick={() => navigateTo('web-designing-development-company-hanumakonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">Web Design</button>
+                <button onClick={() => navigateTo('ppc-services-in-hanamkonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">Google Ads (PPC)</button>
+                <button onClick={() => navigateTo('digital-marketing-agency-hanamkonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">Digital Marketing</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 8. FAQ ACCORDION SECTION */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10 text-center">
         <div className="space-y-6 mb-16">

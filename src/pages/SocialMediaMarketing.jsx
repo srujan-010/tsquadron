@@ -517,6 +517,69 @@ export default function SocialMediaMarketing({ setActivePage }) {
         </div>
       </section>
 
+      {/* 8.5. LOCAL STRATEGIC INSIGHTS AND DEEP DIVE (Content expansion for SMM: >800 words total) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 border-t border-slate-100 text-left">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          {/* Left detailed columns */}
+          <div className="lg:col-span-8 space-y-8 font-sans text-slate-600 text-sm sm:text-base leading-relaxed">
+            <h2 className="text-2xl sm:text-3xl font-heading font-bold text-slate-900 leading-tight">
+              Igniting Brand Engagement with the Best Social Media Marketing in Warangal
+            </h2>
+            <p>
+              Audience attention is the ultimate modern currency. To scale your brand online, you must establish an active, trust-worthy presence across platforms where your target audience spends their time. As the premier <strong>branding agency in Warangal</strong> and Telangana, TSquadron compiles powerful organic campaigns and paid social ads that drive direct brand discovery and turn viewers into loyal brand advocates.
+            </p>
+            <p>
+              Our creative team designs comprehensive campaigns for local and corporate partners across Hanamkonda, Kazipet, Hyderabad, and surrounding local areas. By choosing TSquadron for your <strong>social media marketing Warangal</strong> campaign, you gain an elite visual creative studio. We optimize <strong>Instagram marketing Warangal</strong> pipelines, manage professional <strong>Facebook ads Warangal</strong> budgets, design high-converting visual banners, and track click metrics under a single unified dashboard.
+            </p>
+
+            <h3 className="text-xl font-heading font-semibold text-slate-900 pt-4">
+              Integrated Conversion Funnels & Visual Brand Consistency
+            </h3>
+            <p>
+              Social media is a powerful engine for brand awareness, but conversions happen on your website. Every social campaign we manage connects with fast-loading, SEO-ready landing pages. We build these pages using optimized layouts, single H1 headers, responsive design systems, and custom organization schema markup. This ensures that users arriving via social links experience lightning-fast page loading and convert smoothly.
+            </p>
+
+            <h3 className="text-xl font-heading font-semibold text-slate-900 pt-4">
+              Paid Social Bidding & Online Sentiment Management
+            </h3>
+            <p>
+              Organic visibility builds trust, but scaling lead volume quickly requires paid social advertising. TSquadron operates as an elite paid social and <strong>Google ads agency Warangal</strong>. We combine target demographic filters, A/B creative testing, and retargeting workflows to reduce lead acquisition costs. Simultaneously, our reputation systems monitor customer review stars across platforms, building absolute brand credibility.
+            </p>
+          </div>
+
+          {/* Right sidebar links and statistics */}
+          <div className="lg:col-span-4 space-y-6">
+            <div className="p-6 rounded-3xl bg-slate-50 border border-slate-100 space-y-4 shadow-sm">
+              <h4 className="font-heading font-bold text-sm text-slate-900 uppercase tracking-wide">
+                Social Campaigns Core
+              </h4>
+              <ul className="space-y-3 text-xs font-sans font-medium text-slate-700">
+                <li className="flex items-center gap-2">✓ Instagram & Facebook Paid Ads</li>
+                <li className="flex items-center gap-2">✓ B2B LinkedIn Outreach Campaign Plans</li>
+                <li className="flex items-center gap-2">✓ High-Impact Graphic & Logo Designs</li>
+                <li className="flex items-center gap-2">✓ Community Management & Review Audits</li>
+                <li className="flex items-center gap-2">✓ Custom Influencer Outreach Strategies</li>
+                <li className="flex items-center gap-2">✓ Lead Capture Integrations & Analytics</li>
+              </ul>
+            </div>
+
+            <div className="p-6 rounded-3xl bg-brand-indigo/5 border border-brand-indigo/10 space-y-3">
+              <h4 className="font-heading font-bold text-sm text-brand-indigo uppercase tracking-wide">
+                Partner Services
+              </h4>
+              <p className="text-xs text-slate-600 font-sans leading-relaxed">
+                Combine social engagement with long-term organic rankings and dynamic site assets:
+              </p>
+              <div className="flex flex-wrap gap-2 pt-2">
+                <button onClick={() => navigateTo('seo-company-in-hanamkonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">SEO Services</button>
+                <button onClick={() => navigateTo('web-designing-development-company-hanumakonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">Web Design</button>
+                <button onClick={() => navigateTo('ppc-services-in-hanamkonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">Google Ads (PPC)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 9. FAQ ACCORDION SECTION */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10 text-center">
         <div className="space-y-6 mb-16">

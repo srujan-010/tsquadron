@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { 
   FiGrid, FiUsers, FiFileText, FiLayers, FiMessageSquare, 
   FiImage, FiSettings, FiExternalLink, FiLogOut, FiMenu, FiX, FiShield,
-  FiChevronDown, FiChevronUp, FiLock, FiAlertTriangle, FiGlobe, FiCode, FiCalendar
+  FiChevronDown, FiChevronUp, FiLock, FiAlertTriangle, FiGlobe, FiCode, FiCalendar,
+  FiPackage, FiFolder, FiHeart
 } from 'react-icons/fi'
+
+import { db } from '../../lib/db'
 
 export default function AdminLayout({ children, activeTab, setActivePage }) {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
@@ -12,6 +15,21 @@ export default function AdminLayout({ children, activeTab, setActivePage }) {
   const [activeRole, setActiveRole] = useState(() => {
     return sessionStorage.getItem('tsquadron_admin_role') || 'Super Admin'
   })
+
+  const [logoUrl, setLogoUrl] = useState('https://res.cloudinary.com/dixbhnqnf/image/upload/v1782826521/og-image-Photoroom_oawp5v.png')
+
+  const updateLogo = () => {
+    const globalSeo = db.getSeoFile('global.json', {
+      companyLogo: 'https://res.cloudinary.com/dixbhnqnf/image/upload/v1782826521/og-image-Photoroom_oawp5v.png'
+    })
+    setLogoUrl(globalSeo.companyLogo || 'https://res.cloudinary.com/dixbhnqnf/image/upload/v1782826521/og-image-Photoroom_oawp5v.png')
+  }
+
+  useEffect(() => {
+    updateLogo()
+    window.addEventListener('seo-updated', updateLogo)
+    return () => window.removeEventListener('seo-updated', updateLogo)
+  }, [])
 
   // Synchronize role updates across layouts and state
   const handleRoleChange = (role) => {
@@ -46,9 +64,12 @@ export default function AdminLayout({ children, activeTab, setActivePage }) {
     { id: 'seo-global', label: 'Global Defaults', icon: <FiGlobe size={14} />, path: 'admin/seo-global' },
     { id: 'seo-pages', label: 'Page Meta Manager', icon: <FiLayers size={14} />, path: 'admin/seo-pages' },
     { id: 'seo-blogs', label: 'Blog SEO Panel', icon: <FiFileText size={14} />, path: 'admin/seo-blogs' },
+    { id: 'seo-products', label: 'Product SEO Panel', icon: <FiPackage size={14} />, path: 'admin/seo-products' },
+    { id: 'seo-categories', label: 'Category SEO Panel', icon: <FiFolder size={14} />, path: 'admin/seo-categories' },
     { id: 'seo-technical', label: 'Technical SEO', icon: <FiSettings size={14} />, path: 'admin/seo-technical' },
     { id: 'seo-sitemap', label: 'Sitemap Manager', icon: <FiExternalLink size={14} />, path: 'admin/seo-sitemap' },
-    { id: 'seo-schema', label: 'Schema Builder', icon: <FiCode size={14} />, path: 'admin/seo-schema' }
+    { id: 'seo-schema', label: 'Schema Builder', icon: <FiCode size={14} />, path: 'admin/seo-schema' },
+    { id: 'seo-health', label: 'SEO Health Checker', icon: <FiHeart size={14} />, path: 'admin/seo-health' }
   ]
 
   const handleLogout = () => {
@@ -63,9 +84,13 @@ export default function AdminLayout({ children, activeTab, setActivePage }) {
   }
 
   // Strict Role Protection
-  // Content Editors can ONLY access Page SEO (seo-pages) and Blog SEO (seo-blogs) within the SEO Suite.
+  // Content Editors can access Pages, Blogs, Products, and Categories.
   const isSeoTab = activeTab.startsWith('seo-')
-  const isRestrictedSeo = activeRole === 'Content Editor' && isSeoTab && activeTab !== 'seo-pages' && activeTab !== 'seo-blogs'
+  const isRestrictedSeo = activeRole === 'Content Editor' && isSeoTab && 
+    activeTab !== 'seo-pages' && 
+    activeTab !== 'seo-blogs' && 
+    activeTab !== 'seo-products' && 
+    activeTab !== 'seo-categories'
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans flex text-left relative">
@@ -73,7 +98,7 @@ export default function AdminLayout({ children, activeTab, setActivePage }) {
       <aside className="hidden lg:flex flex-col w-64 bg-slate-950 text-slate-300 border-r border-slate-900 shrink-0 select-none">
         {/* Header Branding */}
         <div className="p-6 border-b border-slate-900 flex items-center justify-center">
-          <img src="/logo.png" alt="TSquadron Logo" className="h-8 w-auto object-contain" />
+          <img src={logoUrl} alt="TSquadron Logo" className="h-8 w-auto object-contain" />
         </div>
 
         {/* Navigation list */}
@@ -170,7 +195,7 @@ export default function AdminLayout({ children, activeTab, setActivePage }) {
           {/* Drawer content */}
           <aside className="relative flex flex-col w-64 max-w-[80vw] bg-slate-950 text-slate-300 h-full border-r border-slate-900 z-10 p-5 space-y-6 select-none overflow-y-auto">
             <div className="flex items-center justify-between border-b border-slate-900 pb-4">
-              <img src="/logo.png" alt="TSquadron Logo" className="h-8 w-auto object-contain" />
+              <img src={logoUrl} alt="TSquadron Logo" className="h-8 w-auto object-contain" />
               <button
                 onClick={() => setIsMobileOpen(false)}
                 className="p-1 rounded-lg bg-slate-800 text-slate-400 hover:text-white"

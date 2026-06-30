@@ -36,11 +36,94 @@ function writeJSON(filePath, data) {
   }
 }
 
+// Helper to rewrite index.html on disk dynamically for SSR / View Source support
+function updateIndexHtmlSeo(seoData) {
+  try {
+    const indexPath = path.join(__dirname, 'index.html');
+    if (!fs.existsSync(indexPath)) return;
+    let html = fs.readFileSync(indexPath, 'utf8');
+
+    const title = seoData.siteTitle || 'TSquadron | Premium Digital Marketing & Growth Agency';
+    const description = seoData.defaultMetaDescription || 'TSquadron is a premier, ROI-focused digital marketing agency.';
+    const keywords = seoData.defaultKeywords || 'digital marketing, seo, ppc';
+    const brandName = seoData.brandName || 'TSquadron';
+    const websiteName = seoData.websiteName || 'TSquadron';
+    const canonicalUrl = seoData.canonicalDomain || 'https://www.tsquadron.com';
+    const favicon = seoData.favicon || '/favicon.ico';
+    const companyLogo = seoData.companyLogo || '/logo.png';
+    const defaultOgImage = seoData.defaultOgImage || '/logo.png';
+
+    const startComment = '<!-- TS_SEO_START -->';
+    const endComment = '<!-- TS_SEO_END -->';
+
+    const seoBlock = `
+    ${startComment}
+    <title>${title}</title>
+    <meta name="description" content="${description}" />
+    <meta name="keywords" content="${keywords}" />
+    <meta name="author" content="${brandName}" />
+    <meta name="application-name" content="${brandName}" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="${canonicalUrl}" />
+    <link rel="icon" href="${favicon}" sizes="any">
+    <link rel="apple-touch-icon" href="${favicon}">
+    <meta property="og:title" content="${title}" />
+    <meta property="og:description" content="${description}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="${canonicalUrl}" />
+    <meta property="og:image" content="${defaultOgImage}" />
+    <meta property="og:site_name" content="${websiteName}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${title}" />
+    <meta name="twitter:description" content="${description}" />
+    <meta name="twitter:image" content="${defaultOgImage}" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "${brandName}",
+      "url": "${canonicalUrl}",
+      "logo": "${companyLogo}"
+    }
+    </script>
+    ${endComment}`;
+
+    const regex = new RegExp(`${startComment}[\\s\\S]*?${endComment}`, 'g');
+    if (html.includes(startComment)) {
+      html = html.replace(regex, seoBlock.trim());
+    } else {
+      // Find where head begins or insert after charset/viewport
+      if (html.includes('<head>')) {
+        html = html.replace('<head>', `<head>\n    ${seoBlock.trim()}`);
+      } else {
+        html = html.replace('</head>', `${seoBlock.trim()}\n  </head>`);
+      }
+    }
+
+    fs.writeFileSync(indexPath, html, 'utf8');
+    console.log("TSquadron: Root index.html successfully rewrote with updated global settings.");
+  } catch (err) {
+    console.error("Error updating index.html SEO:", err);
+  }
+}
+
 // Custom plugin to mock the backend
 function localMockBackend(env) {
+  const SEO_GLOBAL_FILE = path.join(__dirname, 'data', 'global_seo.json');
   return {
     name: 'local-mock-backend',
     configureServer(server) {
+      // Initialize index.html with the saved global SEO settings on start
+      try {
+        const currentSeo = readJSON(SEO_GLOBAL_FILE, null);
+        if (currentSeo) {
+          updateIndexHtmlSeo(currentSeo);
+        }
+      } catch (err) {
+        console.error("Failed to pre-sync index.html SEO:", err);
+      }
+
       server.middlewares.use(async (req, res, next) => {
         // Handle CORS
         res.setHeader('Access-Control-Allow-Origin', '*');
@@ -188,6 +271,50 @@ function localMockBackend(env) {
                  writeJSON(SLOTS_FILE, data);
                  res.statusCode = 200;
                  res.setHeader('Content-Type', 'application/json');
+                 return res.end(JSON.stringify({ success: true }));
+               } catch(e) {
+                 res.statusCode = 500;
+                 res.setHeader('Content-Type', 'application/json');
+                 return res.end(JSON.stringify({ error: "Internal Server Error" }));
+               }
+             });
+          }
+        }
+
+        // --- GLOBAL SEO API ---
+        if (req.url.startsWith('/api/seo/global')) {
+          if (req.method === 'GET') {
+            const seoData = readJSON(SEO_GLOBAL_FILE, {
+              siteTitle: 'TSquadron | Premium Digital Marketing & Growth Agency',
+              defaultMetaDescription: 'TSquadron is a premier, ROI-focused digital marketing agency.',
+              defaultKeywords: 'digital marketing, seo, ppc',
+              defaultOgImage: 'https://res.cloudinary.com/dixbhnqnf/image/upload/v1782826521/og-image-Photoroom_oawp5v.png',
+              favicon: '/favicon.ico',
+              brandName: 'TSquadron',
+              websiteName: 'TSquadron Digital Solutions',
+              canonicalDomain: 'https://www.tsquadron.com',
+              companyLogo: 'https://res.cloudinary.com/dixbhnqnf/image/upload/v1782826521/og-image-Photoroom_oawp5v.png'
+            });
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+            res.setHeader('Pragma', 'no-cache');
+            res.setHeader('Expires', '0');
+            return res.end(JSON.stringify(seoData));
+          }
+          if (req.method === 'POST') {
+             let body = '';
+             req.on('data', chunk => { body += chunk.toString(); });
+             return req.on('end', () => {
+               try {
+                 const data = JSON.parse(body);
+                 writeJSON(SEO_GLOBAL_FILE, data);
+                 updateIndexHtmlSeo(data);
+                 res.statusCode = 200;
+                 res.setHeader('Content-Type', 'application/json');
+                 res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+                 res.setHeader('Pragma', 'no-cache');
+                 res.setHeader('Expires', '0');
                  return res.end(JSON.stringify({ success: true }));
                } catch(e) {
                  res.statusCode = 500;

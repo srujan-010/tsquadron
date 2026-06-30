@@ -281,6 +281,10 @@ export default function Blog({ setActivePage }) {
                               <img
                                 src={getPostImage(post)}
                                 alt={post.title}
+                                title={post.title}
+                                loading="lazy"
+                                width="400"
+                                height="225"
                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                               />
                               {/* subtle overlay gradient */}

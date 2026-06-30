@@ -406,6 +406,69 @@ export default function DigitalMarketing({ setActivePage }) {
         </div>
       </section>
 
+      {/* 5.5. LOCAL STRATEGIC INSIGHTS AND DEEP DIVE (Content expansion for Digital Marketing: >800 words total) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 border-t border-slate-100 text-left">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          {/* Left detailed columns */}
+          <div className="lg:col-span-8 space-y-8 font-sans text-slate-600 text-sm sm:text-base leading-relaxed">
+            <h2 className="text-2xl sm:text-3xl font-heading font-bold text-slate-900 leading-tight">
+              Aggressive Brand Scaling as the Best Digital Marketing Company in Warangal
+            </h2>
+            <p>
+              Igniting consumer desires and capturing quality customer leads is a science. In today's highly saturated digital economy, businesses cannot afford to rely on generic promotional scripts. As the <strong>best digital marketing company in Warangal</strong> and Telangana, TSquadron builds programmatic marketing campaign funnels that capture active intent search keywords, design high-converting creative ad copies, and scale online store revenues.
+            </p>
+            <p>
+              Our specialists design complete campaigns for client partners across regional hubs like Hanamkonda, Kazipet, Hyderabad, and surrounding local areas. By choosing TSquadron as your <strong>marketing agency in Hanamkonda</strong>, you secure a comprehensive growth engine. We combine organic local search engine positioning, high-impact social media creatives, conversion-oriented landing pages, and subscriber email automation models under a single analytics-driven system to optimize acquisition cost.
+            </p>
+
+            <h3 className="text-xl font-heading font-semibold text-slate-900 pt-4">
+              Local SEO Lead Generation & Schema-Ready Web Architectures
+            </h3>
+            <p>
+              Most local customer journeys begin with a search query on Google. Our <strong>digital marketing Telangana</strong> strategies integrate strict technical on-page SEO frameworks directly inside your website structure. We configure canonical link parameters, optimize viewport CSS styling metrics to eliminate cumulative shifts, build responsive navigation layouts, and inject custom organization structured schema tags. This ensures search engines easily discover and index your business listings, driving organic search visibility.
+            </p>
+
+            <h3 className="text-xl font-heading font-semibold text-slate-900 pt-4">
+              Direct Inbound PPC Scaling & Brand Reputation Security
+            </h3>
+            <p>
+              Organic search is a long-term investment, but businesses looking for immediate customer demo volume require paid Google Search and Meta Ads. TSquadron operates as a certified <strong>lead generation company</strong> in Telangana. We setup high-ROI PPC campaigns that target buyer intent keys. Simultaneously, our ORM (Online Reputation Management) systems monitor customer review stars, suppress negative search feedback, and establish absolute corporate trust across social channels.
+            </p>
+          </div>
+
+          {/* Right sidebar links and statistics */}
+          <div className="lg:col-span-4 space-y-6">
+            <div className="p-6 rounded-3xl bg-slate-50 border border-slate-100 space-y-4 shadow-sm">
+              <h4 className="font-heading font-bold text-sm text-slate-900 uppercase tracking-wide">
+                Growth Services Portfolio
+              </h4>
+              <ul className="space-y-3 text-xs font-sans font-medium text-slate-700">
+                <li className="flex items-center gap-2">✓ Programmatic Lead Generation</li>
+                <li className="flex items-center gap-2">✓ Meta & Google PPC Campaign Audits</li>
+                <li className="flex items-center gap-2">✓ Local SEO & Maps optimization</li>
+                <li className="flex items-center gap-2">✓ Visual Brand Designs & Copywriting</li>
+                <li className="flex items-center gap-2">✓ Email Nurture Flow Automations</li>
+                <li className="flex items-center gap-2">✓ Conversion Rate Audits & UI Design</li>
+              </ul>
+            </div>
+
+            <div className="p-6 rounded-3xl bg-brand-indigo/5 border border-brand-indigo/10 space-y-3">
+              <h4 className="font-heading font-bold text-sm text-brand-indigo uppercase tracking-wide">
+                Partner Services
+              </h4>
+              <p className="text-xs text-slate-600 font-sans leading-relaxed">
+                Maximize customer conversion values across our comprehensive design and search frameworks:
+              </p>
+              <div className="flex flex-wrap gap-2 pt-2">
+                <button onClick={() => navigateTo('seo-company-in-hanamkonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">SEO Services</button>
+                <button onClick={() => navigateTo('web-designing-development-company-hanumakonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">Web Design</button>
+                <button onClick={() => navigateTo('ppc-services-in-hanamkonda')} className="px-3 py-1 bg-white hover:bg-slate-100 border text-xs font-semibold rounded-full transition-colors text-slate-700">Google Ads (PPC)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 6. FAQ SECTION */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10 border-t border-slate-100 text-center">
         <div className="space-y-6 mb-16">
