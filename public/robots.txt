@@ -12,3 +12,5 @@ Allow: /favicon-16x16.png
 Allow: /favicon-32x32.png
 Allow: /apple-touch-icon.png
 Allow: /site.webmanifest
+
+Sitemap: https://www.tsquadron.in/sitemap.xml

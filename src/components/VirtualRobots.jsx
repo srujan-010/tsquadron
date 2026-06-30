@@ -5,7 +5,7 @@ import { db } from '../lib/db'
 export default function VirtualRobots() {
   // Read technical configuration
   const technicalConfig = db.getSeoFile('technical.json', {
-    robotsTxt: 'User-agent: *\nAllow: /\n\nSitemap: https://www.tsquadron.com/sitemap.xml'
+    robotsTxt: 'User-agent: *\nAllow: /\n\nSitemap: https://www.tsquadron.in/sitemap.xml'
   })
 
   // Update visual browser tab title

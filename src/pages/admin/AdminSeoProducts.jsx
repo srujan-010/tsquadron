@@ -91,7 +91,7 @@ export default function AdminSeoProducts() {
     setFormData(prev => ({
       ...prev,
       slug,
-      canonicalUrl: `https://www.tsquadron.com/products/${slug}/`
+      canonicalUrl: `https://www.tsquadron.in/products/${slug}/`
     }))
   }
 
@@ -113,7 +113,7 @@ export default function AdminSeoProducts() {
       primaryKeyword: 'SEO Course',
       secondaryKeywords: 'seo classes, local search optimization',
       longTailKeywords: 'practical local seo training warangal',
-      canonicalUrl: 'https://www.tsquadron.com/products/new-seo-strategy-course/',
+      canonicalUrl: 'https://www.tsquadron.in/products/new-seo-strategy-course/',
       imageAlt: 'SEO training classroom',
       robotsIndex: 'index',
       robotsFollow: 'follow',
@@ -760,7 +760,7 @@ export default function AdminSeoProducts() {
                         <div className="leading-none text-left">
                           <span className="text-[11px] font-medium text-slate-800 block">TSquadron Shop</span>
                           <span className="text-[9px] text-slate-500 font-medium truncate max-w-[190px] block">
-                            https://www.tsquadron.com/products/{formData.slug || 'url'}/
+                            https://www.tsquadron.in/products/{formData.slug || 'url'}/
                           </span>
                         </div>
                       </div>
@@ -791,7 +791,7 @@ export default function AdminSeoProducts() {
                         className="w-full h-36 object-cover border-b"
                       />
                       <div className="p-3 space-y-1">
-                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block">www.tsquadron.com</span>
+                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block">www.tsquadron.in</span>
                         <h5 className="text-[11px] font-bold text-slate-800 leading-snug truncate">
                           {formData.seoTitle || formData.name}
                         </h5>

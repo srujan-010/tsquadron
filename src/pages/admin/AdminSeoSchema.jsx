@@ -34,7 +34,7 @@ export default function AdminSeoSchema() {
   // Organization state
   const [orgData, setOrgData] = useState({
     name: 'TSquadron Digital Solutions',
-    url: 'https://www.tsquadron.com',
+    url: 'https://www.tsquadron.in',
     logo: 'https://res.cloudinary.com/dixbhnqnf/image/upload/v1782553914/Chat-GPT-Image-May-21-2026-03-14-44-PM-removebg-preview_b7cqku.png',
     phone: '+91 98765 43210'
   })
@@ -160,7 +160,7 @@ export default function AdminSeoSchema() {
           'latitude': localData.lat,
           'longitude': localData.lng
         },
-        'url': 'https://www.tsquadron.com'
+        'url': 'https://www.tsquadron.in'
       }
     } else if (schemaType === 'FAQPage') {
       compiledJson = {

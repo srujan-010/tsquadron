@@ -34,7 +34,7 @@ export default function AdminSeoSitemap() {
 
   // 2. Generate XML preview dynamically whenever formData changes
   useEffect(() => {
-    const domain = 'https://www.tsquadron.com'
+    const domain = 'https://www.tsquadron.in'
     const today = new Date().toISOString().split('T')[0]
     const list = []
 

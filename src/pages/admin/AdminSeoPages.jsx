@@ -113,7 +113,7 @@ export default function AdminSeoPages() {
 
     const data = db.getSeoFile(pageItem.path, {
       ...fallback,
-      canonicalUrl: `https://www.tsquadron.com/${selectedPage === 'home' ? '' : selectedPage + '/'}`,
+      canonicalUrl: `https://www.tsquadron.in/${selectedPage === 'home' ? '' : selectedPage + '/'}`,
       ogTitle: '',
       ogDescription: '',
       ogImage: 'https://res.cloudinary.com/dixbhnqnf/image/upload/v1782553914/Chat-GPT-Image-May-21-2026-03-14-44-PM-removebg-preview_b7cqku.png',
@@ -387,7 +387,7 @@ export default function AdminSeoPages() {
                 name="canonicalUrl"
                 value={formData.canonicalUrl}
                 onChange={handleChange}
-                placeholder="https://www.tsquadron.com/..."
+                placeholder="https://www.tsquadron.in/..."
                 className="w-full px-4 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-brand-indigo focus:border-brand-indigo font-semibold text-slate-800"
               />
               <span className="text-[10px] text-slate-400 font-medium block">Forces crawler traffic into single preferred URL endpoints.</span>
@@ -650,7 +650,7 @@ export default function AdminSeoPages() {
                     <div className="text-left leading-none">
                       <span className="text-[11px] font-medium text-slate-800 block">TSquadron</span>
                       <span className="text-[9px] text-slate-500 font-medium truncate max-w-[190px] block">
-                        https://www.tsquadron.com{selectedPage === 'home' ? '' : `/${selectedPage}`}
+                        https://www.tsquadron.in{selectedPage === 'home' ? '' : `/${selectedPage}`}
                       </span>
                     </div>
                   </div>
@@ -672,7 +672,7 @@ export default function AdminSeoPages() {
                     className="w-full h-36 object-cover border-b"
                   />
                   <div className="p-3 space-y-1">
-                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block">www.tsquadron.com</span>
+                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block">www.tsquadron.in</span>
                     <h5 className="text-[11px] font-bold text-slate-800 leading-snug truncate">
                       {formData.ogTitle || formData.title || 'Page Title'}
                     </h5>

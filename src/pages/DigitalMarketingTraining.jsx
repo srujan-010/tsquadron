@@ -94,7 +94,7 @@ export default function DigitalMarketingTraining({ setActivePage }) {
       "provider": {
         "@type": "EducationalOrganization",
         "name": "TSquadron Digital Academy",
-        "sameAs": "https://www.tsquadron.com"
+        "sameAs": "https://www.tsquadron.in"
       },
       "educationalCredentialAwarded": "Certified Digital Marketing Specialist",
       "offers": {
@@ -122,7 +122,7 @@ export default function DigitalMarketingTraining({ setActivePage }) {
         "addressCountry": "IN"
       },
       "telephone": "+91 9346989817",
-      "email": "info@tsquadron.com"
+      "email": "info@tsquadron.in"
     }
 
     const script1 = document.createElement("script")
@@ -1292,7 +1292,7 @@ export default function DigitalMarketingTraining({ setActivePage }) {
                 {[
                   { title: "Training Center Office", val: "2nd Floor, V-Square Plaza, Naimnagar Main Road, Hanamkonda, Warangal, Telangana 506001", icon: <FiMapPin /> },
                   { title: "Direct Helpline Support", val: "+91 9346989817", icon: <FiPhone className="text-brand-indigo" /> },
-                  { title: "Email Academic Registrar", val: "info@tsquadron.com", icon: <FiMail /> }
+                  { title: "Email Academic Registrar", val: "info@tsquadron.in", icon: <FiMail /> }
                 ].map((coord, idx) => (
                   <div key={idx} className="flex items-center gap-4 p-5 rounded-2xl bg-[#F8FAFC] border border-slate-200">
                     <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center shrink-0 text-[#163C8C]">

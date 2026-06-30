@@ -48,7 +48,7 @@ function updateIndexHtmlSeo(seoData) {
     const keywords = seoData.defaultKeywords || 'digital marketing, seo, ppc';
     const brandName = seoData.brandName || 'TSquadron';
     const websiteName = seoData.websiteName || 'TSquadron';
-    const canonicalUrl = seoData.canonicalDomain || 'https://www.tsquadron.com';
+    const canonicalUrl = seoData.canonicalDomain || 'https://www.tsquadron.in';
     const favicon = seoData.favicon || '/favicon.ico';
     const companyLogo = seoData.companyLogo || '/logo.png';
     const defaultOgImage = seoData.defaultOgImage || '/logo.png';
@@ -58,27 +58,27 @@ function updateIndexHtmlSeo(seoData) {
 
     const seoBlock = `
     ${startComment}
-    <title>${title}</title>
-    <meta name="description" content="${description}" />
-    <meta name="keywords" content="${keywords}" />
-    <meta name="author" content="${brandName}" />
-    <meta name="application-name" content="${brandName}" />
-    <meta name="theme-color" content="#ffffff" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="${canonicalUrl}" />
-    <link rel="icon" href="${favicon}" sizes="any">
-    <link rel="apple-touch-icon" href="${favicon}">
-    <meta property="og:title" content="${title}" />
-    <meta property="og:description" content="${description}" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="${canonicalUrl}" />
-    <meta property="og:image" content="${defaultOgImage}" />
-    <meta property="og:site_name" content="${websiteName}" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="${title}" />
-    <meta name="twitter:description" content="${description}" />
-    <meta name="twitter:image" content="${defaultOgImage}" />
-    <script type="application/ld+json">
+    <title data-rh="true">${title}</title>
+    <meta data-rh="true" name="description" content="${description}" />
+    <meta data-rh="true" name="keywords" content="${keywords}" />
+    <meta data-rh="true" name="author" content="${brandName}" />
+    <meta data-rh="true" name="application-name" content="${brandName}" />
+    <meta data-rh="true" name="theme-color" content="#ffffff" />
+    <meta data-rh="true" name="robots" content="index, follow" />
+    <link data-rh="true" rel="canonical" href="${canonicalUrl}" />
+    <link data-rh="true" rel="icon" href="${favicon}" sizes="any">
+    <link data-rh="true" rel="apple-touch-icon" href="${favicon}">
+    <meta data-rh="true" property="og:title" content="${title}" />
+    <meta data-rh="true" property="og:description" content="${description}" />
+    <meta data-rh="true" property="og:type" content="website" />
+    <meta data-rh="true" property="og:url" content="${canonicalUrl}" />
+    <meta data-rh="true" property="og:image" content="${defaultOgImage}" />
+    <meta data-rh="true" property="og:site_name" content="${websiteName}" />
+    <meta data-rh="true" name="twitter:card" content="summary_large_image" />
+    <meta data-rh="true" name="twitter:title" content="${title}" />
+    <meta data-rh="true" name="twitter:description" content="${description}" />
+    <meta data-rh="true" name="twitter:image" content="${defaultOgImage}" />
+    <script data-rh="true" type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
@@ -292,7 +292,7 @@ function localMockBackend(env) {
               favicon: '/favicon.ico',
               brandName: 'TSquadron',
               websiteName: 'TSquadron Digital Solutions',
-              canonicalDomain: 'https://www.tsquadron.com',
+              canonicalDomain: 'https://www.tsquadron.in',
               companyLogo: 'https://res.cloudinary.com/dixbhnqnf/image/upload/v1782826521/og-image-Photoroom_oawp5v.png'
             });
             res.statusCode = 200;

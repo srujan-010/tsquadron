@@ -19,7 +19,8 @@ export default function VirtualSitemap() {
       priorityBlogs: '0.6'
     })
 
-    const domain = 'https://www.tsquadron.com'
+    const globalSeo = db.getSeoFile('global.json', {})
+    const domain = globalSeo.canonicalDomain || 'https://www.tsquadron.in'
     const today = new Date().toISOString().split('T')[0]
 
     // 2. Compile URL arrays

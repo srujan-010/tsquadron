@@ -71,7 +71,7 @@ export default function AdminSeoCategories() {
     setFormData(prev => ({
       ...prev,
       slug,
-      canonicalUrl: `https://www.tsquadron.com/categories/${slug}/`
+      canonicalUrl: `https://www.tsquadron.in/categories/${slug}/`
     }))
   }
 
@@ -82,7 +82,7 @@ export default function AdminSeoCategories() {
       seoTitle: 'Local SEO Strategy Categories Hanamkonda | TSquadron',
       seoDescription: 'Explore digital marketing categories specializing in performance SEO audits, analytics, SMM, and course training.',
       focusKeyword: 'SEO Services Warangal',
-      canonicalUrl: 'https://www.tsquadron.com/categories/new-seo-campaign-group/',
+      canonicalUrl: 'https://www.tsquadron.in/categories/new-seo-campaign-group/',
       robotsIndex: 'index',
       robotsFollow: 'follow',
       breadcrumbLabel: 'SEO Group',
@@ -484,7 +484,7 @@ export default function AdminSeoCategories() {
                         <div className="leading-none text-left">
                           <span className="text-[11px] font-medium text-slate-800 block">TSquadron Category</span>
                           <span className="text-[9px] text-slate-500 font-medium truncate max-w-[190px] block">
-                            https://www.tsquadron.com/categories/{formData.slug || 'url'}/
+                            https://www.tsquadron.in/categories/{formData.slug || 'url'}/
                           </span>
                         </div>
                       </div>

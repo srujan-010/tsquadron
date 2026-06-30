@@ -22,7 +22,7 @@ export default function AdminLogin({ setActivePage }) {
     // Simulate authenticating admin against mock JWT/Session
     setTimeout(() => {
       setIsSubmitting(false)
-      if (email === 'admin@tsquadron.com' && password === 'admin') {
+      if (email === 'admin@tsquadron.in' && password === 'admin') {
         sessionStorage.setItem('tsquadron_admin_authenticated', 'true')
         
         // Redirect to intended dashboard or default
@@ -101,7 +101,7 @@ export default function AdminLogin({ setActivePage }) {
               <div className="relative">
                 <input
                   type="email"
-                  placeholder="admin@tsquadron.com"
+                  placeholder="admin@tsquadron.in"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={isSubmitting}

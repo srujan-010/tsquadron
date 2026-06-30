@@ -59,14 +59,14 @@ export default function AdminSeoGlobal() {
       googleAnalyticsId: '',
       googleTagManager: '',
       facebookPixelId: '',
-      canonicalDomain: 'https://www.tsquadron.com',
+      canonicalDomain: 'https://www.tsquadron.in',
       businessAddress: '2nd Floor, V-Square Plaza, Naimnagar Main Road, Hanamkonda',
       city: 'Warangal',
       state: 'Telangana',
       country: 'India',
       phoneNumber: '+91 98765 43210',
       whatsAppNumber: '+91 98765 43210',
-      email: 'info@tsquadron.com',
+      email: 'info@tsquadron.in',
       facebookLink: 'https://facebook.com/tsquadron',
       instagramLink: 'https://instagram.com/tsquadron',
       linkedinLink: 'https://linkedin.com/company/tsquadron',
@@ -220,7 +220,7 @@ export default function AdminSeoGlobal() {
                     name="canonicalDomain"
                     value={formData.canonicalDomain}
                     onChange={handleChange}
-                    placeholder="https://www.tsquadron.com"
+                    placeholder="https://www.tsquadron.in"
                     className="w-full px-4 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-brand-indigo focus:border-brand-indigo font-semibold text-slate-800"
                   />
                   <span className="text-[10px] text-slate-400 font-medium block">Used to generate fallback canonical URLs.</span>
@@ -282,7 +282,7 @@ export default function AdminSeoGlobal() {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="info@tsquadron.com"
+                      placeholder="info@tsquadron.in"
                       className="w-full px-4 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-brand-indigo"
                     />
                   </div>

@@ -129,14 +129,14 @@ export default function SEOHelmet({ activePage }) {
       googleAnalyticsId: '',
       googleTagManager: '',
       facebookPixelId: '',
-      canonicalDomain: 'https://www.tsquadron.com',
+      canonicalDomain: 'https://www.tsquadron.in',
       businessAddress: '2nd Floor, V-Square Plaza, Naimnagar Main Road, Hanamkonda',
       city: 'Warangal',
       state: 'Telangana',
       country: 'India',
       phoneNumber: '+91 98765 43210',
       whatsAppNumber: '+91 98765 43210',
-      email: 'info@tsquadron.com',
+      email: 'info@tsquadron.in',
       facebookLink: 'https://facebook.com/tsquadron',
       instagramLink: 'https://instagram.com/tsquadron',
       linkedinLink: 'https://linkedin.com/company/tsquadron',
@@ -310,7 +310,7 @@ export default function SEOHelmet({ activePage }) {
   }
   
   const cleanActivePage = activePage === 'home' ? '' : activePage + '/'
-  const baseCanonical = globalSeo.canonicalDomain || 'https://www.tsquadron.com'
+  const baseCanonical = globalSeo.canonicalDomain || 'https://www.tsquadron.in'
   const canonicalUrl = pageSeo.canonicalUrl || `${baseCanonical}/${cleanActivePage}`
   
   const robotsIndex = pageSeo.robotsIndex || pageFallback.robotsIndex || 'index'
@@ -345,7 +345,7 @@ export default function SEOHelmet({ activePage }) {
         '@type': 'ContactPoint',
         'telephone': globalSeo.phoneNumber || '+91 98765 43210',
         'contactType': 'customer service',
-        'email': globalSeo.email || 'info@tsquadron.com'
+        'email': globalSeo.email || 'info@tsquadron.in'
       },
       'sameAs': [
         globalSeo.facebookLink,
@@ -364,7 +364,7 @@ export default function SEOHelmet({ activePage }) {
       'image': globalSeo.companyLogo || ogImage,
       'url': baseCanonical,
       'telephone': globalSeo.phoneNumber || '+91 98765 43210',
-      'email': globalSeo.email || 'info@tsquadron.com',
+      'email': globalSeo.email || 'info@tsquadron.in',
       'address': {
         '@type': 'PostalAddress',
         'streetAddress': globalSeo.businessAddress || '2nd Floor, V-Square Plaza, Naimnagar Main Road, Hanamkonda',

@@ -181,9 +181,9 @@ export default function Footer({ setActivePage }) {
                   <a href="tel:+919346989817" className="flex items-center gap-1.5 hover:text-brand-indigo transition-colors">
                     <span>+91 9346989817</span>
                   </a>
-                  <a href="mailto:info@tsquadron.com" className="flex items-center gap-1.5 hover:text-brand-indigo transition-colors">
+                  <a href="mailto:info@tsquadron.in" className="flex items-center gap-1.5 hover:text-brand-indigo transition-colors">
                     <FiMail size={14} className="text-slate-400" />
-                    <span>info@tsquadron.com</span>
+                    <span>info@tsquadron.in</span>
                   </a>
                 </div>
               </div>

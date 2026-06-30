@@ -88,7 +88,7 @@ export default function AdminSeoBlogs() {
       title: `${matchBlog.title} | TSquadron`,
       description: matchBlog.excerpt || 'Read this informative article from TSquadron experts.',
       keywords: `digital marketing, ${matchBlog.category.toLowerCase()}, blogs`,
-      canonicalUrl: `https://www.tsquadron.com/blog/${activeSlug}/`,
+      canonicalUrl: `https://www.tsquadron.in/blog/${activeSlug}/`,
       ogTitle: `${matchBlog.title} | TSquadron`,
       ogDescription: matchBlog.excerpt || 'Read this informative article.',
       ogImage: 'https://res.cloudinary.com/dixbhnqnf/image/upload/v1782553914/Chat-GPT-Image-May-21-2026-03-14-44-PM-removebg-preview_b7cqku.png',
@@ -118,7 +118,7 @@ export default function AdminSeoBlogs() {
     setFormData(prev => ({ 
       ...prev, 
       slug: newSlug,
-      canonicalUrl: `https://www.tsquadron.com/blog/${newSlug}/`
+      canonicalUrl: `https://www.tsquadron.in/blog/${newSlug}/`
     }))
   }
 
@@ -558,7 +558,7 @@ export default function AdminSeoBlogs() {
                         <div className="leading-none text-left">
                           <span className="text-[11px] font-medium text-slate-800 block">TSquadron Insights</span>
                           <span className="text-[9px] text-slate-500 font-medium truncate max-w-[190px] block">
-                            https://www.tsquadron.com/blog/{formData.slug || 'url'}/
+                            https://www.tsquadron.in/blog/{formData.slug || 'url'}/
                           </span>
                         </div>
                       </div>
@@ -577,7 +577,7 @@ export default function AdminSeoBlogs() {
                         className="w-full h-36 object-cover border-b"
                       />
                       <div className="p-3 space-y-1">
-                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block font-sans">www.tsquadron.com</span>
+                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block font-sans">www.tsquadron.in</span>
                         <h5 className="text-[11px] font-bold text-slate-800 leading-snug truncate font-sans">
                           {formData.ogTitle || formData.title || 'Blog Share Title'}
                         </h5>

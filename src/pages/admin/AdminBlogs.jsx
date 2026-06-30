@@ -313,7 +313,7 @@ export default function AdminBlogs() {
                   <span className="font-heading font-bold text-slate-900 text-xs uppercase tracking-wider">SEO Snippet Preview</span>
                 </div>
                 <div className="p-4 border border-slate-100 rounded-2xl bg-slate-50/50 space-y-1 font-sans">
-                  <span className="text-[10px] text-brand-label block truncate">https://tsquadron.com/blog/{formData.slug || 'slug-url'}</span>
+                  <span className="text-[10px] text-brand-label block truncate">https://tsquadron.in/blog/{formData.slug || 'slug-url'}</span>
                   <span className="text-sm font-semibold text-blue-800 block leading-tight hover:underline cursor-pointer truncate">
                     {formData.title || 'Draft Article Title'}
                   </span>

@@ -549,7 +549,7 @@ export default function About({ setActivePage }) {
             </div>
             <div className="text-left">
               <span className="text-[10px] text-brand-label uppercase tracking-widest font-sans font-semibold block leading-none">EMAIL CORRESPONDENCE</span>
-              <span className="text-sm font-heading font-bold text-slate-800">growth@tsquadron.com</span>
+              <span className="text-sm font-heading font-bold text-slate-800">growth@tsquadron.in</span>
             </div>
           </div>
         </div>

@@ -237,7 +237,7 @@ export default function Home({ setActivePage }) {
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
                 </div>
                 <div className="w-48 h-4.5 bg-slate-100 rounded flex items-center justify-center">
-                  <span className="text-[9px] text-brand-label font-sans tracking-wide">tsquadron.com/metrics</span>
+                  <span className="text-[9px] text-brand-label font-sans tracking-wide">tsquadron.in/metrics</span>
                 </div>
                 <div className="w-3" />
               </div>

@@ -28,7 +28,7 @@ export default function AdminSeoTechnical() {
   // Load configuration and 404 logs on mount
   useEffect(() => {
     const data = db.getSeoFile('technical.json', {
-      robotsTxt: 'User-agent: *\nAllow: /\n\nSitemap: https://www.tsquadron.com/sitemap.xml',
+      robotsTxt: 'User-agent: *\nAllow: /\n\nSitemap: https://www.tsquadron.in/sitemap.xml',
       trailingSlash: 'force',
       redirects: [
         { id: 1, source: '/services/seo-agency', destination: '/seo-company-in-hanamkonda/', type: '301' },

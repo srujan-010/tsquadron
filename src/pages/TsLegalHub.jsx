@@ -202,7 +202,7 @@ export default function PrivacyPolicy({ setActivePage }) {
               <p>1st Floor, Green Square Plaza, opp Public Garden,</p>
               <p>Kishanpura, Hanamkonda, Warangal, Telangana 506001</p>
               <p className="pt-2">
-                <strong>Email:</strong> <a href="mailto:info@tsquadron.com" className="text-indigo-600 hover:underline">info@tsquadron.com</a>
+                <strong>Email:</strong> <a href="mailto:info@tsquadron.in" className="text-indigo-600 hover:underline">info@tsquadron.in</a>
               </p>
               <p>
                 <strong>Phone:</strong> <a href="tel:+919346989817" className="text-indigo-600 hover:underline">+91 9346989817</a>

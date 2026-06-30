@@ -116,7 +116,7 @@ export default function Contact() {
             {/* Icon Info Badges */}
             <div className="space-y-4">
               {[
-                { label: "Direct Support & Audit queries", value: "info@tsquadron.com", icon: <FiMail />, link: "mailto:info@tsquadron.com" },
+                { label: "Direct Support & Audit queries", value: "info@tsquadron.in", icon: <FiMail />, link: "mailto:info@tsquadron.in" },
                 { label: "Call Our Execution Team", value: "+91 9346989817", icon: <FiPhone />, link: "tel:+919346989817" },
                 { label: "Office Location (Warangal)", value: "1st Floor, Green Square Plaza, Kishanpura, Hanamkonda, Warangal", icon: <FiMapPin />, link: "https://maps.app.goo.gl/ebSTinBiFWneemTSA" }
               ].map((item, idx) => (
