@@ -19,6 +19,13 @@
   RewriteCond %{HTTP_HOST} ^tsquadron\.in [NC]
   RewriteRule ^(.*)$ https://www.tsquadron.in/$1 [R=301,L]
 
+  # Route production API requests to central PHP backend scripts
+  RewriteRule ^api/clients/reorder/?$ api/clients.php?action=reorder [QSA,L]
+  RewriteRule ^api/clients/upload/?$ api/upload.php [QSA,L]
+  RewriteRule ^api/upload/?$ api/upload.php [QSA,L]
+  RewriteRule ^api/clients/([^/]+)/?$ api/clients.php?id=$1 [QSA,L]
+  RewriteRule ^api/clients/?$ api/clients.php [QSA,L]
+
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
