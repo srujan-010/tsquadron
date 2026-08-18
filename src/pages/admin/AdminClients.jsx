@@ -25,9 +25,11 @@ export default function AdminClients() {
     isActive: true
   })
 
-  const loadClients = () => {
-    const current = db.getClients()
-    setClients(current)
+  const loadClients = async () => {
+    const data = await db.getClientsAsync()
+    if (Array.isArray(data)) {
+      setClients(data)
+    }
   }
 
   useEffect(() => {

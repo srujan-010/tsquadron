@@ -892,13 +892,38 @@ export const db = {
     }
     return [...clients].sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
   },
+  getClientsAsync: async (onlyActive = false) => {
+    try {
+      const endpoint = onlyActive ? '/api/clients?active=true' : '/api/clients';
+      const res = await fetch(endpoint, {
+        headers: { 'Accept': 'application/json' },
+        cache: 'no-store'
+      });
+      const contentType = res.headers.get('content-type') || '';
+      if (res.ok && contentType.includes('application/json')) {
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          setStore("tsquadron_clients", data);
+          return data;
+        }
+      }
+    } catch(e) {
+      console.warn("Client API fetch failed, falling back to local store:", e.message);
+    }
+    return onlyActive ? db.getActiveClients() : db.getClients();
+  },
   getActiveClients: () => {
     const clients = db.getClients();
     return clients.filter(c => c.isActive !== false).sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
   },
-  saveClient: (client) => {
+  getActiveClientsAsync: async () => {
+    return await db.getClientsAsync(true);
+  },
+  saveClient: async (client) => {
     const clients = db.getClients();
     const now = new Date().toISOString();
+    let updatedClient = null;
+
     if (client.id) {
       const idx = clients.findIndex(c => c.id === Number(client.id));
       if (idx !== -1) {
@@ -909,10 +934,11 @@ export const db = {
           displayOrder: Number(client.displayOrder) || clients[idx].displayOrder || 1,
           updatedAt: now
         };
+        updatedClient = clients[idx];
       }
     } else {
       const maxOrder = clients.length > 0 ? Math.max(...clients.map(c => c.displayOrder || 0)) : 0;
-      const newClient = {
+      updatedClient = {
         id: Date.now(),
         name: client.name || '',
         logoUrl: client.logoUrl || '',
@@ -922,55 +948,99 @@ export const db = {
         updatedAt: now,
         ...client
       };
-      clients.push(newClient);
+      clients.push(updatedClient);
     }
     clients.sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
     setStore("tsquadron_clients", clients);
+
+    // Sync mutation to Central API Backend
+    try {
+      if (client.id) {
+        await fetch(`/api/clients/${client.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedClient)
+        });
+      } else {
+        await fetch('/api/clients', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedClient)
+        });
+      }
+    } catch(e) {
+      console.warn("Backend API client sync failed:", e.message);
+    }
+
     window.dispatchEvent(new Event('clients-updated'));
     return clients;
   },
-  deleteClient: (id) => {
+  deleteClient: async (id) => {
     const clients = db.getClients();
     const filtered = clients.filter(c => c.id !== Number(id));
     setStore("tsquadron_clients", filtered);
+
+    try {
+      await fetch(`/api/clients/${id}`, { method: 'DELETE' });
+    } catch(e) {
+      console.warn("Backend API delete client failed:", e.message);
+    }
+
     window.dispatchEvent(new Event('clients-updated'));
     return filtered;
   },
-  toggleClientActive: (id) => {
+  toggleClientActive: async (id) => {
     const clients = db.getClients();
     const idx = clients.findIndex(c => c.id === Number(id));
     if (idx !== -1) {
       clients[idx].isActive = !clients[idx].isActive;
       clients[idx].updatedAt = new Date().toISOString();
       setStore("tsquadron_clients", clients);
+
+      try {
+        await fetch(`/api/clients/${id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ isActive: clients[idx].isActive })
+        });
+      } catch(e) {}
+
       window.dispatchEvent(new Event('clients-updated'));
     }
     return clients;
   },
-  reorderClients: (reorderedList) => {
+  reorderClients: async (reorderedList) => {
     const updated = reorderedList.map((client, index) => ({
       ...client,
       displayOrder: index + 1,
       updatedAt: new Date().toISOString()
     }));
     setStore("tsquadron_clients", updated);
+
+    try {
+      await fetch('/api/clients/reorder', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updated)
+      });
+    } catch(e) {}
+
     window.dispatchEvent(new Event('clients-updated'));
     return updated;
   },
-  saveAllClients: (allClients) => {
+  saveAllClients: async (allClients) => {
     const sorted = [...allClients].sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
     setStore("tsquadron_clients", sorted);
-    window.dispatchEvent(new Event('clients-updated'));
 
-    // Also synchronize with backend if available
     try {
-      fetch('/api/clients/reorder', {
+      await fetch('/api/clients/reorder', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(sorted)
-      }).catch(e => console.warn('Syncing clients to backend failed:', e.message));
+      });
     } catch(e) {}
 
+    window.dispatchEvent(new Event('clients-updated'));
     return sorted;
   }
 };

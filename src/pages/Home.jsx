@@ -19,15 +19,30 @@ export default function Home({ setActivePage }) {
   // Interactive Dashboard Tab State
   const [dashboardTab, setDashboardTab] = useState('seo') // 'seo' | 'ppc' | 'ux'
 
-  // Active Clients state with real-time sync
+  // Active Clients state with real-time API sync
   const [activeClients, setActiveClients] = useState(() => db.getActiveClients())
 
   useEffect(() => {
-    const handleClientsUpdate = () => {
-      setActiveClients(db.getActiveClients())
+    let isMounted = true
+    const loadActive = async () => {
+      const data = await db.getActiveClientsAsync()
+      if (isMounted && Array.isArray(data)) {
+        setActiveClients(data)
+      }
+    }
+    loadActive()
+
+    const handleClientsUpdate = async () => {
+      const data = await db.getActiveClientsAsync()
+      if (isMounted && Array.isArray(data)) {
+        setActiveClients(data)
+      }
     }
     window.addEventListener('clients-updated', handleClientsUpdate)
-    return () => window.removeEventListener('clients-updated', handleClientsUpdate)
+    return () => {
+      isMounted = false
+      window.removeEventListener('clients-updated', handleClientsUpdate)
+    }
   }, [])
 
 
