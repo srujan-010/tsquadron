@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   FiPlus, FiEdit2, FiTrash2, FiCheck, FiX, FiImage, 
@@ -15,6 +15,7 @@ export default function AdminClients() {
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState('All')
   const [isUploading, setIsUploading] = useState(false)
+  const isMigratingRef = useRef(false)
 
   const [formData, setFormData] = useState({
     id: null,
@@ -24,26 +25,37 @@ export default function AdminClients() {
     isActive: true
   })
 
-  const loadClients = async () => {
+  const loadClients = () => {
     const current = db.getClients()
     setClients(current)
-
-    // Check if any legacy client has a Base64 logo and auto-migrate to Cloudinary safely
-    const hasBase64 = current.some(c => c.logoUrl && typeof c.logoUrl === 'string' && c.logoUrl.startsWith('data:image/'))
-    if (hasBase64) {
-      console.log('Initiating automatic Cloudinary migration for Base64 client logos...')
-      const { updated, clients: migrated } = await migrateBase64ClientsToCloudinary(current)
-      if (updated) {
-        db.saveAllClients(migrated)
-        setClients(migrated)
-        setSuccessMsg('Legacy Base64 logos successfully migrated to Cloudinary!')
-        setTimeout(() => setSuccessMsg(''), 4000)
-      }
-    }
   }
 
   useEffect(() => {
     loadClients()
+
+    // Run one-time safe legacy Base64 migration on mount
+    const checkAndMigrate = async () => {
+      if (isMigratingRef.current) return
+      const current = db.getClients()
+      const hasBase64 = current.some(c => c.logoUrl && typeof c.logoUrl === 'string' && c.logoUrl.startsWith('data:image/'))
+      if (hasBase64) {
+        isMigratingRef.current = true
+        console.log('Initiating automatic Cloudinary migration for Base64 client logos...')
+        try {
+          const { updated, clients: migrated } = await migrateBase64ClientsToCloudinary(current)
+          if (updated) {
+            db.saveAllClients(migrated)
+            setClients(migrated)
+            setSuccessMsg('Legacy Base64 logos successfully migrated to Cloudinary!')
+            setTimeout(() => setSuccessMsg(''), 4000)
+          }
+        } catch (err) {
+          console.error('Migration error:', err)
+        }
+      }
+    }
+    checkAndMigrate()
+
     window.addEventListener('clients-updated', loadClients)
     return () => window.removeEventListener('clients-updated', loadClients)
   }, [])
