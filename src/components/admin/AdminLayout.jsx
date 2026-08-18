@@ -3,7 +3,7 @@ import {
   FiGrid, FiUsers, FiFileText, FiLayers, FiMessageSquare, 
   FiImage, FiSettings, FiExternalLink, FiLogOut, FiMenu, FiX, FiShield,
   FiChevronDown, FiChevronUp, FiLock, FiAlertTriangle, FiGlobe, FiCode, FiCalendar,
-  FiPackage, FiFolder, FiHeart
+  FiPackage, FiFolder, FiHeart, FiAward
 } from 'react-icons/fi'
 
 import { db } from '../../lib/db'
@@ -53,6 +53,7 @@ export default function AdminLayout({ children, activeTab, setActivePage }) {
     { id: 'dashboard', label: 'Overview', icon: <FiGrid size={18} />, path: 'admin/dashboard' },
     { id: 'appointments', label: 'Appointments', icon: <FiCalendar size={18} />, path: 'admin/appointments' },
     { id: 'leads', label: 'Leads Inbox', icon: <FiUsers size={18} />, path: 'admin/leads' },
+    { id: 'clients', label: 'Clients', icon: <FiAward size={18} />, path: 'admin/clients' },
     { id: 'blogs', label: 'Blog Manager', icon: <FiFileText size={18} />, path: 'admin/blogs' },
     { id: 'services', label: 'Services Editor', icon: <FiLayers size={18} />, path: 'admin/services' },
     { id: 'testimonials', label: 'Testimonials', icon: <FiMessageSquare size={18} />, path: 'admin/testimonials' },

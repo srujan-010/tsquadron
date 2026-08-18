@@ -64,7 +64,7 @@ export default async function handler(req) {
         'X-Title': 'TSquadron Assistant'
       },
       body: JSON.stringify({
-        model: 'meta-llama/llama-3-8b-instruct',
+        model: 'meta-llama/llama-3.1-8b-instruct',
         messages: messages,
         temperature: 0.3, // Low temperature for consistent, professional business responses
         max_tokens: 500,

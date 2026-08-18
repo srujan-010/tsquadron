@@ -1,0 +1,16 @@
+[
+  { "id": 1, "name": "Sai Chandar Child Neuro Care", "logoUrl": "", "displayOrder": 1, "isActive": true, "createdAt": "2026-08-18T00:00:00.000Z", "updatedAt": "2026-08-18T00:00:00.000Z" },
+  { "id": 2, "name": "IRA Childrens Hospital", "logoUrl": "", "displayOrder": 2, "isActive": true, "createdAt": "2026-08-18T00:00:00.000Z", "updatedAt": "2026-08-18T00:00:00.000Z" },
+  { "id": 3, "name": "IMA Warangal", "logoUrl": "", "displayOrder": 3, "isActive": true, "createdAt": "2026-08-18T00:00:00.000Z", "updatedAt": "2026-08-18T00:00:00.000Z" },
+  { "id": 4, "name": "Teja International High School", "logoUrl": "", "displayOrder": 4, "isActive": true, "createdAt": "2026-08-18T00:00:00.000Z", "updatedAt": "2026-08-18T00:00:00.000Z" },
+  { "id": 5, "name": "Sri Sharanya Hospital", "logoUrl": "", "displayOrder": 5, "isActive": true, "createdAt": "2026-08-18T00:00:00.000Z", "updatedAt": "2026-08-18T00:00:00.000Z" },
+  { "id": 6, "name": "Vinayaka Neuro", "logoUrl": "", "displayOrder": 6, "isActive": true, "createdAt": "2026-08-18T00:00:00.000Z", "updatedAt": "2026-08-18T00:00:00.000Z" },
+  { "id": 7, "name": "Swastika Sarees", "logoUrl": "", "displayOrder": 7, "isActive": true, "createdAt": "2026-08-18T00:00:00.000Z", "updatedAt": "2026-08-18T00:00:00.000Z" },
+  { "id": 8, "name": "Suryodaya", "logoUrl": "", "displayOrder": 8, "isActive": true, "createdAt": "2026-08-18T00:00:00.000Z", "updatedAt": "2026-08-18T00:00:00.000Z" },
+  { "id": 9, "name": "Niyo Dental Care", "logoUrl": "", "displayOrder": 9, "isActive": true, "createdAt": "2026-08-18T00:00:00.000Z", "updatedAt": "2026-08-18T00:00:00.000Z" },
+  { "id": 10, "name": "Sunshine Dental Clinic", "logoUrl": "", "displayOrder": 10, "isActive": true, "createdAt": "2026-08-18T00:00:00.000Z", "updatedAt": "2026-08-18T00:00:00.000Z" },
+  { "id": 11, "name": "Maatha Sri Women's and Children's Hospital", "logoUrl": "", "displayOrder": 11, "isActive": true, "createdAt": "2026-08-18T00:00:00.000Z", "updatedAt": "2026-08-18T00:00:00.000Z" },
+  { "id": 12, "name": "Prasta Clinique", "logoUrl": "", "displayOrder": 12, "isActive": true, "createdAt": "2026-08-18T00:00:00.000Z", "updatedAt": "2026-08-18T00:00:00.000Z" },
+  { "id": 13, "name": "Sri Chakra Superspeciality Hospital", "logoUrl": "", "displayOrder": 13, "isActive": true, "createdAt": "2026-08-18T00:00:00.000Z", "updatedAt": "2026-08-18T00:00:00.000Z" },
+  { "id": 14, "name": "Tgumami", "logoUrl": "", "displayOrder": 14, "isActive": true, "createdAt": "2026-08-18T00:00:00.000Z", "updatedAt": "2026-08-18T00:00:00.000Z" }
+]

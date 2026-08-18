@@ -9,6 +9,7 @@ const __dirname = path.dirname(__filename);
 
 const APPOINTMENTS_FILE = path.join(__dirname, 'data', 'appointments.json');
 const SLOTS_FILE = path.join(__dirname, 'data', 'slots.json');
+const CLIENTS_FILE = path.join(__dirname, 'data', 'clients.json');
 
 // Helper to read JSON
 function readJSON(filePath, defaultData) {
@@ -322,6 +323,113 @@ function localMockBackend(env) {
                  return res.end(JSON.stringify({ error: "Internal Server Error" }));
                }
              });
+          }
+        }
+
+        // --- CLIENTS API ---
+        if (req.url.startsWith('/api/clients')) {
+          const urlObj = new URL(req.url, 'http://localhost');
+          const isOnlyActive = urlObj.searchParams.get('active') === 'true';
+
+          if (req.method === 'GET') {
+            const clients = readJSON(CLIENTS_FILE, []);
+            let result = clients;
+            if (isOnlyActive) {
+              result = clients.filter(c => c.isActive !== false);
+            }
+            result.sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            return res.end(JSON.stringify(result));
+          }
+
+          if (req.method === 'POST' && req.url === '/api/clients/reorder') {
+            let body = '';
+            req.on('data', chunk => { body += chunk.toString(); });
+            return req.on('end', () => {
+              try {
+                const reordered = JSON.parse(body);
+                writeJSON(CLIENTS_FILE, reordered);
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                return res.end(JSON.stringify({ success: true, clients: reordered }));
+              } catch(e) {
+                res.statusCode = 500;
+                res.setHeader('Content-Type', 'application/json');
+                return res.end(JSON.stringify({ error: "Internal Server Error" }));
+              }
+            });
+          }
+
+          if (req.method === 'POST') {
+            let body = '';
+            req.on('data', chunk => { body += chunk.toString(); });
+            return req.on('end', () => {
+              try {
+                const data = JSON.parse(body);
+                const clients = readJSON(CLIENTS_FILE, []);
+                const now = new Date().toISOString();
+                const maxOrder = clients.length > 0 ? Math.max(...clients.map(c => c.displayOrder || 0)) : 0;
+                const newClient = {
+                  id: Date.now(),
+                  name: data.name || '',
+                  logoUrl: data.logoUrl || '',
+                  displayOrder: data.displayOrder !== undefined ? Number(data.displayOrder) : maxOrder + 1,
+                  isActive: data.isActive !== undefined ? data.isActive : true,
+                  createdAt: now,
+                  updatedAt: now
+                };
+                clients.push(newClient);
+                clients.sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+                writeJSON(CLIENTS_FILE, clients);
+                res.statusCode = 201;
+                res.setHeader('Content-Type', 'application/json');
+                return res.end(JSON.stringify({ success: true, client: newClient }));
+              } catch(e) {
+                res.statusCode = 500;
+                res.setHeader('Content-Type', 'application/json');
+                return res.end(JSON.stringify({ error: "Internal Server Error" }));
+              }
+            });
+          }
+
+          if (req.method === 'PATCH' || req.method === 'DELETE') {
+            const pathParts = urlObj.pathname.split('/');
+            const id = Number(pathParts[pathParts.length - 1]);
+            let body = '';
+            req.on('data', chunk => { body += chunk.toString(); });
+            return req.on('end', () => {
+              try {
+                const clients = readJSON(CLIENTS_FILE, []);
+                const idx = clients.findIndex(c => c.id === id);
+                if (idx === -1) {
+                  res.statusCode = 404;
+                  res.setHeader('Content-Type', 'application/json');
+                  return res.end(JSON.stringify({ error: "Client not found" }));
+                }
+
+                if (req.method === 'DELETE') {
+                  clients.splice(idx, 1);
+                } else {
+                  const data = JSON.parse(body);
+                  clients[idx] = {
+                    ...clients[idx],
+                    ...data,
+                    id: clients[idx].id,
+                    updatedAt: new Date().toISOString()
+                  };
+                }
+                clients.sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+                writeJSON(CLIENTS_FILE, clients);
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                return res.end(JSON.stringify({ success: true, clients }));
+              } catch(e) {
+                res.statusCode = 500;
+                res.setHeader('Content-Type', 'application/json');
+                return res.end(JSON.stringify({ error: "Internal Server Error" }));
+              }
+            });
           }
         }
 

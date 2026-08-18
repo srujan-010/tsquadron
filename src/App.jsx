@@ -45,6 +45,7 @@ const AdminLeads = React.lazy(() => import('./pages/admin/AdminLeads'))
 const AdminBlogs = React.lazy(() => import('./pages/admin/AdminBlogs'))
 const AdminServices = React.lazy(() => import('./pages/admin/AdminServices'))
 const AdminTestimonials = React.lazy(() => import('./pages/admin/AdminTestimonials'))
+const AdminClients = React.lazy(() => import('./pages/admin/AdminClients'))
 const AdminMedia = React.lazy(() => import('./pages/admin/AdminMedia'))
 const AdminSettings = React.lazy(() => import('./pages/admin/AdminSettings'))
 const AdminAppointments = React.lazy(() => import('./pages/admin/AdminAppointments'))
@@ -291,6 +292,8 @@ export default function App() {
           return <AdminLayout activeTab="services" setActivePage={setActivePage}><AdminServices /></AdminLayout>
         case 'admin/testimonials':
           return <AdminLayout activeTab="testimonials" setActivePage={setActivePage}><AdminTestimonials /></AdminLayout>
+        case 'admin/clients':
+          return <AdminLayout activeTab="clients" setActivePage={setActivePage}><AdminClients /></AdminLayout>
         case 'admin/media':
           return <AdminLayout activeTab="media" setActivePage={setActivePage}><AdminMedia /></AdminLayout>
         case 'admin/settings':

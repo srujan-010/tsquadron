@@ -468,6 +468,23 @@ const DEFAULT_404_LOGS = [
   { id: 3, url: "/about-us-old", count: 8, lastOccurred: "2026-06-30T12:05:00Z" }
 ];
 
+const DEFAULT_CLIENTS = [
+  { id: 1, name: "Sai Chandar Child Neuro Care", logoUrl: "", displayOrder: 1, isActive: true, createdAt: "2026-08-18T00:00:00.000Z", updatedAt: "2026-08-18T00:00:00.000Z" },
+  { id: 2, name: "IRA Childrens Hospital", logoUrl: "", displayOrder: 2, isActive: true, createdAt: "2026-08-18T00:00:00.000Z", updatedAt: "2026-08-18T00:00:00.000Z" },
+  { id: 3, name: "IMA Warangal", logoUrl: "", displayOrder: 3, isActive: true, createdAt: "2026-08-18T00:00:00.000Z", updatedAt: "2026-08-18T00:00:00.000Z" },
+  { id: 4, name: "Teja International High School", logoUrl: "", displayOrder: 4, isActive: true, createdAt: "2026-08-18T00:00:00.000Z", updatedAt: "2026-08-18T00:00:00.000Z" },
+  { id: 5, name: "Sri Sharanya Hospital", logoUrl: "", displayOrder: 5, isActive: true, createdAt: "2026-08-18T00:00:00.000Z", updatedAt: "2026-08-18T00:00:00.000Z" },
+  { id: 6, name: "Vinayaka Neuro", logoUrl: "", displayOrder: 6, isActive: true, createdAt: "2026-08-18T00:00:00.000Z", updatedAt: "2026-08-18T00:00:00.000Z" },
+  { id: 7, name: "Swastika Sarees", logoUrl: "", displayOrder: 7, isActive: true, createdAt: "2026-08-18T00:00:00.000Z", updatedAt: "2026-08-18T00:00:00.000Z" },
+  { id: 8, name: "Suryodaya", logoUrl: "", displayOrder: 8, isActive: true, createdAt: "2026-08-18T00:00:00.000Z", updatedAt: "2026-08-18T00:00:00.000Z" },
+  { id: 9, name: "Niyo Dental Care", logoUrl: "", displayOrder: 9, isActive: true, createdAt: "2026-08-18T00:00:00.000Z", updatedAt: "2026-08-18T00:00:00.000Z" },
+  { id: 10, name: "Sunshine Dental Clinic", logoUrl: "", displayOrder: 10, isActive: true, createdAt: "2026-08-18T00:00:00.000Z", updatedAt: "2026-08-18T00:00:00.000Z" },
+  { id: 11, name: "Maatha Sri Women's and Children's Hospital", logoUrl: "", displayOrder: 11, isActive: true, createdAt: "2026-08-18T00:00:00.000Z", updatedAt: "2026-08-18T00:00:00.000Z" },
+  { id: 12, name: "Prasta Clinique", logoUrl: "", displayOrder: 12, isActive: true, createdAt: "2026-08-18T00:00:00.000Z", updatedAt: "2026-08-18T00:00:00.000Z" },
+  { id: 13, name: "Sri Chakra Superspeciality Hospital", logoUrl: "", displayOrder: 13, isActive: true, createdAt: "2026-08-18T00:00:00.000Z", updatedAt: "2026-08-18T00:00:00.000Z" },
+  { id: 14, name: "Tgumami", logoUrl: "", displayOrder: 14, isActive: true, createdAt: "2026-08-18T00:00:00.000Z", updatedAt: "2026-08-18T00:00:00.000Z" }
+];
+
 // Helper to initialize and retrieve stores
 const getStore = (key, fallback) => {
   const data = localStorage.getItem(key);
@@ -729,5 +746,87 @@ export const db = {
     // Dispatch custom event to instantly trigger re-renders in SEOHelmet without refresh
     window.dispatchEvent(new Event('seo-updated'));
     return data;
+  },
+
+  // CLIENTS
+  getClients: () => {
+    const clients = getStore("tsquadron_clients", DEFAULT_CLIENTS);
+    let updated = false;
+    DEFAULT_CLIENTS.forEach(defClient => {
+      if (!clients.some(c => c.id === defClient.id || (c.name && c.name.toLowerCase() === defClient.name.toLowerCase()))) {
+        clients.push(defClient);
+        updated = true;
+      }
+    });
+    if (updated) {
+      clients.sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+      setStore("tsquadron_clients", clients);
+    }
+    return [...clients].sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+  },
+  getActiveClients: () => {
+    const clients = db.getClients();
+    return clients.filter(c => c.isActive !== false).sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+  },
+  saveClient: (client) => {
+    const clients = db.getClients();
+    const now = new Date().toISOString();
+    if (client.id) {
+      const idx = clients.findIndex(c => c.id === Number(client.id));
+      if (idx !== -1) {
+        clients[idx] = {
+          ...clients[idx],
+          ...client,
+          id: Number(client.id),
+          displayOrder: Number(client.displayOrder) || clients[idx].displayOrder || 1,
+          updatedAt: now
+        };
+      }
+    } else {
+      const maxOrder = clients.length > 0 ? Math.max(...clients.map(c => c.displayOrder || 0)) : 0;
+      const newClient = {
+        id: Date.now(),
+        name: client.name || '',
+        logoUrl: client.logoUrl || '',
+        displayOrder: client.displayOrder !== undefined && client.displayOrder !== '' ? Number(client.displayOrder) : maxOrder + 1,
+        isActive: client.isActive !== undefined ? client.isActive : true,
+        createdAt: now,
+        updatedAt: now,
+        ...client
+      };
+      clients.push(newClient);
+    }
+    clients.sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+    setStore("tsquadron_clients", clients);
+    window.dispatchEvent(new Event('clients-updated'));
+    return clients;
+  },
+  deleteClient: (id) => {
+    const clients = db.getClients();
+    const filtered = clients.filter(c => c.id !== Number(id));
+    setStore("tsquadron_clients", filtered);
+    window.dispatchEvent(new Event('clients-updated'));
+    return filtered;
+  },
+  toggleClientActive: (id) => {
+    const clients = db.getClients();
+    const idx = clients.findIndex(c => c.id === Number(id));
+    if (idx !== -1) {
+      clients[idx].isActive = !clients[idx].isActive;
+      clients[idx].updatedAt = new Date().toISOString();
+      setStore("tsquadron_clients", clients);
+      window.dispatchEvent(new Event('clients-updated'));
+    }
+    return clients;
+  },
+  reorderClients: (reorderedList) => {
+    const updated = reorderedList.map((client, index) => ({
+      ...client,
+      displayOrder: index + 1,
+      updatedAt: new Date().toISOString()
+    }));
+    setStore("tsquadron_clients", updated);
+    window.dispatchEvent(new Event('clients-updated'));
+    return updated;
   }
 };

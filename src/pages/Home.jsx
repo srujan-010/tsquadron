@@ -7,6 +7,7 @@ import {
   FiBookOpen, FiShoppingBag, FiLayers, FiAward, FiUsers, FiChevronRight
 } from 'react-icons/fi'
 import GoogleReviews from '../components/GoogleReviews'
+import { db } from '../lib/db'
 
 export default function Home({ setActivePage }) {
   // Process step active state
@@ -17,6 +18,17 @@ export default function Home({ setActivePage }) {
   
   // Interactive Dashboard Tab State
   const [dashboardTab, setDashboardTab] = useState('seo') // 'seo' | 'ppc' | 'ux'
+
+  // Active Clients state with real-time sync
+  const [activeClients, setActiveClients] = useState(() => db.getActiveClients())
+
+  useEffect(() => {
+    const handleClientsUpdate = () => {
+      setActiveClients(db.getActiveClients())
+    }
+    window.addEventListener('clients-updated', handleClientsUpdate)
+    return () => window.removeEventListener('clients-updated', handleClientsUpdate)
+  }, [])
 
 
   const steps = [
@@ -381,31 +393,77 @@ export default function Home({ setActivePage }) {
         </div>
       </section>
 
-      {/* 2. TRUST / CLIENT LOGO MARQUEE */}
-      <section className="border-y border-slate-100 bg-slate-50/50 py-10 relative overflow-hidden z-10">
-        <div className="max-w-7xl mx-auto px-4 mb-4 text-center">
-          <span className="text-[11px] font-semibold text-brand-label uppercase tracking-widest font-sans">
-            Trusted by growth-focused brands across modern industries
-          </span>
+      {/* 2. OUR CLIENTS SECTION — CONTINUOUS LOGO MARQUEE */}
+      <section className="border-y border-slate-100 bg-[#F8FAFC]/70 py-10 sm:py-12 lg:py-14 relative overflow-hidden z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Section Heading */}
+          <div className="max-w-3xl mx-auto space-y-2 mb-8 sm:mb-10 text-center">
+            <span className="text-xs font-semibold text-brand-indigo uppercase tracking-widest font-sans block">
+              OUR CLIENTS
+            </span>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-slate-900 tracking-tight leading-tight">
+              Trusted by Businesses Across Industries
+            </h2>
+            <p className="text-slate-600 font-sans text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
+              We work with businesses across healthcare, education, retail and other industries to build their online presence and support their growth.
+            </p>
+          </div>
+
         </div>
 
-        {/* Infinite Auto-scrolling Strip */}
-        <div className="flex w-[200%] gap-12 overflow-hidden select-none relative">
-          <div className="flex justify-around items-center min-w-full shrink-0 gap-16 py-3 animate-marquee">
-            {["Quantum Labs", "Veritas Health", "Apex E-com", "Sync Systems", "Spectra SaaS", "Aether Tech", "Nova Media"].map((logo, idx) => (
-              <span key={idx} className="text-lg sm:text-xl font-heading font-semibold text-brand-label tracking-wider hover:text-slate-800 transition-colors duration-300">
-                {logo}
-              </span>
-            ))}
-          </div>
-          <div className="flex justify-around items-center min-w-full shrink-0 gap-16 py-3 animate-marquee" aria-hidden="true">
-            {["Quantum Labs", "Veritas Health", "Apex E-com", "Sync Systems", "Spectra SaaS", "Aether Tech", "Nova Media"].map((logo, idx) => (
-              <span key={idx+10} className="text-lg sm:text-xl font-heading font-semibold text-brand-label tracking-wider hover:text-slate-800 transition-colors duration-300">
-                {logo}
-              </span>
-            ))}
-          </div>
-        </div>
+        {/* Single-Row Seamless Infinite Logo Marquee */}
+        {(() => {
+          const clientLogos = activeClients.filter(c => Boolean(c.logoUrl));
+          if (clientLogos.length === 0) return null;
+          // Ensure enough items to smoothly fill ultra-wide screens
+          const marqueeLogos = clientLogos.length < 6 ? [...clientLogos, ...clientLogos, ...clientLogos] : clientLogos;
+
+          return (
+            <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]">
+              {/* Left and Right Fade Edge Gradients */}
+              <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-28 lg:w-40 bg-gradient-to-r from-[#F8FAFC] to-transparent z-10" />
+              <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-28 lg:w-40 bg-gradient-to-l from-[#F8FAFC] to-transparent z-10" />
+
+              {/* Continuously Moving Track */}
+              <div className="flex w-max items-center animate-[marquee_24s_linear_infinite] hover:[animation-play-state:paused] motion-reduce:animate-none group cursor-pointer select-none py-2">
+                {/* Primary Set */}
+                <div className="flex items-center gap-14 sm:gap-20 lg:gap-24 shrink-0 pr-14 sm:pr-20 lg:pr-24">
+                  {marqueeLogos.map((client, idx) => (
+                    <div
+                      key={`track1-${client.id}-${idx}`}
+                      className="flex items-center justify-center shrink-0 w-auto max-w-[190px] sm:max-w-[230px] lg:max-w-[270px] h-[85px] sm:h-[105px] lg:h-[120px]"
+                    >
+                      <img
+                        src={client.logoUrl}
+                        alt={client.name}
+                        className="max-h-[80px] sm:max-h-[100px] lg:max-h-[115px] max-w-[175px] sm:max-w-[220px] lg:max-w-[260px] w-auto object-contain opacity-95 group-hover:opacity-100 transition-opacity duration-200"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Seamless Duplicate Set */}
+                <div className="flex items-center gap-14 sm:gap-20 lg:gap-24 shrink-0 pr-14 sm:pr-20 lg:pr-24" aria-hidden="true">
+                  {marqueeLogos.map((client, idx) => (
+                    <div
+                      key={`track2-${client.id}-${idx}`}
+                      className="flex items-center justify-center shrink-0 w-auto max-w-[190px] sm:max-w-[230px] lg:max-w-[270px] h-[85px] sm:h-[105px] lg:h-[120px]"
+                    >
+                      <img
+                        src={client.logoUrl}
+                        alt={client.name}
+                        className="max-h-[80px] sm:max-h-[100px] lg:max-h-[115px] max-w-[175px] sm:max-w-[220px] lg:max-w-[260px] w-auto object-contain opacity-95 group-hover:opacity-100 transition-opacity duration-200"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          );
+        })()}
       </section>
 
       {/* 3. SERVICES PREVIEW SECTION */}

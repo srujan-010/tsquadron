@@ -198,16 +198,24 @@ You are ONLY the TSquadron AI Assistant.`;
           'X-Title': 'TSquadron Assistant'
         },
         body: JSON.stringify({
-          model: 'meta-llama/llama-3-8b-instruct',
+          model: 'meta-llama/llama-3.1-8b-instruct',
           messages: messagesForApi,
           temperature: 0.3,
           max_tokens: 500,
         })
       });
 
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData?.error?.message || `Server responded with status ${response.status}`);
+      }
+
       const data = await response.json();
       
-      let finalReply = data.choices[0].message.content;
+      let finalReply = data?.choices?.[0]?.message?.content;
+      if (!finalReply) {
+        throw new Error('No valid response received from AI model');
+      }
       
       // Safe Parser Guard: Only execute IF message includes trigger AND state is collecting_booking
       if (finalReply?.includes('[BOOK_APPOINTMENT:') && currentState === 'collecting_booking') {
