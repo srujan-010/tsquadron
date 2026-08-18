@@ -2,6 +2,7 @@ import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -35,6 +36,97 @@ function writeJSON(filePath, data) {
     console.error("Error writing JSON:", err);
     return false;
   }
+}
+
+// Helper for Cloudinary server-side upload
+async function uploadToCloudinary(fileData, options = {}, env = {}) {
+  let cloudName = env.CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME || 'dixbhnqnf';
+  let apiKey = env.CLOUDINARY_API_KEY || process.env.CLOUDINARY_API_KEY || '';
+  let apiSecret = env.CLOUDINARY_API_SECRET || process.env.CLOUDINARY_API_SECRET || '';
+  let uploadPreset = env.CLOUDINARY_UPLOAD_PRESET || process.env.CLOUDINARY_UPLOAD_PRESET || '';
+
+  const cloudinaryUrl = env.CLOUDINARY_URL || process.env.CLOUDINARY_URL;
+  if (cloudinaryUrl && cloudinaryUrl.startsWith('cloudinary://')) {
+    try {
+      const parsed = new URL(cloudinaryUrl);
+      apiKey = parsed.username || apiKey;
+      apiSecret = parsed.password || apiSecret;
+      cloudName = parsed.hostname || cloudName;
+    } catch (e) {
+      console.error("Error parsing CLOUDINARY_URL:", e);
+    }
+  }
+
+  const folder = options.folder || 'tsquadron/clients';
+  const timestamp = Math.round(Date.now() / 1000);
+
+  const formData = new FormData();
+  formData.append('file', fileData);
+  formData.append('folder', folder);
+
+  if (apiKey && apiSecret) {
+    formData.append('api_key', apiKey);
+    formData.append('timestamp', String(timestamp));
+
+    const paramsToSign = { folder, timestamp };
+    const sortedKeys = Object.keys(paramsToSign).sort();
+    const stringToSign = sortedKeys.map(k => `${k}=${paramsToSign[k]}`).join('&') + apiSecret;
+    const signature = crypto.createHash('sha1').update(stringToSign).digest('hex');
+    formData.append('signature', signature);
+  } else if (uploadPreset) {
+    formData.append('upload_preset', uploadPreset);
+  }
+
+  const uploadEndpoint = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+  const response = await fetch(uploadEndpoint, {
+    method: 'POST',
+    body: formData
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    const errorMsg = data?.error?.message || `Cloudinary upload error (${response.status})`;
+    throw new Error(errorMsg);
+  }
+
+  return {
+    success: true,
+    secure_url: data.secure_url,
+    public_id: data.public_id,
+    format: data.format,
+    bytes: data.bytes,
+    width: data.width,
+    height: data.height
+  };
+}
+
+// Helper to delete old Cloudinary assets
+async function deleteFromCloudinary(publicId, env = {}) {
+  let cloudName = env.CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME || 'dixbhnqnf';
+  let apiKey = env.CLOUDINARY_API_KEY || process.env.CLOUDINARY_API_KEY || '';
+  let apiSecret = env.CLOUDINARY_API_SECRET || process.env.CLOUDINARY_API_SECRET || '';
+
+  if (!apiKey || !apiSecret || !publicId) return { success: false, reason: 'Credentials or publicId missing' };
+
+  const timestamp = Math.round(Date.now() / 1000);
+  const paramsToSign = { public_id: publicId, timestamp };
+  const sortedKeys = Object.keys(paramsToSign).sort();
+  const stringToSign = sortedKeys.map(k => `${k}=${paramsToSign[k]}`).join('&') + apiSecret;
+  const signature = crypto.createHash('sha1').update(stringToSign).digest('hex');
+
+  const formData = new FormData();
+  formData.append('public_id', publicId);
+  formData.append('api_key', apiKey);
+  formData.append('timestamp', String(timestamp));
+  formData.append('signature', signature);
+
+  const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/destroy`, {
+    method: 'POST',
+    body: formData
+  });
+
+  const data = await response.json();
+  return { success: response.ok, data };
 }
 
 // Helper to rewrite index.html on disk dynamically for SSR / View Source support
@@ -134,6 +226,90 @@ function localMockBackend(env) {
         if (req.method === 'OPTIONS') {
           res.statusCode = 200;
           return res.end();
+        }
+
+        // --- CLOUDINARY UPLOAD API ---
+        if ((req.url === '/api/upload' || req.url === '/api/clients/upload') && req.method === 'POST') {
+          let body = '';
+          req.on('data', chunk => { body += chunk.toString(); });
+          return req.on('end', async () => {
+            try {
+              const payload = JSON.parse(body);
+              const { file, folder, name } = payload;
+
+              if (!file) {
+                res.statusCode = 400;
+                res.setHeader('Content-Type', 'application/json');
+                return res.end(JSON.stringify({ error: "No file payload provided." }));
+              }
+
+              // Validate format if base64 data URI
+              if (typeof file === 'string' && file.startsWith('data:')) {
+                const mimeMatch = file.match(/^data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+);base64,/);
+                const mime = mimeMatch ? mimeMatch[1] : '';
+                const accepted = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/svg+xml'];
+                if (mime && !accepted.includes(mime)) {
+                  res.statusCode = 400;
+                  res.setHeader('Content-Type', 'application/json');
+                  return res.end(JSON.stringify({ error: "Unsupported file format. Supported: PNG, JPG, JPEG, WebP, SVG." }));
+                }
+
+                // Check approx size (base64 length * 0.75)
+                const approxBytes = file.length * 0.75;
+                if (approxBytes > 5.5 * 1024 * 1024) {
+                  res.statusCode = 400;
+                  res.setHeader('Content-Type', 'application/json');
+                  return res.end(JSON.stringify({ error: "File size exceeds 5MB limit." }));
+                }
+              }
+
+              // Upload to Cloudinary server-side
+              const result = await uploadToCloudinary(file, { folder: folder || 'tsquadron/clients', name }, env);
+
+              res.statusCode = 200;
+              res.setHeader('Content-Type', 'application/json');
+              return res.end(JSON.stringify({
+                success: true,
+                secure_url: result.secure_url,
+                url: result.secure_url,
+                public_id: result.public_id,
+                format: result.format,
+                bytes: result.bytes
+              }));
+            } catch (err) {
+              console.error("Cloudinary upload failed:", err.message);
+              res.statusCode = 500;
+              res.setHeader('Content-Type', 'application/json');
+              return res.end(JSON.stringify({ 
+                error: `Cloudinary upload failed: ${err.message}. Please ensure CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET are configured in .env.` 
+              }));
+            }
+          });
+        }
+
+        // --- CLOUDINARY DELETE API ---
+        if (req.url === '/api/upload/delete' && req.method === 'POST') {
+          let body = '';
+          req.on('data', chunk => { body += chunk.toString(); });
+          return req.on('end', async () => {
+            try {
+              const { public_id } = JSON.parse(body);
+              if (!public_id) {
+                res.statusCode = 400;
+                res.setHeader('Content-Type', 'application/json');
+                return res.end(JSON.stringify({ error: "Missing public_id" }));
+              }
+
+              const result = await deleteFromCloudinary(public_id, env);
+              res.statusCode = 200;
+              res.setHeader('Content-Type', 'application/json');
+              return res.end(JSON.stringify(result));
+            } catch (err) {
+              res.statusCode = 500;
+              res.setHeader('Content-Type', 'application/json');
+              return res.end(JSON.stringify({ error: err.message }));
+            }
+          });
         }
 
         // --- APPOINTMENTS API ---

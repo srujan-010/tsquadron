@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FiImage, FiPlus, FiTrash2, FiCopy, FiCheck, FiUploadCloud } from 'react-icons/fi'
 import { db } from '../../lib/db'
+import { uploadImageToCloudinary } from '../../lib/cloudinary'
 
 export default function AdminMedia() {
   const [mediaList, setMediaList] = useState([])
   const [copiedId, setCopiedId] = useState(null)
   const [isUploading, setIsUploading] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
 
   useEffect(() => {
     setMediaList(db.getMedia())
@@ -26,28 +28,38 @@ export default function AdminMedia() {
     }
   }
 
-  // Simulated file upload convert to mock object
-  const handleFileUpload = (e) => {
+  // Upload file directly to Cloudinary
+  const handleFileUpload = async (e) => {
     const file = e.target.files[0]
     if (!file) return
 
     setIsUploading(true)
+    setErrorMsg('')
 
-    const reader = new FileReader()
-    reader.onload = () => {
-      // Simulate file upload latency
-      setTimeout(() => {
+    try {
+      const result = await uploadImageToCloudinary(file, {
+        folder: 'tsquadron/media',
+        name: file.name.replace(/\.[^/.]+$/, "")
+      })
+
+      if (result && result.secure_url) {
         const newItem = {
           name: file.name,
-          url: reader.result, // base64 representation of the uploaded file
-          size: `${(file.size / 1024).toFixed(0)} KB`
+          url: result.secure_url,
+          size: `${(file.size / 1024).toFixed(0)} KB`,
+          publicId: result.public_id
         }
         db.addMedia(newItem)
         setMediaList(db.getMedia())
-        setIsUploading(false)
-      }, 1000)
+      } else {
+        throw new Error('Cloudinary did not return a secure URL.')
+      }
+    } catch (err) {
+      console.error('Media upload error:', err)
+      setErrorMsg(`Upload failed: ${err.message}`)
+    } finally {
+      setIsUploading(false)
     }
-    reader.readAsDataURL(file)
   }
 
   return (

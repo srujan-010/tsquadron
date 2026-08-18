@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   FiPlus, FiEdit2, FiTrash2, FiCheck, FiX, FiImage, 
-  FiArrowUp, FiArrowDown, FiSearch, FiUploadCloud, FiEye, FiEyeOff, FiLayers
+  FiArrowUp, FiArrowDown, FiSearch, FiUploadCloud, FiEye, FiEyeOff, FiLayers, FiCheckCircle
 } from 'react-icons/fi'
 import { db } from '../../lib/db'
+import { uploadImageToCloudinary, migrateBase64ClientsToCloudinary } from '../../lib/cloudinary'
 
 export default function AdminClients() {
   const [clients, setClients] = useState([])
@@ -23,8 +24,22 @@ export default function AdminClients() {
     isActive: true
   })
 
-  const loadClients = () => {
-    setClients(db.getClients())
+  const loadClients = async () => {
+    const current = db.getClients()
+    setClients(current)
+
+    // Check if any legacy client has a Base64 logo and auto-migrate to Cloudinary safely
+    const hasBase64 = current.some(c => c.logoUrl && typeof c.logoUrl === 'string' && c.logoUrl.startsWith('data:image/'))
+    if (hasBase64) {
+      console.log('Initiating automatic Cloudinary migration for Base64 client logos...')
+      const { updated, clients: migrated } = await migrateBase64ClientsToCloudinary(current)
+      if (updated) {
+        db.saveAllClients(migrated)
+        setClients(migrated)
+        setSuccessMsg('Legacy Base64 logos successfully migrated to Cloudinary!')
+        setTimeout(() => setSuccessMsg(''), 4000)
+      }
+    }
   }
 
   useEffect(() => {
@@ -84,8 +99,8 @@ export default function AdminClients() {
     db.reorderClients(reordered)
   }
 
-  // Handle image upload and convert to base64 Data URL (supports PNG, JPG, JPEG, WEBP, SVG)
-  const handleLogoUpload = (e) => {
+  // Handle image upload and upload directly to Cloudinary via server-side endpoint
+  const handleLogoUpload = async (e) => {
     const file = e.target.files[0]
     if (!file) return
 
@@ -104,22 +119,31 @@ export default function AdminClients() {
     setErrorMsg('')
     setIsUploading(true)
 
-    const reader = new FileReader()
-    reader.onload = () => {
-      setFormData(prev => ({
-        ...prev,
-        logoUrl: reader.result
-      }))
+    try {
+      const result = await uploadImageToCloudinary(file, {
+        folder: 'tsquadron/clients',
+        name: formData.name.trim() || file.name.replace(/\.[^/.]+$/, "")
+      })
+
+      if (result && result.secure_url) {
+        setFormData(prev => ({
+          ...prev,
+          logoUrl: result.secure_url
+        }))
+        setSuccessMsg('Logo uploaded to Cloudinary successfully!')
+        setTimeout(() => setSuccessMsg(''), 3500)
+      } else {
+        throw new Error('Cloudinary did not return a secure URL.')
+      }
+    } catch (err) {
+      console.error('Logo upload error:', err)
+      setErrorMsg(`Upload failed: ${err.message}`)
+    } finally {
       setIsUploading(false)
     }
-    reader.onerror = () => {
-      setErrorMsg('Failed to process image file.')
-      setIsUploading(false)
-    }
-    reader.readAsDataURL(file)
   }
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault()
     if (!formData.name.trim()) {
       setErrorMsg('Client Name is required.')
@@ -136,10 +160,33 @@ export default function AdminClients() {
       return
     }
 
+    let finalLogoUrl = formData.logoUrl.trim()
+
+    // Safety guard: If logoUrl is somehow a raw base64 string, upload it to Cloudinary before saving
+    if (finalLogoUrl.startsWith('data:image/')) {
+      setIsUploading(true)
+      try {
+        const result = await uploadImageToCloudinary(finalLogoUrl, {
+          folder: 'tsquadron/clients',
+          name: formData.name.trim()
+        })
+        if (result && result.secure_url) {
+          finalLogoUrl = result.secure_url
+        } else {
+          throw new Error('Failed to resolve Cloudinary URL.')
+        }
+      } catch (err) {
+        setIsUploading(false)
+        setErrorMsg(`Cannot save: Logo upload to Cloudinary failed (${err.message}).`)
+        return
+      }
+      setIsUploading(false)
+    }
+
     db.saveClient({
       id: formData.id,
       name: formData.name.trim(),
-      logoUrl: formData.logoUrl.trim(),
+      logoUrl: finalLogoUrl,
       displayOrder: Number(formData.displayOrder) || 1,
       isActive: formData.isActive
     })
@@ -265,7 +312,7 @@ export default function AdminClients() {
                     {isUploading ? (
                       <div className="space-y-2 py-2">
                         <div className="w-6 h-6 border-2 border-brand-indigo border-t-transparent rounded-full animate-spin mx-auto" />
-                        <span className="text-xs text-slate-600 font-medium block">Encoding logo...</span>
+                        <span className="text-xs text-slate-600 font-medium block">Uploading to Cloudinary...</span>
                       </div>
                     ) : (
                       <div className="space-y-2 py-1">
@@ -274,7 +321,7 @@ export default function AdminClients() {
                         </div>
                         <div>
                           <span className="text-xs font-semibold text-slate-700 block">Click to upload logo file</span>
-                          <span className="text-[10px] text-slate-400 block mt-0.5">PNG, JPG, WebP, SVG (Max 5MB)</span>
+                          <span className="text-[10px] text-slate-400 block mt-0.5">Auto-uploaded to Cloudinary (Max 5MB)</span>
                         </div>
                       </div>
                     )}

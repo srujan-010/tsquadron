@@ -828,5 +828,21 @@ export const db = {
     setStore("tsquadron_clients", updated);
     window.dispatchEvent(new Event('clients-updated'));
     return updated;
+  },
+  saveAllClients: (allClients) => {
+    const sorted = [...allClients].sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+    setStore("tsquadron_clients", sorted);
+    window.dispatchEvent(new Event('clients-updated'));
+
+    // Also synchronize with backend if available
+    try {
+      fetch('/api/clients/reorder', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(sorted)
+      }).catch(e => console.warn('Syncing clients to backend failed:', e.message));
+    } catch(e) {}
+
+    return sorted;
   }
 };
