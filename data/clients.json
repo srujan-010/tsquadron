@@ -126,16 +126,7 @@
     "updatedAt": "2026-08-18T08:17:49.183Z"
   },
   {
-    "id": null,
-    "name": "Facttax",
-    "logoUrl": "",
-    "displayOrder": 15,
-    "isActive": true,
-    "createdAt": "2026-08-18T06:24:34.972Z",
-    "updatedAt": "2026-08-18T06:24:34.972Z"
-  },
-  {
-    "id": null,
+    "id": 15,
     "name": "Facttax",
     "logoUrl": "https://res.cloudinary.com/dixbhnqnf/image/upload/v1787041068/tsquadron/clients/grwwoesmdcdeb8sbresi.jpg",
     "displayOrder": 15,
